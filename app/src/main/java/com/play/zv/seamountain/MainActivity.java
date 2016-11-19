@@ -2,7 +2,9 @@ package com.play.zv.seamountain;
 
 
 import android.os.AsyncTask;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,8 +30,10 @@ public class MainActivity extends AppCompatActivity {
     private int lastVisibleItem;
     private int page=1;
 
+
     private static RecyclerView recyclerview;
     private CoordinatorLayout coordinatorLayout;
+    private FloatingActionButton fab;
     private GridLayoutManager mLayoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
     private GrilAdapter mAdapter;
@@ -40,14 +44,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         //设置为空 就可以使titile居中
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+
+
         initView();
         setListener();
         new GetData().execute("http://gank.io/api/data/福利/10/1");
     }
     private void setListener(){
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerview.smoothScrollToPosition(0);
+            }
+        });
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -93,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout=(SwipeRefreshLayout) findViewById(R.id.grid_swipe_refresh) ;
         //调整SwipeRefreshLayout的位置
         swipeRefreshLayout.setProgressViewOffset(false, 0,  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
 
     }
@@ -101,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             //设置swipeRefreshLayout为刷新状态
-            swipeRefreshLayout.setRefreshing(true);
+            //swipeRefreshLayout.setRefreshing(true);
         }
 
         @Override

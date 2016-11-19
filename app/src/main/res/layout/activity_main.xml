@@ -8,6 +8,7 @@
     android:fitsSystemWindows="true"
     android:background="#ffffff"
     >
+
     <!--工具栏-->
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -25,11 +26,11 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:text="妹子"
+            android:text="星球"
             android:textColor="@android:color/white"
             android:textSize="20sp"
-            android:textStyle="bold"/>
-        </android.support.v7.widget.Toolbar>
+            android:textStyle="bold" />
+            </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
     <!--下拉刷新控件-->
@@ -45,6 +46,18 @@
             android:layout_height="match_parent"
             />
     </android.support.v4.widget.SwipeRefreshLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:clickable="true"
+
+        app:backgroundTint="#ffffff"
+        android:src="@drawable/up"
+        app:layout_anchor="@id/grid_recycler"
+        app:layout_anchorGravity="bottom|right|end"
+        />
 
 
 </android.support.design.widget.CoordinatorLayout>
