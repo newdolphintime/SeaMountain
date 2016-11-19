@@ -8,17 +8,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+
+import java.util.Collections;
+
 import GrilInfo.GrilInfo;
 
 
 
 public class MainActivity extends AppCompatActivity {
+    private int lastVisibleItem;
+    private int page=1;
+
     private static RecyclerView recyclerview;
     private CoordinatorLayout coordinatorLayout;
     private GridLayoutManager mLayoutManager;
@@ -33,9 +42,45 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         initView();
+        setListener();
         new GetData().execute("http://gank.io/api/data/福利/10/1");
     }
+    private void setListener(){
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                page=1;
+                new GetData().execute("http://gank.io/api/data/福利/10/1");
+            }
+        });
+
+
+
+        //recyclerview滚动监听
+        recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                //0：当前屏幕停止滚动；1时：屏幕在滚动 且 用户仍在触碰或手指还在屏幕上；2时：随用户的操作，屏幕上产生的惯性滑动；
+                // 滑动状态停止并且剩余少于两个item时，自动加载下一页
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && lastVisibleItem +2>=mLayoutManager.getItemCount()) {
+                    new GetData().execute("http://gank.io/api/data/福利/10/"+(++page));
+                    //Toast.makeText(MainActivity.this,page,Toast.LENGTH_SHORT);
+                    System.out.println("当前页是"+page);
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+//                获取加载的最后一个可见视图在适配器的位置。
+                lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
+
+            }
+        });
+    }
     private void initView(){
         coordinatorLayout=(CoordinatorLayout)findViewById(R.id.grid_coordinatorLayout);
 
@@ -53,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            //设置swipeRefreshLayout为刷新状态
+            swipeRefreshLayout.setRefreshing(true);
         }
 
         @Override
@@ -67,32 +114,43 @@ public class MainActivity extends AppCompatActivity {
             if (!TextUtils.isEmpty(s)) {
 
                 Gson gson = new Gson();
+                if (grilInfo == null ) {
 
-                grilInfo = gson.fromJson(s, GrilInfo.class);
+                    grilInfo = gson.fromJson(s, GrilInfo.class);
+                    System.out.println(grilInfo.getResults().size());
+                    System.out.println("走这步了");
+                    //System.out.println(grilInfo.getResults().size());
+                } else {
+                    GrilInfo grilInfomore = gson.fromJson(s, GrilInfo.class);
+                    grilInfo.getResults().addAll(grilInfomore.getResults());
 
+                    System.out.println("刷新后链接" + grilInfo.getResults());
+                    System.out.println("刷新后长度" + grilInfo.getResults().size());
+                }
+                if (mAdapter == null) {
+
+                    recyclerview.setAdapter(mAdapter = new GrilAdapter(MainActivity.this, grilInfo));
+
+                    mAdapter.setOnItemClickListener(new GrilAdapter.OnRecyclerViewItemClickListener() {
+                        @Override
+                        public void onItemClick(View view) {
+                            int position = recyclerview.getChildAdapterPosition(view);
+                            //SnackbarUtil.ShortSnackbar(coordinatorLayout,"点击第"+position+"个",SnackbarUtil.Info).show();
+                        }
+
+                        @Override
+                        public void onItemLongClick(View view) {
+
+                        }
+                    });
+
+
+                } else {
+                    mAdapter.notifyDataSetChanged();
+                }
+                //停止swipeRefreshLayout加载动画
+                swipeRefreshLayout.setRefreshing(false);
             }
-            if(mAdapter==null){
-
-                recyclerview.setAdapter(mAdapter = new GrilAdapter(MainActivity.this,grilInfo));
-
-                mAdapter.setOnItemClickListener(new GrilAdapter.OnRecyclerViewItemClickListener() {
-                    @Override
-                    public void onItemClick(View view) {
-                        int position=recyclerview.getChildAdapterPosition(view);
-                        //SnackbarUtil.ShortSnackbar(coordinatorLayout,"点击第"+position+"个",SnackbarUtil.Info).show();
-                    }
-
-                    @Override
-                    public void onItemLongClick(View view) {
-                        //itemTouchHelper.startDrag(recyclerview.getChildViewHolder(view));
-                    }
-                });
-
-                //itemTouchHelper.attachToRecyclerView(recyclerview);
-            }else{
-                mAdapter.notifyDataSetChanged();
-            }
-
         }
     }
 
