@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //设置为空 就可以使titile居中
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         initView();
         setListener();
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
                         && lastVisibleItem +2>=mLayoutManager.getItemCount()) {
                     new GetData().execute("http://gank.io/api/data/福利/10/"+(++page));
-                    //Toast.makeText(MainActivity.this,page,Toast.LENGTH_SHORT);
+
                     System.out.println("当前页是"+page);
                 }
             }
@@ -136,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
                         public void onItemClick(View view) {
                             int position = recyclerview.getChildAdapterPosition(view);
                             //SnackbarUtil.ShortSnackbar(coordinatorLayout,"点击第"+position+"个",SnackbarUtil.Info).show();
+                            Toast.makeText(MainActivity.this,page+"",Toast.LENGTH_SHORT).show();
+
                         }
 
                         @Override

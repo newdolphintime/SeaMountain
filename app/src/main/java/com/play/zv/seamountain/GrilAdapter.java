@@ -1,12 +1,19 @@
 package com.play.zv.seamountain;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.squareup.picasso.Picasso;
 
 import GrilInfo.GrilInfo;
@@ -15,7 +22,7 @@ import GrilInfo.GrilInfo;
  * Created by Zv on 2016/11/12.
  */
 
-public class GrilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
+public class GrilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private GrilInfo grilInfo;
 
@@ -39,11 +46,14 @@ public class GrilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private ImageButton iv;
+        public final View mView;
+        public ImageView iv;
 
         public MyViewHolder(View view) {
             super(view);
-            iv = (ImageButton) view.findViewById(R.id.iv);
+            mView = view;
+            iv = (ImageView) mView.findViewById(R.id.iv);
+
         }
     }
 
@@ -54,7 +64,7 @@ public class GrilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 false);
         MyViewHolder holder = new MyViewHolder(view);
 
-        view.setOnClickListener(this);
+
 
 
         return holder;
@@ -63,7 +73,37 @@ public class GrilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Picasso.with(mContext).load(grilInfo.getResults().get(position).getUrl()).into(((MyViewHolder) holder).iv);
+
+        final View cardview = ((MyViewHolder)holder).mView;
+        ((MyViewHolder) holder).iv.setTag(grilInfo.getResults().get(position).getUrl());
+        //解决异步图片加载显示错位的问题
+        if (((MyViewHolder) holder).iv.getTag() != null && ((MyViewHolder) holder).iv.getTag().equals(grilInfo.getResults().get(position).getUrl())) {
+
+
+            Picasso.with(mContext)
+                    .load(grilInfo.getResults().get(position).getUrl())
+                    .placeholder(mContext.getDrawable(R.mipmap.ic_launcher))//没有加载图片时显示的默认图像
+                    .error(mContext.getDrawable(R.mipmap.ic_launcher))
+                    .into(((MyViewHolder) holder).iv);// 被加载的控件
+        }
+
+
+        cardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                ObjectAnimator animator = ObjectAnimator.ofFloat(v, "translationZ", 20, 0);
+                animator.setDuration(100);
+                animator.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        if ( mOnItemClickListener!= null) {
+                            mOnItemClickListener.onItemClick(v);
+                        }
+                    }
+                });
+                animator.start();
+            }
+        });
     }
 
     @Override
@@ -71,11 +111,5 @@ public class GrilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         return grilInfo.getResults().size();
     }
 
-    @Override
-    public void onClick(View view) {
-        if (mOnItemClickListener != null) {
 
-            mOnItemClickListener.onItemClick(view);
-        }
-    }
 }
