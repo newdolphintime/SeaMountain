@@ -148,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
                             grilInfo.getResults().add(grilsEntity);
                         // System.out.println(p.name+"+++++"+p.age);
                     }
+
                     System.out.println("刷新后链接" + grilInfo.getResults());
                     System.out.println("刷新后长度" + grilInfo.getResults().size());
                 }
