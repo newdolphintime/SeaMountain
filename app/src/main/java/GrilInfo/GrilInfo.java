@@ -141,5 +141,14 @@ public class GrilInfo {
                     ", desc='" + desc + '\'' +
                     '}';
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (!(obj instanceof GrilsEntity))
+                return false;
+            GrilsEntity p = (GrilsEntity) obj;
+            return this.getUrl().equals(p.getUrl());
+
+        }
     }
 }

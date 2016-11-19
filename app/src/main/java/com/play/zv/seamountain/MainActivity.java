@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.util.Collections;
+import java.util.Iterator;
 
 import GrilInfo.GrilInfo;
 
@@ -138,8 +139,15 @@ public class MainActivity extends AppCompatActivity {
                     //System.out.println(grilInfo.getResults().size());
                 } else {
                     GrilInfo grilInfomore = gson.fromJson(s, GrilInfo.class);
-                    grilInfo.getResults().addAll(grilInfomore.getResults());
-
+                    //grilInfo.getResults().addAll(grilInfomore.getResults());
+                    Iterator it = grilInfomore.getResults().iterator();
+                    //集合去重逻辑
+                    while (it.hasNext()) {
+                        GrilInfo.GrilsEntity grilsEntity=  (GrilInfo.GrilsEntity)it.next();
+                        if (!grilInfo.getResults().contains(grilsEntity))//會調用Person的equal方法
+                            grilInfo.getResults().add(grilsEntity);
+                        // System.out.println(p.name+"+++++"+p.age);
+                    }
                     System.out.println("刷新后链接" + grilInfo.getResults());
                     System.out.println("刷新后长度" + grilInfo.getResults().size());
                 }
