@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import GrilInfo.GrilInfo;
@@ -71,20 +72,24 @@ public class GrilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         final View cardview = ((MyViewHolder)holder).mView;
-        ((MyViewHolder) holder).iv.setTag(grilInfo.getResults().get(position).getUrl());
-        //解决异步图片加载显示错位的问题
-        if (((MyViewHolder) holder).iv.getTag() != null && ((MyViewHolder) holder).iv.getTag().equals(grilInfo.getResults().get(position).getUrl())) {
-
-
-            Picasso.with(mContext)
-                    .load(grilInfo.getResults().get(position).getUrl())
-                    .placeholder(R.drawable.pic_loading_round)//没有加载图片时显示的默认图像
-                    .resize(480,720)
-                    .centerCrop()
-                    .error(mContext.getDrawable(R.mipmap.ic_launcher))
-                    .into(((MyViewHolder) holder).iv);// 被f加载的控件
-        }
-
+//        ((MyViewHolder) holder).iv.setTag(grilInfo.getResults().get(position).getUrl());
+//        //解决异步图片加载显示错位的问题
+//        if (((MyViewHolder) holder).iv.getTag() != null && ((MyViewHolder) holder).iv.getTag().equals(grilInfo.getResults().get(position).getUrl())) {
+//
+//
+//            Picasso.with(mContext)
+//                    .load(grilInfo.getResults().get(position).getUrl())
+//                    .placeholder(R.drawable.pic_loading_round)//没有加载图片时显示的默认图像
+//                    .resize(480,720)
+//                    .centerCrop()
+//                    .error(mContext.getDrawable(R.mipmap.ic_launcher))
+//                    .into(((MyViewHolder) holder).iv);// 被f加载的控件
+//        }
+        Glide.with(mContext)
+                .load(grilInfo.getResults().get(position).getUrl())
+                .placeholder(R.color.imageColorPlaceholder)
+                .centerCrop()
+                .into(((MyViewHolder) holder).iv);
 
         cardview.setOnClickListener(new View.OnClickListener() {
             @Override
