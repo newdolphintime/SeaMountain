@@ -19,9 +19,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.orhanobut.logger.Logger;
 
 import java.util.Collections;
 import java.util.Iterator;
+
 
 import GrilInfo.GrilInfo;
 
@@ -129,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (!TextUtils.isEmpty(s)) {
-
+                Logger.json(s);
                 Gson gson = new Gson();
                 if (grilInfo == null ) {
 
