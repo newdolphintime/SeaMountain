@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                page=1;
+                //page=1;
                 new GetData().execute("http://gank.io/api/data/福利/10/1");
             }
         });
@@ -142,14 +142,14 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     GrilInfo grilInfomore = gson.fromJson(s, GrilInfo.class);
                     //grilInfo.getResults().addAll(grilInfomore.getResults());
-                    Iterator it = grilInfomore.getResults().iterator();
+                    //Iterator it = grilInfomore.getResults().iterator();
                     //集合去重逻辑
-                    while (it.hasNext()) {
-                        GrilInfo.GrilsEntity grilsEntity=  (GrilInfo.GrilsEntity)it.next();
-                        if (!grilInfo.getResults().contains(grilsEntity))//會調用Person的equal方法
-                            grilInfo.getResults().add(grilsEntity);
+//                    while (it.hasNext()) {
+                       // GrilInfo.GrilsEntity grilsEntity=  (GrilInfo.GrilsEntity)it.next();
+                        if (!grilInfo.getResults().containsAll(grilInfomore.getResults()))//會調用Person的equal方法
+                            grilInfo.getResults().addAll(grilInfomore.getResults());
                         // System.out.println(p.name+"+++++"+p.age);
-                    }
+                   // }
 
                     System.out.println("刷新后链接" + grilInfo.getResults());
                     System.out.println("刷新后长度" + grilInfo.getResults().size());
