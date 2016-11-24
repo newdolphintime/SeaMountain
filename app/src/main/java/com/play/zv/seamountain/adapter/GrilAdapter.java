@@ -1,4 +1,4 @@
-package com.play.zv.seamountain;
+package com.play.zv.seamountain.adapter;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -11,11 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
+import com.play.zv.seamountain.R;
 
-import java.util.List;
-
-import GrilInfo.GrilInfo;
+import com.play.zv.seamountain.api.GrilInfo;
 
 /**
  * Created by Zv on 2016/11/12.
