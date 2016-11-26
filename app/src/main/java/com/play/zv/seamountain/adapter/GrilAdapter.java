@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.play.zv.seamountain.R;
 
 import com.play.zv.seamountain.api.GrilInfo;
+import com.thunderrise.animations.PulseAnimation;
 
 /**
  * Created by Zv on 2016/11/12.
@@ -94,6 +95,11 @@ public class GrilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
+//                PulseAnimation.create().with(v)
+//                        .setDuration(310)
+//                        .setRepeatCount(PulseAnimation.INFINITE)
+//                        .setRepeatMode(PulseAnimation.REVERSE)
+//                        .start();
                 ObjectAnimator animator = ObjectAnimator.ofFloat(v, "translationZ", 20, 0);
                 animator.setDuration(100);
                 animator.addListener(new AnimatorListenerAdapter() {
