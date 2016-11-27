@@ -95,12 +95,12 @@ public class GrilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                PulseAnimation.create().with(v)
-                        .setDuration(310)
-                        .setRepeatCount(PulseAnimation.RESTART)
-                        .setRepeatMode(PulseAnimation.REVERSE)
-
-                        .start();
+//                PulseAnimation.create().with(v)
+//                        .setDuration(310)
+//                        .setRepeatCount(PulseAnimation.RESTART)
+//                        .setRepeatMode(PulseAnimation.REVERSE)
+//
+//                        .start();
                 ObjectAnimator animator = ObjectAnimator.ofFloat(v, "translationZ", 20, 0);
                 animator.setDuration(100);
                 animator.addListener(new AnimatorListenerAdapter() {
