@@ -143,6 +143,8 @@ public class MainActivity extends AppCompatActivity {
                     //集合去重逻辑
 //                    while (it.hasNext()) {
                        // GrilInfo.GrilsEntity grilsEntity=  (GrilInfo.GrilsEntity)it.next();
+                    Logger.d("是否包含全部List？");
+                    Logger.d(grilInfo.getResults().containsAll(grilInfomore.getResults()));
                         if (!grilInfo.getResults().containsAll(grilInfomore.getResults()))//會調用Person的equal方法
                             grilInfo.getResults().addAll(grilInfomore.getResults());
                         // System.out.println(p.name+"+++++"+p.age);
