@@ -22,9 +22,9 @@ public class GrilPresenter extends BasePresenter{
     public GrilPresenter(IGrilActivity mIGrilActivity){
         this.mIGrilActivity =mIGrilActivity;
     }
-    public void loadGrilData(){
+    public void loadGrilData(String type,int count ,int page){
         Subscription subscription = BuildApi.getInstence().getAPIService()
-                .getGrilInfo("福利",10,1)
+                .getGrilInfo(type,count,page)
                 .map(new Func1<GrilInfo, List<GrilInfo.GrilsEntity>>() {
 
                     @Override

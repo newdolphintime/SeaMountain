@@ -81,7 +81,7 @@ public class Main2Activity extends AppCompatActivity implements IGrilActivity{
                 // 滑动状态停止并且剩余少于两个item时，自动加载下一页
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
                         && lastVisibleItem +2>=mLayoutManager.getItemCount()) {
-
+                    loadMore("福利",10,++page);
 
                     System.out.println("当前页是"+page);
                 }
@@ -123,15 +123,27 @@ public class Main2Activity extends AppCompatActivity implements IGrilActivity{
 
     @Override
     public void loadData() {
-        grilPresenter.loadGrilData();
+        grilPresenter.loadGrilData("福利",10,1);
     }
 
     @Override
-    public void getDataSuccess(List<GrilInfo.GrilsEntity> grilsEntities) {
-        if (mAdapter == null) {
-            grilInfo=new GrilInfo();
-            grilInfo.setResults(grilsEntities);
+    public void loadMore(String type, int count, int page) {
+        grilPresenter.loadGrilData(type,count,page);
+    }
 
+
+    @Override
+    public void getDataSuccess(List<GrilInfo.GrilsEntity> grilsEntities) {
+
+            if (grilInfo == null) {
+                grilInfo = new GrilInfo();
+                grilInfo.setResults(grilsEntities);
+            }
+            else{
+                if (!grilInfo.getResults().containsAll(grilsEntities))//會調用Person的equal方法
+                    grilInfo.getResults().addAll(grilsEntities);
+            }
+        if (mAdapter == null) {
             recyclerview.setAdapter(mAdapter = new GrilAdapter(Main2Activity.this, grilInfo));
 
             mAdapter.setOnItemClickListener(new GrilAdapter.OnRecyclerViewItemClickListener() {
@@ -162,7 +174,7 @@ public class Main2Activity extends AppCompatActivity implements IGrilActivity{
 
     @Override
     public void unSubcription() {
-
+        grilPresenter.unsubcription();
     }
 
     private class GetData extends AsyncTask<String, Integer, String> {

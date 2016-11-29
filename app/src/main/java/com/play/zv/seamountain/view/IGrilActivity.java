@@ -16,7 +16,7 @@ public interface IGrilActivity {
 
     void loadData();
 // loadMore refresh 就大家自由发挥了demo中就不写了
-//    void loadMore();
+    void loadMore(String type,int count ,int page);
 //
 //    void refresh();
 //
