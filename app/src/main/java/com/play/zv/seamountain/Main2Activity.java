@@ -19,7 +19,7 @@ import com.orhanobut.logger.Logger;
 import com.play.zv.seamountain.adapter.GrilAdapter;
 
 import com.play.zv.seamountain.api.GrilInfo;
-import com.play.zv.seamountain.api.MyCallBack;
+
 import com.play.zv.seamountain.api.MyOkHttp;
 import com.play.zv.seamountain.presenter.GrilPresenter;
 import com.play.zv.seamountain.view.IGrilActivity;
