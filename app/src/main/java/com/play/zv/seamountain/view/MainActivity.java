@@ -1,4 +1,4 @@
-package com.play.zv.seamountain;
+package com.play.zv.seamountain.view;
 
 
 import android.support.design.widget.CoordinatorLayout;
@@ -14,6 +14,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.Toast;
 
+import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.adapter.GrilAdapter;
 
 
