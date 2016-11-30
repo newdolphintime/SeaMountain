@@ -37,7 +37,7 @@ public class GrilPresenter extends BasePresenter{
                 .subscribe(new Subscriber<List<GrilInfo.GrilsEntity>>() {
                     @Override
                     public void onCompleted() {
-
+                        mIGrilActivity.hidProgressBar();
                     }
 
                     @Override
