@@ -2,9 +2,8 @@ package com.play.zv.seamountain.presenter;
 
 import com.play.zv.seamountain.api.BuildApi;
 import com.play.zv.seamountain.api.GrilInfo;
-import com.play.zv.seamountain.view.IGrilActivity;
+import com.play.zv.seamountain.view.IviewBind.IGrilActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscriber;

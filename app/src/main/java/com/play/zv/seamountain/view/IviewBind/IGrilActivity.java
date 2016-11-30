@@ -1,4 +1,4 @@
-package com.play.zv.seamountain.view;
+package com.play.zv.seamountain.view.IviewBind;
 
 import com.play.zv.seamountain.api.GrilInfo;
 
