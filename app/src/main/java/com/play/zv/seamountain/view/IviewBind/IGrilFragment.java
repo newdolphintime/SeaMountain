@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Zv on 2016/11/29.
  */
 
-public interface IGrilActivity {
+public interface IGrilFragment {
     void showProgressBar();
 
     void hidProgressBar();

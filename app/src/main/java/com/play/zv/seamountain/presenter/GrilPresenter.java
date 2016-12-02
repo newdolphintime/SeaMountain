@@ -2,7 +2,7 @@ package com.play.zv.seamountain.presenter;
 
 import com.play.zv.seamountain.api.BuildApi;
 import com.play.zv.seamountain.api.GrilInfo;
-import com.play.zv.seamountain.view.IviewBind.IGrilActivity;
+import com.play.zv.seamountain.view.IviewBind.IGrilFragment;
 
 import java.util.List;
 
@@ -17,8 +17,8 @@ import rx.schedulers.Schedulers;
  */
 
 public class GrilPresenter extends BasePresenter{
-    private IGrilActivity mIGrilActivity;
-    public GrilPresenter(IGrilActivity mIGrilActivity){
+    private IGrilFragment mIGrilActivity;
+    public GrilPresenter(IGrilFragment mIGrilActivity){
         this.mIGrilActivity =mIGrilActivity;
     }
     public void loadGrilData(String type,int count ,int page){
