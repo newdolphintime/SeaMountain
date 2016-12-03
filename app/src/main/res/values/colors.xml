@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#000000</color>
     <color name="imageColorPlaceholder">#ededed</color>
+
+    <color name="tab_checked">#000000</color>
+    <color name="tab_unchecked">#757575</color>
 </resources>

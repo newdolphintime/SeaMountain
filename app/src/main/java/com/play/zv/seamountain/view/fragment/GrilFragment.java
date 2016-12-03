@@ -1,12 +1,16 @@
 package com.play.zv.seamountain.view.fragment;
 
+import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.play.zv.seamountain.R;
@@ -14,6 +18,8 @@ import com.play.zv.seamountain.adapter.GrilAdapter;
 import com.play.zv.seamountain.api.GrilInfo;
 import com.play.zv.seamountain.presenter.GrilPresenter;
 import com.play.zv.seamountain.view.IviewBind.IGrilFragment;
+import com.play.zv.seamountain.view.PictureActivity;
+import com.play.zv.seamountain.widget.RatioImageView;
 
 import java.util.List;
 
@@ -23,7 +29,7 @@ import java.util.List;
 
 public class GrilFragment extends BaseFragment implements IGrilFragment {
     private int lastVisibleItem;
-    private int page=1;
+    private int page = 1;
 
 
     private static RecyclerView recyclerview;
@@ -34,19 +40,20 @@ public class GrilFragment extends BaseFragment implements IGrilFragment {
     private GrilAdapter mAdapter;
     private GrilInfo grilInfo;
     private GrilPresenter grilPresenter = new GrilPresenter(this);
+
     @Override
     public View initViews() {
-        View view =View.inflate(mActivity, R.layout.fragment_gril,null);
+        View view = View.inflate(mActivity, R.layout.fragment_gril, null);
 
-        coordinatorLayout=(CoordinatorLayout)view.findViewById(R.id.grid_coordinatorLayout);
+        coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.grid_coordinatorLayout);
 
-        recyclerview=(RecyclerView)view.findViewById(R.id.grid_recycler);
-        mLayoutManager=new GridLayoutManager(mActivity,3,GridLayoutManager.VERTICAL,false);
+        recyclerview = (RecyclerView) view.findViewById(R.id.grid_recycler);
+        mLayoutManager = new GridLayoutManager(mActivity, 2, GridLayoutManager.VERTICAL, false);
         recyclerview.setLayoutManager(mLayoutManager);
 
-        swipeRefreshLayout=(SwipeRefreshLayout) view.findViewById(R.id.grid_swipe_refresh) ;
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.grid_swipe_refresh);
         //调整SwipeRefreshLayout的位置
-        swipeRefreshLayout.setProgressViewOffset(false, 0,  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
+        swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
 
 
@@ -76,7 +83,6 @@ public class GrilFragment extends BaseFragment implements IGrilFragment {
         });
 
 
-
         //recyclerview滚动监听
         recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -85,10 +91,10 @@ public class GrilFragment extends BaseFragment implements IGrilFragment {
                 //0：当前屏幕停止滚动；1时：屏幕在滚动 且 用户仍在触碰或手指还在屏幕上；2时：随用户的操作，屏幕上产生的惯性滑动；
                 // 滑动状态停止并且剩余少于两个item时，自动加载下一页
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
-                        && lastVisibleItem +2>=mLayoutManager.getItemCount()) {
+                        && lastVisibleItem + 2 >= mLayoutManager.getItemCount()) {
                     loadMore("福利", 10, ++page);
 
-                    System.out.println("当前页是"+page);
+                    System.out.println("当前页是" + page);
                 }
             }
 
@@ -136,17 +142,19 @@ public class GrilFragment extends BaseFragment implements IGrilFragment {
 
             mAdapter.setOnItemClickListener(new GrilAdapter.OnRecyclerViewItemClickListener() {
                 @Override
-                public void onItemClick(View view) {
+                public void onItemClick(View view, ImageView grilview, String url) {
                     int position = recyclerview.getChildAdapterPosition(view);
                     //SnackbarUtil.ShortSnackbar(coordinatorLayout,"点击第"+position+"个",SnackbarUtil.Info).show();
+                    startPictureActivity(grilview, url);
                     Toast.makeText(mActivity, page + "", Toast.LENGTH_SHORT).show();
-
                 }
 
                 @Override
                 public void onItemLongClick(View view) {
 
                 }
+
+
             });
 
 
@@ -163,5 +171,14 @@ public class GrilFragment extends BaseFragment implements IGrilFragment {
     @Override
     public void unSubcription() {
         grilPresenter.unsubcription();
+    }
+
+    private void startPictureActivity(View meizhiView, String url) {
+        Intent i = new Intent(mActivity, PictureActivity.class);
+        i.putExtra(PictureActivity.EXTRA_IMAGE_URL, url);
+        ActivityOptionsCompat optionsCompat =
+                ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity, meizhiView,
+                        PictureActivity.TRANSIT_PIC);
+        ActivityCompat.startActivity(mActivity, i, optionsCompat.toBundle());
     }
 }

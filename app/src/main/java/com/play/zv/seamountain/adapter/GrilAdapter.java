@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.play.zv.seamountain.R;
 
 import com.play.zv.seamountain.api.GrilInfo;
+import com.play.zv.seamountain.widget.RatioImageView;
 import com.thunderrise.animations.PulseAnimation;
 
 /**
@@ -26,7 +27,7 @@ public class GrilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     //内部类接口
     public static interface OnRecyclerViewItemClickListener {
-        void onItemClick(View view);
+        void onItemClick(View view,ImageView grilview,String url);
 
         void onItemLongClick(View view);
     }
@@ -45,12 +46,13 @@ public class GrilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public ImageView iv;
+        public RatioImageView iv;
 
         public MyViewHolder(View view) {
             super(view);
             mView = view;
-            iv = (ImageView) mView.findViewById(R.id.iv);
+            iv = (RatioImageView) mView.findViewById(R.id.iv);
+            iv.setRatio(0.618f);
 
         }
     }
@@ -63,16 +65,15 @@ public class GrilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         MyViewHolder holder = new MyViewHolder(view);
 
 
-
-
         return holder;
 
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-        final View cardview = ((MyViewHolder)holder).mView;
+        final View cardview = ((MyViewHolder) holder).mView;
+        final ImageView rv=((MyViewHolder) holder).iv;
 //        ((MyViewHolder) holder).iv.setTag(grilInfo.getResults().get(position).getUrl());
 //        //解决异步图片加载显示错位的问题
 //        if (((MyViewHolder) holder).iv.getTag() != null && ((MyViewHolder) holder).iv.getTag().equals(grilInfo.getResults().get(position).getUrl())) {
@@ -106,8 +107,8 @@ public class GrilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        if ( mOnItemClickListener!= null) {
-                            mOnItemClickListener.onItemClick(v);
+                        if (mOnItemClickListener != null) {
+                            mOnItemClickListener.onItemClick(v,rv,grilInfo.getResults().get(position).getUrl());
                         }
                     }
                 });
