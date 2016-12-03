@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.BottomNavigationView.OnNavigationItemSelectedListener;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,20 +22,19 @@ import com.play.zv.seamountain.adapter.ViewPagerAdapter;
 
 
 import com.play.zv.seamountain.view.fragment.GrilFragment;
+import com.play.zv.seamountain.view.fragment.MovieFragment;
+import com.play.zv.seamountain.view.fragment.NewsFragment;
 
 
 public class MainActivity extends AppCompatActivity  {
 
     ViewPager viewPager;
-    MenuItem prevMenuItem;
+    private TabLayout tabLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("");
 
-        setSupportActionBar(toolbar);
         initViews();
         initListener();
     }
@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity  {
 
     private void  initViews(){
         viewPager = (ViewPager) findViewById(R.id.vp_fragment);
-
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        viewPager.setOffscreenPageLimit(3);
     }
 
     private void initListener() {
@@ -65,14 +66,16 @@ public class MainActivity extends AppCompatActivity  {
         });
 
         setupViewPager(viewPager);
-
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
 
 
     public void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new GrilFragment());
-
+        adapter.addFragment(new MovieFragment());
+        adapter.addFragment(new NewsFragment());
         viewPager.setAdapter(adapter);
     }
 }

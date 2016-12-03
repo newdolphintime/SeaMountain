@@ -12,6 +12,7 @@ import java.util.List;
  */
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
+    private String tabTitles[] = new String[]{"图片","电影","新鲜"};
     private final List<Fragment> mFragmentList = new ArrayList<>();
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -25,6 +26,11 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return mFragmentList.size();
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return tabTitles[position];
     }
 
     public void addFragment(Fragment fragment) {

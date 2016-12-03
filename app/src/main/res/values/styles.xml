@@ -16,5 +16,12 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">#000000</item>
+        <item name="tabMaxWidth">100dp</item>
+
+    </style>
+
 </resources>
 
