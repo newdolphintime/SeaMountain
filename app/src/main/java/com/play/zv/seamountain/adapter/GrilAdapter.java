@@ -46,13 +46,13 @@ public class GrilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public RatioImageView iv;
+        public ImageView iv;
 
         public MyViewHolder(View view) {
             super(view);
             mView = view;
-            iv = (RatioImageView) mView.findViewById(R.id.iv);
-            iv.setRatio(0.618f);
+            iv = (ImageView) mView.findViewById(R.id.iv);
+            //iv.setRatio(0.618f);
 
         }
     }

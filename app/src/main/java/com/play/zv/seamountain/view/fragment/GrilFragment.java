@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,7 +36,7 @@ public class GrilFragment extends BaseFragment implements IGrilFragment {
     private static RecyclerView recyclerview;
     private CoordinatorLayout coordinatorLayout;
     private FloatingActionButton fab;
-    private GridLayoutManager mLayoutManager;
+    private StaggeredGridLayoutManager mLayoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
     private GrilAdapter mAdapter;
     private GrilInfo grilInfo;
@@ -48,7 +49,8 @@ public class GrilFragment extends BaseFragment implements IGrilFragment {
         coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.grid_coordinatorLayout);
 
         recyclerview = (RecyclerView) view.findViewById(R.id.grid_recycler);
-        mLayoutManager = new GridLayoutManager(mActivity, 2, GridLayoutManager.VERTICAL, false);
+        mLayoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
+               // new GridLayoutManager(mActivity, 2, GridLayoutManager.VERTICAL, false);
         recyclerview.setLayoutManager(mLayoutManager);
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.grid_swipe_refresh);
@@ -102,7 +104,8 @@ public class GrilFragment extends BaseFragment implements IGrilFragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 //                获取加载的最后一个可见视图在适配器的位置。
-                lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
+                int[] positions = mLayoutManager.findLastCompletelyVisibleItemPositions(null);
+                lastVisibleItem = Math.max(positions[0],positions[1]);
 
             }
         });
@@ -176,9 +179,10 @@ public class GrilFragment extends BaseFragment implements IGrilFragment {
     private void startPictureActivity(View meizhiView, String url) {
         Intent i = new Intent(mActivity, PictureActivity.class);
         i.putExtra(PictureActivity.EXTRA_IMAGE_URL, url);
-        ActivityOptionsCompat optionsCompat =
-                ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity, meizhiView,
-                        PictureActivity.TRANSIT_PIC);
-        ActivityCompat.startActivity(mActivity, i, optionsCompat.toBundle());
+        startActivity(i);
+//        ActivityOptionsCompat optionsCompat =
+//                ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity, meizhiView,
+//                        PictureActivity.TRANSIT_PIC);
+//        ActivityCompat.startActivity(mActivity, i, optionsCompat.toBundle());
     }
 }

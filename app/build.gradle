@@ -50,5 +50,5 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
 
-    compile 'com.commit451:PhotoView:1.2.4'
+    compile 'com.bm.photoview:library:1.4.1'
 }

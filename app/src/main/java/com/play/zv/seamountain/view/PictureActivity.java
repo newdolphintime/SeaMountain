@@ -10,20 +10,21 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
+import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.adapter.GrilAdapter;
 import com.squareup.picasso.Picasso;
 
-import uk.co.senab.photoview.PhotoViewAttacher;
+
 
 
 public class PictureActivity extends AppCompatActivity {
     public static final String EXTRA_IMAGE_URL = "image_url";
     private String mImageUrl;
     public static final String TRANSIT_PIC = "picture";
-    private ImageView picture;
-    private PhotoViewAttacher mPhotoViewAttacher;
+    private PhotoView picture;
+
 
     private void parseIntent() {
         mImageUrl = getIntent().getStringExtra(EXTRA_IMAGE_URL);
@@ -36,13 +37,16 @@ public class PictureActivity extends AppCompatActivity {
 
         parseIntent();
 
-        picture = (ImageView) findViewById(R.id.picture);
-        ViewCompat.setTransitionName(picture, TRANSIT_PIC);
+        picture = (PhotoView) findViewById(R.id.img);
+
         //Picasso.with(this).load(mImageUrl).into(picture);
         Glide.with(this)
                 .load(mImageUrl)
                 .into(picture);
-        mPhotoViewAttacher = new PhotoViewAttacher(picture);
+
+        picture.enable();
+        //picture.setAdjustViewBounds(true);
+        //mPhotoViewAttacher = new PhotoViewAttacher(picture);
     }
 
 
