@@ -6,5 +6,6 @@ package com.play.zv.seamountain.api;
 
 public class Constants {
     //接口请求的Url
-    public static final String BASEURL = "http://gank.io/api/";
+    public static final String GRILBASEURL = "http://gank.io/api/";
+    public static final String MOVIEBASEURL = "https://api.douban.com/";
 }

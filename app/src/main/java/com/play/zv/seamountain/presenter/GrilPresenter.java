@@ -22,7 +22,7 @@ public class GrilPresenter extends BasePresenter{
         this.mIGrilActivity =mIGrilActivity;
     }
     public void loadGrilData(String type,int count ,int page){
-        Subscription subscription = BuildApi.getInstence().getAPIService()
+        Subscription subscription = BuildApi.getInstence().getGrilAPIService()
                 .getGrilInfo(type,count,page)
                 .map(new Func1<GrilInfo, List<GrilInfo.GrilsEntity>>() {
 

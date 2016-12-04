@@ -1,6 +1,5 @@
 package com.play.zv.seamountain.api;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -10,8 +9,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class BuildApi {
-    private static Retrofit retrofit;
-    private  static BuildApi sBuildApi;
+    private static Retrofit grilretrofit;
+    private static Retrofit movieretrofit;
+    private static BuildApi sBuildApi;
 
     public static BuildApi getInstence() {
         if (sBuildApi == null) {
@@ -23,14 +23,27 @@ public class BuildApi {
         }
         return sBuildApi;
     }
-    public  APIService getAPIService() {
-        if (retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(Constants.BASEURL) //设置Base的访问路径
+
+    public APIService getGrilAPIService() {
+        if (grilretrofit == null) {
+            grilretrofit = new Retrofit.Builder()
+                    .baseUrl(Constants.GRILBASEURL) //设置Base的访问路径
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create()) //设置默认的解析库：Gson
                     .build();
         }
-        return retrofit.create(APIService.class);
+        return grilretrofit.create(APIService.class);
     }
+
+    public APIService getMovieAPIService() {
+        if (movieretrofit == null) {
+            movieretrofit = new Retrofit.Builder()
+                    .baseUrl(Constants.MOVIEBASEURL) //设置Base的访问路径
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create()) //设置默认的解析库：Gson
+                    .build();
+        }
+        return movieretrofit.create(APIService.class);
+    }
+
 }

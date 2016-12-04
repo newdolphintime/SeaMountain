@@ -16,4 +16,10 @@ public interface APIService {
                                      @Path("count") int count,
                                      @Path("pageIndex") int pageIndex
     );
+    /**
+     * 热映中
+     * @return
+     */
+    @GET("v2/movie/in_theaters")
+    Observable<DoubanNewMovie> getLiveFilm();
 }
