@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.orhanobut.logger.Logger;
+
 /**
  * Created by Zv on 2016/12/01.
  */
@@ -38,6 +40,8 @@ public abstract class BaseFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         isViewInitiated = true;
+        //initData();
+
         prepareFetchData();
         setListener();
 
@@ -70,4 +74,8 @@ public abstract class BaseFragment extends Fragment {
         }
         return false;
     }
+
+
+
+
 }

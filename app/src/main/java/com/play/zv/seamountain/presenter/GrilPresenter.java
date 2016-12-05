@@ -46,6 +46,7 @@ public class GrilPresenter extends BasePresenter{
 
                     @Override
                     public void onNext(List<GrilInfo.GrilsEntity> grilsEntities) {
+
                         mIGrilActivity.getDataSuccess(grilsEntities);
                     }
                 });

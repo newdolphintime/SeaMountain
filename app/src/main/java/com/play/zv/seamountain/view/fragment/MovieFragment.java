@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.orhanobut.logger.Logger;
 import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.adapter.GrilAdapter;
+import com.play.zv.seamountain.adapter.MovieNewAdapter;
 import com.play.zv.seamountain.api.DoubanNewMovie;
 import com.play.zv.seamountain.api.GrilInfo;
 import com.play.zv.seamountain.presenter.DoubanNewMoviePresenter;
@@ -32,31 +33,51 @@ import java.util.List;
 public class MovieFragment extends BaseFragment implements INewMovieFragment{
 
     private DoubanNewMoviePresenter doubanNewMoviePresenter =new DoubanNewMoviePresenter(this);
-    private TextView textView;
+    private  RecyclerView recyclerview;
+    private  DoubanNewMovie doubanNewMovie;
+    private MovieNewAdapter mAdapter;
+    private StaggeredGridLayoutManager mLayoutManager;
+    private SwipeRefreshLayout swipeRefreshLayout;
     @Override
     public View initViews() {
         View view = View.inflate(mActivity, R.layout.fragment_movie, null);
-        textView = (TextView) view.findViewById(R.id.movie);
 
-
+        recyclerview = (RecyclerView) view.findViewById(R.id.grid_recycler);
+        mLayoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
+        // new GridLayoutManager(mActivity, 2, GridLayoutManager.VERTICAL, false);
+        recyclerview.setLayoutManager(mLayoutManager);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.grid_swipe_refresh);
+        swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
 
         return view;
     }
 
     @Override
+    public void setListener() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //page=1;
+                loadData();
+            }
+        });
+    }
+
+    @Override
     public void initData() {
+        showProgressBar();
         loadData();
     }
 
 
     @Override
     public void showProgressBar() {
-
+        swipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void hidProgressBar() {
-
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -66,8 +87,22 @@ public class MovieFragment extends BaseFragment implements INewMovieFragment{
 
     @Override
     public void getDataSuccess(List<DoubanNewMovie.SubjectsEntity> subjectsEntities) {
-        textView.setText(subjectsEntities.toString());
-        Logger.d(subjectsEntities);
+        if (doubanNewMovie == null) {
+            doubanNewMovie = new DoubanNewMovie();
+            doubanNewMovie.setSubjects(subjectsEntities);
+        } else {
+            if (!doubanNewMovie.getSubjects().containsAll(subjectsEntities))//會調用Person的equal方法
+                doubanNewMovie.getSubjects().addAll(subjectsEntities);
+        }
+        if (mAdapter == null) {
+            recyclerview.setAdapter(mAdapter = new MovieNewAdapter(mActivity, doubanNewMovie));
+
+
+
+
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

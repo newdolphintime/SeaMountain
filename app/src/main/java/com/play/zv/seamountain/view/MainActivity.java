@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity  {
     private void  initViews(){
         viewPager = (ViewPager) findViewById(R.id.vp_fragment);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(2);
     }
 
     private void initListener() {
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity  {
 
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        //tabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
 
 

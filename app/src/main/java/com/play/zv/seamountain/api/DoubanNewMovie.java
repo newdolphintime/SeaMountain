@@ -451,5 +451,13 @@ public class DoubanNewMovie {
                 }
             }
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (!(obj instanceof DoubanNewMovie.SubjectsEntity))
+                return false;
+            DoubanNewMovie.SubjectsEntity p = (DoubanNewMovie.SubjectsEntity) obj;
+            return this.getImages().getLarge().equals(p.getImages().getLarge());
+        }
     }
 }

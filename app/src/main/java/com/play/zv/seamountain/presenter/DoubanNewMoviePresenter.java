@@ -37,7 +37,7 @@ public class DoubanNewMoviePresenter extends BasePresenter {
                 .subscribe(new Subscriber<List<DoubanNewMovie.SubjectsEntity>>() {
                     @Override
                     public void onCompleted() {
-
+                        iNewMovieFragment.hidProgressBar();
                     }
 
                     @Override
@@ -47,6 +47,7 @@ public class DoubanNewMoviePresenter extends BasePresenter {
 
                     @Override
                     public void onNext(List<DoubanNewMovie.SubjectsEntity> subjectsEntities) {
+                        iNewMovieFragment.showProgressBar();
                         iNewMovieFragment.getDataSuccess(subjectsEntities);
                         Logger.d("this step");
                         Logger.d(subjectsEntities);

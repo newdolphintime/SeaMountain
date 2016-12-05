@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.orhanobut.logger.Logger;
 import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.adapter.GrilAdapter;
 import com.play.zv.seamountain.api.GrilInfo;
@@ -27,7 +28,7 @@ import java.util.List;
 /**
  * Created by Zv on 2016/12/01.
  */
-
+//public class GrilFragment extends BaseFragment implements IGrilFragment {
 public class GrilFragment extends BaseFragment implements IGrilFragment {
     private int lastVisibleItem;
     private int page = 1;
@@ -64,7 +65,10 @@ public class GrilFragment extends BaseFragment implements IGrilFragment {
 
     @Override
     public void initData() {
+        showProgressBar();
         loadData();
+
+        //prepareFetchData(true);
     }
 
     @Override
@@ -113,7 +117,7 @@ public class GrilFragment extends BaseFragment implements IGrilFragment {
 
     @Override
     public void showProgressBar() {
-
+        swipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
@@ -133,6 +137,7 @@ public class GrilFragment extends BaseFragment implements IGrilFragment {
 
     @Override
     public void getDataSuccess(List<GrilInfo.GrilsEntity> grilsEntities) {
+        Logger.d("getDataSuccess");
         if (grilInfo == null) {
             grilInfo = new GrilInfo();
             grilInfo.setResults(grilsEntities);
@@ -185,4 +190,6 @@ public class GrilFragment extends BaseFragment implements IGrilFragment {
 //                        PictureActivity.TRANSIT_PIC);
 //        ActivityCompat.startActivity(mActivity, i, optionsCompat.toBundle());
     }
+
+
 }
