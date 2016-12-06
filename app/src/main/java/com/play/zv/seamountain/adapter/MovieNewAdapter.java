@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.play.zv.seamountain.R;
@@ -26,13 +27,14 @@ public class MovieNewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     class MyViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public ImageView iv;
+        public TextView moviename;
 
         public MyViewHolder(View view) {
             super(view);
             mView = view;
             iv = (ImageView) mView.findViewById(R.id.iv);
             //iv.setRatio(0.618f);
-
+            moviename = (TextView) mView.findViewById(R.id.moviename);
         }
     }
     @Override
@@ -54,6 +56,7 @@ public class MovieNewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 .placeholder(R.color.imageColorPlaceholder)
                 .centerCrop()
                 .into(((MovieNewAdapter.MyViewHolder) holder).iv);
+        ((MyViewHolder) holder).moviename.setText(doubanNewMovie.getSubjects().get(position).getTitle());
     }
 
     @Override
