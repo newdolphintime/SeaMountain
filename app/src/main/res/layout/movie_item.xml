@@ -4,11 +4,11 @@
     android:id="@+id/cd"
     android:layout_width="130dp"
     android:layout_height="220dp"
-    android:layout_margin="5dp"
-
+    android:layout_margin="10dp"
+    app:cardElevation="15dp"
     android:foreground="?attr/selectableItemBackground"
 
-    app:cardCornerRadius="1dp">
+    app:cardCornerRadius="8dp">
     <!--<com.play.zv.seamountain.widget.RatioImageView-->
     <LinearLayout
         android:layout_width="match_parent"
