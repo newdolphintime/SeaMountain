@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -26,7 +27,7 @@ import com.play.zv.seamountain.presenter.GrilPresenter;
 import com.play.zv.seamountain.view.IviewBind.IGrilFragment;
 import com.play.zv.seamountain.view.IviewBind.INewMovieFragment;
 import com.play.zv.seamountain.view.PictureActivity;
-import com.play.zv.seamountain.widget.FixLinearSnapHelper;
+
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class MovieFragment extends BaseFragment implements INewMovieFragment{
     private  RecyclerView recyclerview;
     private  DoubanNewMovie doubanNewMovie;
     private MovieNewAdapter mAdapter;
-    private LinearLayoutManager mLayoutManager;
+    private StaggeredGridLayoutManager mLayoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -52,13 +53,13 @@ public class MovieFragment extends BaseFragment implements INewMovieFragment{
 //        recyclerview.setLayoutManager(linearLayoutManager);
 //
 //        new LinearSnapHelper().attachToRecyclerView(recyclerview);
-        mLayoutManager=new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false);
-        FixLinearSnapHelper snapHelper = new FixLinearSnapHelper();
+//        mLayoutManager=new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false);
+//        FixLinearSnapHelper snapHelper = new FixLinearSnapHelper();
+//        recyclerview.setLayoutManager(mLayoutManager);
+//        snapHelper.attachToRecyclerView(recyclerview);
+        mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
+
         recyclerview.setLayoutManager(mLayoutManager);
-        snapHelper.attachToRecyclerView(recyclerview);
-        //mLayoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
-        // new GridLayoutManager(mActivity, 2, GridLayoutManager.VERTICAL, false);
-        //recyclerview.setLayoutManager(mLayoutManager);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.grid_swipe_refresh);
         swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
 

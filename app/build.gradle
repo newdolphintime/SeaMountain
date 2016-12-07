@@ -51,4 +51,8 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
 
     compile 'com.bm.photoview:library:1.4.1'
+
+    compile 'jp.wasabeef:glide-transformations:2.0.1'
+
+
 }
