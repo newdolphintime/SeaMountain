@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
 import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.api.DoubanNewMovie;
 
@@ -37,6 +38,7 @@ public class MovieNewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public ImageView bluriv;
         public TextView moviename;
 
+
         public MyViewHolder(View view) {
             super(view);
             mView = view;
@@ -44,6 +46,7 @@ public class MovieNewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             //iv.setRatio(0.618f);
             moviename = (TextView) mView.findViewById(R.id.moviename);
             bluriv = (ImageView) mView.findViewById(R.id.blurimg);
+
         }
     }
     @Override
