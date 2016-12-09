@@ -70,7 +70,7 @@ public class MovieNewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 .load(doubanNewMovie.getSubjects().get(position).getImages().getLarge())
                 .placeholder(R.color.imageColorPlaceholder)
                 .centerCrop()
-                .bitmapTransform(new BlurTransformation(mContext,20,1))
+                .bitmapTransform(new BlurTransformation(mContext,25,1))
                 .into(((MyViewHolder) holder).bluriv);
 
 
