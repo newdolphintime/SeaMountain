@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/grid_coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="#ffffff"
+    >
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/grid_swipe_refresh"
@@ -15,4 +19,17 @@
             android:layout_height="230dp" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
-</LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:clickable="true"
+
+        android:src="@drawable/ic_arrow_upward"
+        app:backgroundTint="#000000"
+        app:layout_anchor="@id/grid_recycler"
+        app:layout_anchorGravity="bottom|right|end"
+        app:layout_behavior="com.play.zv.seamountain.widget.ScrollFabBehavior" />
+
+</android.support.design.widget.CoordinatorLayout>

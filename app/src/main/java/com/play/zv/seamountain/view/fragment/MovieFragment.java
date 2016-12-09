@@ -31,6 +31,8 @@ import com.play.zv.seamountain.view.PictureActivity;
 
 import java.util.List;
 
+
+
 /**
  * Created by Zv on 2016/12/01.
  */
@@ -43,6 +45,7 @@ public class MovieFragment extends BaseFragment implements INewMovieFragment{
     private MovieNewAdapter mAdapter;
     private StaggeredGridLayoutManager mLayoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private FloatingActionButton fab;
 
     @Override
     public View initViews() {
@@ -62,6 +65,7 @@ public class MovieFragment extends BaseFragment implements INewMovieFragment{
         recyclerview.setLayoutManager(mLayoutManager);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.grid_swipe_refresh);
         swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
 
         return view;
     }
@@ -73,6 +77,12 @@ public class MovieFragment extends BaseFragment implements INewMovieFragment{
             public void onRefresh() {
                 //page=1;
                 loadData();
+            }
+        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerview.smoothScrollToPosition(0);
             }
         });
     }
