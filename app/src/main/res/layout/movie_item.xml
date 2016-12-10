@@ -88,7 +88,7 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
-            app:srcCompat="@drawable/bluestar"
+            app:srcCompat="@drawable/heart"
             android:id="@+id/imageView"
             android:layout_alignBottom="@+id/cd"
             android:layout_alignStart="@+id/actor" />
