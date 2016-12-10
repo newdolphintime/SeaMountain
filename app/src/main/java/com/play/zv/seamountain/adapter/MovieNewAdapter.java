@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import com.owater.library.CircleTextView;
 import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.api.DoubanNewMovie;
 

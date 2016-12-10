@@ -85,28 +85,20 @@
             android:layout_below="@+id/director"
             android:layout_alignStart="@+id/director" />
 
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            app:srcCompat="@drawable/heart"
-            android:id="@+id/imageView"
-            android:layout_alignBottom="@+id/cd"
-            android:layout_alignStart="@+id/actor" />
 
         <com.play.zv.seamountain.widget.CustomerTextView
 
-            android:layout_width="wrap_content"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:text="3.5"
+            android:background="#3effffff"
             android:textColor="#ffffff"
-
-            android:textSize="20dp"
-
-
+            android:gravity="center"
+            android:textSize="13sp"
+            android:text="9.5"
             android:id="@+id/score"
-            android:layout_alignBottom="@+id/imageView"
-            android:layout_toEndOf="@+id/imageView"
-            android:layout_marginStart="18dp" />
+
+            android:layout_alignBottom="@+id/cd"
+            android:layout_alignStart="@+id/actor" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>
