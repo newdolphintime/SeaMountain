@@ -27,17 +27,21 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 public class MovieNewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private DoubanNewMovie doubanNewMovie;
-    public MovieNewAdapter(Context context,DoubanNewMovie doubanNewMovie){
-        this.mContext =context;
-        this.doubanNewMovie =doubanNewMovie;
+
+    public MovieNewAdapter(Context context, DoubanNewMovie doubanNewMovie) {
+        this.mContext = context;
+        this.doubanNewMovie = doubanNewMovie;
 
     }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public ImageView iv;
         public ImageView bluriv;
         public TextView moviename;
-
+        public TextView director;
+        public TextView actor;
+        public TextView score;
 
         public MyViewHolder(View view) {
             super(view);
@@ -46,9 +50,12 @@ public class MovieNewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             //iv.setRatio(0.618f);
             moviename = (TextView) mView.findViewById(R.id.moviename);
             bluriv = (ImageView) mView.findViewById(R.id.blurimg);
-
+            director = (TextView) mView.findViewById(R.id.director);
+            actor = (TextView) mView.findViewById(R.id.actor);
+            score= (TextView) mView.findViewById(R.id.score);
         }
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext
@@ -63,6 +70,23 @@ public class MovieNewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        String director = null;
+        String actor = null;
+        for (DoubanNewMovie.SubjectsEntity.DirectorsEntity directorsEntity : doubanNewMovie.getSubjects().get(position).getDirectors()) {
+            if (director==null) {
+                director = "导演："+directorsEntity.getName();
+            } else {
+                director = director + " " + directorsEntity.getName();
+            }
+        }
+        for (DoubanNewMovie.SubjectsEntity.CastsEntity castsEntity : doubanNewMovie.getSubjects().get(position).getCasts()) {
+            if (actor==null) {
+                actor = "演员："+castsEntity.getName();
+            } else {
+                actor = actor + " " + castsEntity.getName();
+            }
+
+        }
         Glide.with(mContext)
                 .load(doubanNewMovie.getSubjects().get(position).getImages().getLarge())
                 .placeholder(R.color.imageColorPlaceholder)
@@ -73,12 +97,11 @@ public class MovieNewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 .load(doubanNewMovie.getSubjects().get(position).getImages().getLarge())
                 .placeholder(R.color.imageColorPlaceholder)
                 .centerCrop()
-                .bitmapTransform(new BlurTransformation(mContext,25,1))
+                .bitmapTransform(new BlurTransformation(mContext, 25, 1))
                 .into(((MyViewHolder) holder).bluriv);
-
-
-
-
+        ((MyViewHolder) holder).director.setText(director);
+        ((MyViewHolder) holder).actor.setText(actor);
+        ((MyViewHolder) holder).score.setText(String.valueOf(doubanNewMovie.getSubjects().get(position).getRating().getAverage()));
     }
 
     @Override

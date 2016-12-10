@@ -69,7 +69,7 @@
             android:layout_below="@+id/moviename"
             android:layout_alignStart="@+id/moviename"
             android:layout_marginTop="30dp"
-            android:id="@+id/customerTextView2" />
+            android:id="@+id/director" />
 
         <com.play.zv.seamountain.widget.CustomerTextView
 
@@ -80,10 +80,33 @@
 
             android:textSize="13dp"
             android:layout_marginTop="30dp"
-            android:id="@+id/customerTextView3"
+            android:id="@+id/actor"
 
-            android:layout_below="@+id/customerTextView2"
-            android:layout_alignStart="@+id/customerTextView2" />
+            android:layout_below="@+id/director"
+            android:layout_alignStart="@+id/director" />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:srcCompat="@drawable/bluestar"
+            android:id="@+id/imageView"
+            android:layout_alignBottom="@+id/cd"
+            android:layout_alignStart="@+id/actor" />
+
+        <com.play.zv.seamountain.widget.CustomerTextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3.5"
+            android:textColor="#ffffff"
+
+            android:textSize="20dp"
+
+
+            android:id="@+id/score"
+            android:layout_alignBottom="@+id/imageView"
+            android:layout_toEndOf="@+id/imageView"
+            android:layout_marginStart="18dp" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>
