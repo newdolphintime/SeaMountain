@@ -51,7 +51,7 @@ public class GrilFragment extends BaseFragment implements IGrilFragment {
         coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.grid_coordinatorLayout);
 
         recyclerview = (RecyclerView) view.findViewById(R.id.grid_recycler);
-        mLayoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
+        mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
                // new GridLayoutManager(mActivity, 2, GridLayoutManager.VERTICAL, false);
         recyclerview.setLayoutManager(mLayoutManager);
 
@@ -110,7 +110,8 @@ public class GrilFragment extends BaseFragment implements IGrilFragment {
                 super.onScrolled(recyclerView, dx, dy);
 //                获取加载的最后一个可见视图在适配器的位置。
                 int[] positions = mLayoutManager.findLastCompletelyVisibleItemPositions(null);
-                lastVisibleItem = Math.max(positions[0],positions[1]);
+                //lastVisibleItem = Math.max(positions[0],positions[1]);
+                lastVisibleItem = positions[0];
 
             }
         });
