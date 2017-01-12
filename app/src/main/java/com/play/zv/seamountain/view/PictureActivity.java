@@ -22,7 +22,7 @@ import com.squareup.picasso.Picasso;
 public class PictureActivity extends AppCompatActivity {
     public static final String EXTRA_IMAGE_URL = "image_url";
     private String mImageUrl;
-    public static final String TRANSIT_PIC = "picture";
+    public static final String TRANSIT_PIC = "sharedView";
     private PhotoView picture;
 
 
@@ -39,14 +39,14 @@ public class PictureActivity extends AppCompatActivity {
 
         picture = (PhotoView) findViewById(R.id.img);
 
+
         //Picasso.with(this).load(mImageUrl).into(picture);
         Glide.with(this)
                 .load(mImageUrl)
                 .into(picture);
 
         picture.enable();
-        //picture.setAdjustViewBounds(true);
-        //mPhotoViewAttacher = new PhotoViewAttacher(picture);
+
     }
 
 

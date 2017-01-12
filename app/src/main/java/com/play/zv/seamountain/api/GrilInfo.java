@@ -7,6 +7,7 @@ import java.util.List;
  */
 
 public class GrilInfo {
+
     @Override
     public String toString() {
         return "GrilInfo{" +
@@ -40,6 +41,7 @@ public class GrilInfo {
     }
 
     public static class GrilsEntity {
+        public boolean hasFadedIn = false;
         /**
          * _id : 58250c1d421aa90e799ec2bf
          * createdAt : 2016-11-11T08:09:01.465Z

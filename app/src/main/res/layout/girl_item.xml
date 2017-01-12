@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cd"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="200dp"
     android:layout_margin="3dp"
     android:layout_marginTop="5dp"
     android:foreground="?attr/selectableItemBackground"
@@ -11,10 +11,10 @@
     <!--<com.play.zv.seamountain.widget.RatioImageView-->
     <ImageView
         android:id="@+id/iv"
-        android:minHeight="200dp"
-
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
 
         />
 </android.support.v7.widget.CardView>

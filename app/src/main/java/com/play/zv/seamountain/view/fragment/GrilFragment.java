@@ -1,5 +1,6 @@
 package com.play.zv.seamountain.view.fragment;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -189,7 +190,14 @@ public class GrilFragment extends BaseFragment implements IGrilFragment {
 //                ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity, meizhiView,
 //                        PictureActivity.TRANSIT_PIC);
 //        ActivityCompat.startActivity(mActivity, i, optionsCompat.toBundle());
+       // ActivityCompat.startActivity(mActivity,i, ActivityOptions.makeSceneTransitionAnimation(mActivity, meizhiView, "sharedView").toBundle());
     }
 
+//    private void init() {
+//        ivHead.setImageResource(info.imageRes);
+//        tvTitle.setText(info.title);
+//        // 这里指定了被共享的视图元素
+//        ViewCompat.setTransitionName(ivHead, OPTION_IMAGE);
+//    }
 
 }
