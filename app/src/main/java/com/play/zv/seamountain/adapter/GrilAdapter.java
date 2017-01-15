@@ -21,7 +21,7 @@ import com.play.zv.seamountain.R;
 
 import com.play.zv.seamountain.api.GrilInfo;
 import com.play.zv.seamountain.widget.AnimUtils;
-import com.play.zv.seamountain.widget.RatioImageView;
+
 import com.thunderrise.animations.PulseAnimation;
 
 /**
