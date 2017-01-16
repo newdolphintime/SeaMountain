@@ -22,7 +22,7 @@ import com.play.zv.seamountain.api.GrilInfo;
 import com.play.zv.seamountain.presenter.GrilPresenter;
 import com.play.zv.seamountain.view.IviewBind.IGrilFragment;
 import com.play.zv.seamountain.view.PictureActivity;
-import com.play.zv.seamountain.widget.RatioImageView;
+
 
 import java.util.List;
 
