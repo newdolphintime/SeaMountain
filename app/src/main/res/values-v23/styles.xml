@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+        <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+                <!-- Customize your theme here. -->
+                <!--首先要在 AndroidManifest.xml 中为需要这种动画的 Activity 开启这个功能，为此为这里为其写了一个-->
+                <!--style，注意要放在values-v21的style.xml文件里面，因为该效果是只有android5.0以上才有的。-->
+                <!--<item name="android:windowContentTransitions">true</item>-->
+                <item name="colorPrimary">@color/colorPrimary</item>
+                <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+                <item name="colorAccent">@color/colorAccent</item>
+                <item name="windowActionBar">false</item>
+                <item name="android:statusBarColor">@android:color/transparent</item>
+                <item name="android:windowTranslucentStatus">false</item>
+                <item name="android:windowBackground">@color/colorPrimary</item>
+                <!--避免界面白色的话，图标看不清楚-->
+                <item name="android:windowLightStatusBar">true</item>
+        </style>
+</resources>
