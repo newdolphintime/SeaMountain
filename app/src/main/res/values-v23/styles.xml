@@ -13,7 +13,7 @@
                 <item name="android:statusBarColor">@android:color/transparent</item>
                 <item name="android:windowTranslucentStatus">false</item>
                 <item name="android:windowBackground">@color/colorPrimary</item>
-                <!--避免界面白色的话，图标看不清楚-->
+                <!--6.0避免界面白色的话，图标看不清楚-->
                 <item name="android:windowLightStatusBar">true</item>
         </style>
 </resources>
