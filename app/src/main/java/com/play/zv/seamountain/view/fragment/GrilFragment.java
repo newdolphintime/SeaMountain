@@ -85,6 +85,14 @@ public class GrilFragment extends BaseFragment implements IGrilFragment {
             @Override
             public void onRefresh() {
                 //page=1;
+                /**
+                 * 刷新的时候直接清空list好了 不然会造成list中的元素重复加载
+                 * 显式在前台的第一页图片就会出现两次
+                 */
+
+                if(grilInfo!=null){
+                    grilInfo.getResults().clear();
+                }
                 loadData();
             }
         });

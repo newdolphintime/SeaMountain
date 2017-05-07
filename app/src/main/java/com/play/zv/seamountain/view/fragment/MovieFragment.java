@@ -76,6 +76,9 @@ public class MovieFragment extends BaseFragment implements INewMovieFragment{
             @Override
             public void onRefresh() {
                 //page=1;
+                if(doubanNewMovie!=null){
+                    doubanNewMovie.getSubjects().clear();
+                }
                 loadData();
             }
         });
