@@ -5,6 +5,7 @@
     >
     <TextView
         android:textSize="50dp"
+        android:id="@+id/av"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="新鲜"
