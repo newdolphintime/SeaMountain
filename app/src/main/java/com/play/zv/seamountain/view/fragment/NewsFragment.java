@@ -9,14 +9,17 @@ import android.widget.TextView;
 import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.api.MovieInfo;
 import com.play.zv.seamountain.api.jsoupApi.GetJavbus;
+import com.play.zv.seamountain.presenter.JavPresenter;
+import com.play.zv.seamountain.view.IviewBind.IJavFragment;
 
 /**
  * Created by Zv on 2016/12/01.
  */
 
-public class NewsFragment extends BaseFragment {
+public class NewsFragment extends BaseFragment implements IJavFragment{
     private TextView textView;
     private  MovieInfo movieInfo;
+    private JavPresenter javPresenter = new JavPresenter(this);
 
     @Override
     public View initViews() {
@@ -27,7 +30,8 @@ public class NewsFragment extends BaseFragment {
 
     @Override
     public void initData() {
-        new Thread(runnable).start();
+        //new Thread(runnable).start();
+        loadData();
     }
     Runnable runnable = new Runnable(){
         @Override
@@ -57,4 +61,33 @@ public class NewsFragment extends BaseFragment {
     };
 
 
+    @Override
+    public void showProgressBar() {
+
+    }
+
+    @Override
+    public void hidProgressBar() {
+
+    }
+
+    @Override
+    public void loadData() {
+        javPresenter.loadAVdata("abp-120");
+    }
+
+    @Override
+    public void getDataSuccess(MovieInfo movieInfo) {
+        textView.setText(movieInfo.toString());
+    }
+
+    @Override
+    public void getDataFail(String errCode, String errMsg) {
+
+    }
+
+    @Override
+    public void unSubcription() {
+
+    }
 }
