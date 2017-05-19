@@ -13,7 +13,7 @@ public interface IJavFragment {
 
     void hidProgressBar();
 
-    void loadData();
+    void loadData(String avnum);
 
 //
 //    void refresh();

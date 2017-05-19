@@ -3,35 +3,59 @@ package com.play.zv.seamountain.view.fragment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.textservice.TextInfo;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.orhanobut.logger.Logger;
 import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.api.MovieInfo;
 import com.play.zv.seamountain.api.jsoupApi.GetJavbus;
 import com.play.zv.seamountain.presenter.JavPresenter;
 import com.play.zv.seamountain.view.IviewBind.IJavFragment;
+import com.play.zv.seamountain.widget.ToastUtils;
 
 /**
  * Created by Zv on 2016/12/01.
  */
 
 public class NewsFragment extends BaseFragment implements IJavFragment{
-    private TextView textView;
+    private Button serch;
     private  MovieInfo movieInfo;
+    private ImageView avcover;
+    private EditText avnum;
     private JavPresenter javPresenter = new JavPresenter(this);
 
     @Override
     public View initViews() {
         View view = View.inflate(mActivity, R.layout.fragment_news, null);
-        textView= (TextView) view.findViewById(R.id.av);
+        //textView= (TextView) view.findViewById(R.id.av);
+        serch = (Button) view.findViewById(R.id.serch);
+        avcover = (ImageView) view.findViewById(R.id.avcover);
+        avnum = (EditText) view.findViewById(R.id.avnum);
+        serch.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!avnum.getText().toString().trim().isEmpty()){
+                    ToastUtils.showToast(mActivity,"开始给你翻网页");
+                    Logger.d(avnum.getText().toString().trim());
+                    loadData(avnum.getText().toString().trim());
+                }
+            }
+        });
         return view;
+
     }
 
     @Override
     public void initData() {
         //new Thread(runnable).start();
-        loadData();
+        //loadData("abp-120");
     }
     Runnable runnable = new Runnable(){
         @Override
@@ -55,7 +79,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment{
             /**
              * 处理UI
              */
-            textView.setText(movieInfo.toString());
+            //textView.setText(movieInfo.toString());
             // 当收到消息时就会执行这个方法
         }
     };
@@ -72,13 +96,16 @@ public class NewsFragment extends BaseFragment implements IJavFragment{
     }
 
     @Override
-    public void loadData() {
-        javPresenter.loadAVdata("abp-120");
+    public void loadData(String avnum) {
+        javPresenter.loadAVdata(avnum);
     }
 
     @Override
     public void getDataSuccess(MovieInfo movieInfo) {
-        textView.setText(movieInfo.toString());
+        //textView.setText(movieInfo.toString());
+        //Toast.makeText(mActivity,"得到网页数据开始加载",Toast.LENGTH_LONG).show();
+        ToastUtils.showToast(mActivity,"得到网页数据开始加载");
+        Glide.with(mActivity).load(movieInfo.getCover()).into(avcover);
     }
 
     @Override
