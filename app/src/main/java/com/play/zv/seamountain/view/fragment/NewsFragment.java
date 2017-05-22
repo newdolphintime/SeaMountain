@@ -2,6 +2,7 @@ package com.play.zv.seamountain.view.fragment;
 
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.textservice.TextInfo;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.orhanobut.logger.Logger;
 import com.play.zv.seamountain.R;
+import com.play.zv.seamountain.adapter.AVViewPagerAdapter;
 import com.play.zv.seamountain.api.MovieInfo;
 import com.play.zv.seamountain.api.jsoupApi.GetJavbus;
 import com.play.zv.seamountain.presenter.JavPresenter;
@@ -29,6 +31,8 @@ public class NewsFragment extends BaseFragment implements IJavFragment{
     private  MovieInfo movieInfo;
     private ImageView avcover;
     private EditText avnum;
+    private ViewPager avvp;
+    private AVViewPagerAdapter avViewPagerAdapter;
     private JavPresenter javPresenter = new JavPresenter(this);
 
     @Override
@@ -48,6 +52,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment{
                 }
             }
         });
+        avvp = (ViewPager) view.findViewById(R.id.avvp);
         return view;
 
     }
@@ -104,6 +109,8 @@ public class NewsFragment extends BaseFragment implements IJavFragment{
     public void getDataSuccess(MovieInfo movieInfo) {
         //textView.setText(movieInfo.toString());
         //Toast.makeText(mActivity,"得到网页数据开始加载",Toast.LENGTH_LONG).show();
+        avvp.setAdapter(avViewPagerAdapter=new AVViewPagerAdapter(movieInfo.getPreviews(),mActivity));
+        Logger.d(movieInfo);
         ToastUtils.showToast(mActivity,"得到网页数据开始加载");
         Glide.with(mActivity).load(movieInfo.getCover()).into(avcover);
     }
