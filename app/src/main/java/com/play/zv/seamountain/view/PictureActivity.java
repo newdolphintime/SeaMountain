@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
+import com.gyf.barlibrary.ImmersionBar;
 import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.adapter.GrilAdapter;
 import com.squareup.picasso.Picasso;
@@ -34,7 +35,7 @@ public class PictureActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picture);
-
+        ImmersionBar.with(this).statusBarDarkFont(true).init();
         parseIntent();
 
         picture = (PhotoView) findViewById(R.id.img);
