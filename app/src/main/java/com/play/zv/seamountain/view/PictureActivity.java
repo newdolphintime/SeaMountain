@@ -35,7 +35,11 @@ public class PictureActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picture);
-        ImmersionBar.with(this).statusBarDarkFont(true).init();
+        //设置透明状态栏
+        ImmersionBar.
+                with(this)
+                .statusBarDarkFont(true)
+                .init();
         parseIntent();
 
         picture = (PhotoView) findViewById(R.id.img);
