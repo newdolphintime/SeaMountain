@@ -34,10 +34,11 @@ public class NewsFragment extends BaseFragment implements IJavFragment{
     private ViewPager avvp;
     private AVViewPagerAdapter avViewPagerAdapter;
     private JavPresenter javPresenter = new JavPresenter(this);
+    private View view;
 
     @Override
     public View initViews() {
-        View view = View.inflate(mActivity, R.layout.fragment_news, null);
+        view = View.inflate(mActivity, R.layout.fragment_news, null);
         //textView= (TextView) view.findViewById(R.id.av);
         serch = (Button) view.findViewById(R.id.serch);
         avcover = (ImageView) view.findViewById(R.id.avcover);
