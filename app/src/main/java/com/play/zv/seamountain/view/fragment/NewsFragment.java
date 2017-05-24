@@ -168,8 +168,17 @@ public class NewsFragment extends BaseFragment implements IJavFragment{
         javbusDB.execSQL("replace INTO movieinfo(num,censored,cover,director,genres,lable,release,runtime,series,studio,title,stars) " +
                                                    "values ( ?,?,?,?,?,?,?,?,?,?,?,? )",
 
-                new String[]{movieInfo.getNum(),movieInfo.getCensored(),movieInfo.getCover(),movieInfo.getDirector(),
-                movieInfo.getGenres().toString(),movieInfo.getLabel(),movieInfo.getRelease(),movieInfo.getRunTime(),movieInfo.getStudio(),
+                new String[]{movieInfo.getNum(),
+                        movieInfo.getCensored(),
+                        movieInfo.getCover(),
+                        movieInfo.getDirector(),
+                        movieInfo.getGenres().toString(),
+                        movieInfo.getLabel(),
+                        movieInfo.getRelease(),
+                        movieInfo.getRunTime(),
+                        movieInfo.getSeries(),
+                        movieInfo.getStudio(),
+                        movieInfo.getTitle(),
                         movieInfo.getStars().toString()});
         //ToastUtils.showToast(mActivity,"得到网页数据存入数据库中");
     }
