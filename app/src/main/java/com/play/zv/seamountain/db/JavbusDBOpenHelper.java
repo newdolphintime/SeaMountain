@@ -16,9 +16,34 @@ public class JavbusDBOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table movieinfo(num varchar(20),censored varchar(10),cover varchar(1000)," +
-                "director varchar(100),genres varchar(1000),lable varchar(500),release varchar(20),runtime varchar(100)," +
-                "series varchar(1000),studio varchar(500),title varchar(1000),stars varchar(500))");
+        db.execSQL("create table movieinfo(" +
+                "num varchar(20) PRIMARY KEY," +
+                "censored varchar(10)," +
+                "cover varchar(1000)," +
+                "director varchar(100)," +
+                "genres varchar(1000)," +
+                "lable varchar(500)," +
+                "release varchar(20)," +
+                "runtime varchar(100)," +
+                "series varchar(1000)," +
+                "studio varchar(500)," +
+                "title varchar(1000)," +
+                "stars varchar(500),"+
+                "previews varchar(2000))"
+
+        );
+        db.execSQL("create table avstars(" +
+                   "avstarname varchar(100) PRIMARY KEY," +
+                   "age varchar(10)," +
+                   "birthday varchar(20)," +
+                   "bust varchar(10)," +
+                   "cup varchar(10)," +
+                   "height varchar(10)," +
+                   "hips varchar(10)," +
+                   "hometown varchar(100)," +
+                   "image varchar(500)," +
+                   "waist varchar(10)" +
+                ")");
     }
     //软件版本号发生改变时调用
     @Override

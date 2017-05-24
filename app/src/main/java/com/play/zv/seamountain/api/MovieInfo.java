@@ -214,7 +214,7 @@ public class MovieInfo {
     }
     /**
      * 设置预览图
-     * @param previewss
+     * @param previews
      */
     public void setPreviews(List<String> previews) {
         Previews = previews;
