@@ -1,5 +1,7 @@
 package com.play.zv.seamountain.view.fragment;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
@@ -18,6 +20,7 @@ import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.adapter.AVViewPagerAdapter;
 import com.play.zv.seamountain.api.MovieInfo;
 import com.play.zv.seamountain.api.jsoupApi.GetJavbus;
+import com.play.zv.seamountain.db.JavbusDBOpenHelper;
 import com.play.zv.seamountain.presenter.JavPresenter;
 import com.play.zv.seamountain.view.IviewBind.IJavFragment;
 import com.play.zv.seamountain.widget.ToastUtils;
@@ -33,8 +36,10 @@ public class NewsFragment extends BaseFragment implements IJavFragment{
     private EditText avnum;
     private ViewPager avvp;
     private AVViewPagerAdapter avViewPagerAdapter;
+    private JavbusDBOpenHelper javbusDBOpenHelper;
     private JavPresenter javPresenter = new JavPresenter(this);
     private View view;
+
 
     @Override
     public View initViews() {
@@ -42,6 +47,13 @@ public class NewsFragment extends BaseFragment implements IJavFragment{
         //textView= (TextView) view.findViewById(R.id.av);
         serch = (Button) view.findViewById(R.id.serch);
         avcover = (ImageView) view.findViewById(R.id.avcover);
+        avcover.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Logger.d(avnum.getText().toString().trim().toUpperCase());
+               //ToastUtils.showToast(mActivity, find(avnum.getText().toString().trim().toUpperCase()));
+            }
+        });
         avnum = (EditText) view.findViewById(R.id.avnum);
         serch.setOnClickListener(new OnClickListener() {
             @Override
@@ -50,10 +62,12 @@ public class NewsFragment extends BaseFragment implements IJavFragment{
                     ToastUtils.showToast(mActivity,"开始给你翻网页");
                     Logger.d(avnum.getText().toString().trim());
                     loadData(avnum.getText().toString().trim());
+
                 }
             }
         });
         avvp = (ViewPager) view.findViewById(R.id.avvp);
+        javbusDBOpenHelper = new JavbusDBOpenHelper(mActivity,"javbus.db",null,1);
         return view;
 
     }
@@ -114,6 +128,13 @@ public class NewsFragment extends BaseFragment implements IJavFragment{
         Logger.d(movieInfo);
         ToastUtils.showToast(mActivity,"得到网页数据开始加载");
         Glide.with(mActivity).load(movieInfo.getCover()).into(avcover);
+//        SQLiteDatabase javbusDB = javbusDBOpenHelper.getWritableDatabase();
+//        javbusDB.execSQL("replace INTO movieinfo(num,censored,cover,director,genres,lable,release,runtime,series,studio,title,stars) " +
+//                        "values ( ?,?,?,?,?,?,?,?,?,?,?,? )",
+//
+//                new String[]{movieInfo.getNum(),movieInfo.getCensored(),movieInfo.getCover(),movieInfo.getDirector(),
+//                        movieInfo.getGenres().toString(),movieInfo.getLabel(),movieInfo.getRelease(),movieInfo.getRunTime(),movieInfo.getStudio(),
+//                        movieInfo.getStars().toString()});
     }
 
     @Override
@@ -124,5 +145,32 @@ public class NewsFragment extends BaseFragment implements IJavFragment{
     @Override
     public void unSubcription() {
 
+    }
+    public String find(String id)
+    {
+        SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
+        Cursor cursor =  db.rawQuery("SELECT * FROM movieinfo where num = ?",new String[]{id.toString()});
+        //存在数据才返回true
+        if(cursor.moveToFirst())
+        {
+
+            String name = cursor.getString(cursor.getColumnIndex("stars"));
+
+            return name;
+        }
+        cursor.close();
+        return "meizhaodao";
+    }
+    @Override
+    public void writeDatabase(MovieInfo movieInfo) {
+
+        SQLiteDatabase javbusDB = javbusDBOpenHelper.getWritableDatabase();
+        javbusDB.execSQL("replace INTO movieinfo(num,censored,cover,director,genres,lable,release,runtime,series,studio,title,stars) " +
+                                                   "values ( ?,?,?,?,?,?,?,?,?,?,?,? )",
+
+                new String[]{movieInfo.getNum(),movieInfo.getCensored(),movieInfo.getCover(),movieInfo.getDirector(),
+                movieInfo.getGenres().toString(),movieInfo.getLabel(),movieInfo.getRelease(),movieInfo.getRunTime(),movieInfo.getStudio(),
+                        movieInfo.getStars().toString()});
+        //ToastUtils.showToast(mActivity,"得到网页数据存入数据库中");
     }
 }

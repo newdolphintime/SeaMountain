@@ -30,6 +30,7 @@ public class JavPresenter extends BasePresenter {
             public void call(Subscriber<? super MovieInfo> subscriber) {
                 try {
                     MovieInfo movieinfo = GetJavbus.getInfo(name);
+                    javFragment.writeDatabase(movieinfo);
                     subscriber.onNext(movieinfo);
                     subscriber.onCompleted();
                 } catch (Exception e) {

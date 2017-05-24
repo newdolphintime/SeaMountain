@@ -31,4 +31,6 @@ public interface IJavFragment {
     void getDataFail(String errCode, String errMsg);
 
     void unSubcription();
+
+    void writeDatabase(MovieInfo movieInfo);
 }

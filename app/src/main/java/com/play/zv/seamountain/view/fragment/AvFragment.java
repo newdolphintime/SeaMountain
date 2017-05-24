@@ -51,5 +51,10 @@ public class AvFragment extends BaseFragment implements IJavFragment {
 
     }
 
+    @Override
+    public void writeDatabase(MovieInfo movieInfo) {
+
+    }
+
 
 }
