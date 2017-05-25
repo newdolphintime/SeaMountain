@@ -11,6 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class BuildApi {
     private static Retrofit grilretrofit;
     private static Retrofit movieretrofit;
+    private static Retrofit avretrofit;
     private static BuildApi sBuildApi;
 
     public static BuildApi getInstence() {
@@ -44,6 +45,17 @@ public class BuildApi {
                     .build();
         }
         return movieretrofit.create(APIService.class);
+    }
+
+    public APIService getAvAPIService() {
+        if (avretrofit == null) {
+            avretrofit = new Retrofit.Builder()
+                    .baseUrl(Constants.AVBASEURL) //设置Base的访问路径
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create()) //设置默认的解析库：Gson
+                    .build();
+        }
+        return avretrofit.create(APIService.class);
     }
 
 }

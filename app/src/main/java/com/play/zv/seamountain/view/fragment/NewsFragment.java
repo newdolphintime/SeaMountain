@@ -22,6 +22,7 @@ import com.play.zv.seamountain.api.MovieInfo;
 import com.play.zv.seamountain.api.Star;
 import com.play.zv.seamountain.api.jsoupApi.GetJavbus;
 import com.play.zv.seamountain.db.JavbusDBOpenHelper;
+import com.play.zv.seamountain.presenter.AvPresenter;
 import com.play.zv.seamountain.presenter.JavPresenter;
 import com.play.zv.seamountain.view.IviewBind.IJavFragment;
 import com.play.zv.seamountain.widget.ToastUtils;
@@ -40,7 +41,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
     private ViewPager avvp;
     private AVViewPagerAdapter avViewPagerAdapter;
     private JavbusDBOpenHelper javbusDBOpenHelper;
-    private JavPresenter javPresenter = new JavPresenter(this);
+    private AvPresenter javPresenter = new AvPresenter(this);
     private View view;
 
 

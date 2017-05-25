@@ -3,6 +3,7 @@ package com.play.zv.seamountain.api;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -23,5 +24,10 @@ public interface APIService {
     @GET("v2/movie/in_theaters")
     Observable<DoubanNewMovie> getLiveFilm();
 
-
+    /**
+     * AVNUM
+     * @return
+     */
+    @GET("MyAvLibrary/servlet/FindAVHtmlByName")
+    Observable<AVInfo> getAV(@Query("avnum") String avnum);
 }
