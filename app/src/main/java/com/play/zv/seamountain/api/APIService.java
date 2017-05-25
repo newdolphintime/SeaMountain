@@ -1,6 +1,9 @@
 package com.play.zv.seamountain.api;
 
-import retrofit2.Call;
+import com.play.zv.seamountain.api.DoubanMovieApi.DoubanNewMovie;
+import com.play.zv.seamountain.api.GrilApi.GrilInfo;
+import com.play.zv.seamountain.api.his.AVInfo;
+
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;

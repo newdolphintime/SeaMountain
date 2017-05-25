@@ -1,13 +1,12 @@
 package com.play.zv.seamountain.presenter;
 
-import com.play.zv.seamountain.api.MovieInfo;
-import com.play.zv.seamountain.api.jsoupApi.GetJavbus;
+import com.play.zv.seamountain.api.AvjsoupApi.MovieInfo;
+import com.play.zv.seamountain.api.AvjsoupApi.GetJavbus;
 import com.play.zv.seamountain.view.IviewBind.IJavFragment;
 
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 

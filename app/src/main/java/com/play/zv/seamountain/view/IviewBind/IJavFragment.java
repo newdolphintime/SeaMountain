@@ -1,8 +1,6 @@
 package com.play.zv.seamountain.view.IviewBind;
 
-import com.play.zv.seamountain.api.MovieInfo;
-
-import java.util.List;
+import com.play.zv.seamountain.api.AvjsoupApi.MovieInfo;
 
 /**
  * Created by Zv on 2017/05/18.

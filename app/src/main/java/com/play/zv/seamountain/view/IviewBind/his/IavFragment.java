@@ -1,21 +1,18 @@
-package com.play.zv.seamountain.view.IviewBind;
+package com.play.zv.seamountain.view.IviewBind.his;
 
-import com.play.zv.seamountain.api.GrilApi.GrilInfo;
-
-import java.util.List;
+import com.play.zv.seamountain.api.his.AVInfo;
 
 /**
- * Created by Zv on 2016/11/29.
+ * Created by Zv on 2017/05/18.
  */
 
-public interface IGrilFragment {
+public interface IavFragment {
     void showProgressBar();
 
     void hidProgressBar();
 
-    void loadData();
-// loadMore refresh 就大家自由发挥了demo中就不写了
-    void loadMore(String type,int count ,int page);
+    void loadData(String avnum);
+
 //
 //    void refresh();
 //
@@ -27,9 +24,11 @@ public interface IGrilFragment {
 //
 //    void loadFail(String errCode, String errMsg);
 
-    void getDataSuccess(List<GrilInfo.GrilsEntity> grilsEntities);
+    void getDataSuccess(AVInfo avInfo);
 
     void getDataFail(String errCode, String errMsg);
 
     void unSubcription();
+
+    void writeDatabase(AVInfo avInfo);
 }

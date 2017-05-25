@@ -1,8 +1,4 @@
-package com.play.zv.seamountain.api.jsoupApi;
-
-import com.play.zv.seamountain.api.Magnet;
-import com.play.zv.seamountain.api.MovieInfo;
-import com.play.zv.seamountain.api.Star;
+package com.play.zv.seamountain.api.AvjsoupApi;
 
 import org.jsoup.Connection;
 import org.jsoup.HttpStatusException;

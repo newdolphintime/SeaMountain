@@ -7,7 +7,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Window;
 import android.widget.Toast;
 
 import com.play.zv.seamountain.R;
@@ -16,7 +15,6 @@ import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.adapter.ViewPagerAdapter;
 
 
-import com.play.zv.seamountain.view.fragment.AvFragment;
 import com.play.zv.seamountain.view.fragment.GrilFragment;
 import com.play.zv.seamountain.view.fragment.MovieFragment;
 import com.play.zv.seamountain.view.fragment.NewsFragment;

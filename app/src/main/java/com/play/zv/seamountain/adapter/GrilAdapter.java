@@ -15,14 +15,11 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.animation.ViewPropertyAnimation;
 import com.bumptech.glide.request.target.Target;
 import com.play.zv.seamountain.R;
 
-import com.play.zv.seamountain.api.GrilInfo;
+import com.play.zv.seamountain.api.GrilApi.GrilInfo;
 import com.play.zv.seamountain.widget.AnimUtils;
-
-import com.thunderrise.animations.PulseAnimation;
 
 /**
  * Created by Zv on 2016/11/12.

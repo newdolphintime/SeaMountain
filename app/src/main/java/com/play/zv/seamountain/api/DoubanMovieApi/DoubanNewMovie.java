@@ -1,4 +1,4 @@
-package com.play.zv.seamountain.api;
+package com.play.zv.seamountain.api.DoubanMovieApi;
 
 import java.util.List;
 

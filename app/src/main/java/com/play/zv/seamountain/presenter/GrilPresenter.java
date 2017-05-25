@@ -1,7 +1,7 @@
 package com.play.zv.seamountain.presenter;
 
 import com.play.zv.seamountain.api.BuildApi;
-import com.play.zv.seamountain.api.GrilInfo;
+import com.play.zv.seamountain.api.GrilApi.GrilInfo;
 import com.play.zv.seamountain.view.IviewBind.IGrilFragment;
 
 import java.util.List;

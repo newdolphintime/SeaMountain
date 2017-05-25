@@ -1,8 +1,6 @@
 package com.play.zv.seamountain.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +12,8 @@ import com.bumptech.glide.Glide;
 
 
 import com.play.zv.seamountain.R;
-import com.play.zv.seamountain.api.DoubanNewMovie;
+import com.play.zv.seamountain.api.DoubanMovieApi.DoubanNewMovie;
 
-
-import java.util.concurrent.ExecutionException;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 

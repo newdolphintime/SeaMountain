@@ -1,4 +1,4 @@
-package com.play.zv.seamountain.api;
+package com.play.zv.seamountain.api.his;
 
 import java.util.List;
 
@@ -321,5 +321,10 @@ public class AVInfo {
         public void setWaist(String waist) {
             this.waist = waist;
         }
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

@@ -2,7 +2,7 @@ package com.play.zv.seamountain.presenter;
 
 import com.orhanobut.logger.Logger;
 import com.play.zv.seamountain.api.BuildApi;
-import com.play.zv.seamountain.api.DoubanNewMovie;
+import com.play.zv.seamountain.api.DoubanMovieApi.DoubanNewMovie;
 import com.play.zv.seamountain.view.IviewBind.INewMovieFragment;
 
 import java.util.List;

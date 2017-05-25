@@ -1,32 +1,17 @@
 package com.play.zv.seamountain.view.fragment;
 
-import android.content.Intent;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.orhanobut.logger.Logger;
 import com.play.zv.seamountain.R;
-import com.play.zv.seamountain.adapter.GrilAdapter;
 import com.play.zv.seamountain.adapter.MovieNewAdapter;
-import com.play.zv.seamountain.api.DoubanNewMovie;
-import com.play.zv.seamountain.api.GrilInfo;
+import com.play.zv.seamountain.api.DoubanMovieApi.DoubanNewMovie;
 import com.play.zv.seamountain.presenter.DoubanNewMoviePresenter;
-import com.play.zv.seamountain.presenter.GrilPresenter;
-import com.play.zv.seamountain.view.IviewBind.IGrilFragment;
 import com.play.zv.seamountain.view.IviewBind.INewMovieFragment;
-import com.play.zv.seamountain.view.PictureActivity;
 
 
 import java.util.List;

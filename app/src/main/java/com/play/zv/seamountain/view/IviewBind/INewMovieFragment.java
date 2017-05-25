@@ -1,7 +1,6 @@
 package com.play.zv.seamountain.view.IviewBind;
 
-import com.play.zv.seamountain.api.DoubanNewMovie;
-import com.play.zv.seamountain.api.GrilInfo;
+import com.play.zv.seamountain.api.DoubanMovieApi.DoubanNewMovie;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.play.zv.seamountain.api;
+package com.play.zv.seamountain.api.AvjsoupApi;
 
 /**
  * Created by hspc on 2017/5/18.

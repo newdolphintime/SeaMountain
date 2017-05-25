@@ -7,22 +7,18 @@ import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.textservice.TextInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.orhanobut.logger.Logger;
 import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.adapter.AVViewPagerAdapter;
-import com.play.zv.seamountain.api.MovieInfo;
-import com.play.zv.seamountain.api.Star;
-import com.play.zv.seamountain.api.jsoupApi.GetJavbus;
+import com.play.zv.seamountain.api.AvjsoupApi.MovieInfo;
+import com.play.zv.seamountain.api.AvjsoupApi.Star;
+import com.play.zv.seamountain.api.AvjsoupApi.GetJavbus;
 import com.play.zv.seamountain.db.JavbusDBOpenHelper;
-import com.play.zv.seamountain.presenter.AvPresenter;
 import com.play.zv.seamountain.presenter.JavPresenter;
 import com.play.zv.seamountain.view.IviewBind.IJavFragment;
 import com.play.zv.seamountain.widget.ToastUtils;
@@ -41,7 +37,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
     private ViewPager avvp;
     private AVViewPagerAdapter avViewPagerAdapter;
     private JavbusDBOpenHelper javbusDBOpenHelper;
-    private AvPresenter javPresenter = new AvPresenter(this);
+    private JavPresenter javPresenter = new JavPresenter(this);
     private View view;
 
 
