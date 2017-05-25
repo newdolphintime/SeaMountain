@@ -2,6 +2,7 @@ package com.play.zv.seamountain.view.fragment;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
@@ -20,6 +21,7 @@ import com.play.zv.seamountain.api.AvjsoupApi.Star;
 import com.play.zv.seamountain.api.AvjsoupApi.GetJavbus;
 import com.play.zv.seamountain.db.JavbusDBOpenHelper;
 import com.play.zv.seamountain.presenter.JavPresenter;
+import com.play.zv.seamountain.utils.DownloadUtil;
 import com.play.zv.seamountain.view.IviewBind.IJavFragment;
 import com.play.zv.seamountain.widget.ToastUtils;
 
@@ -51,8 +53,23 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
             @Override
             public void onClick(View v) {
                // Logger.d();
-                ToastUtils.showToast(mActivity,find(avnum.getText().toString().trim().toUpperCase()));
+                //ToastUtils.showToast(mActivity,find(avnum.getText().toString().trim().toUpperCase()));
                 //ToastUtils.showToast(mActivity, find(avnum.getText().toString().trim().toUpperCase()));
+                ToastUtils.showToast(mActivity,movieInfo.getCover());
+                DownloadUtil.get().download(movieInfo.getCover(), Environment.getExternalStorageDirectory().getAbsolutePath(), new DownloadUtil.OnDownloadListener() {
+                    @Override
+                    public void onDownloadSuccess() {
+                        ToastUtils.showToast(mActivity, "下载完成");
+                    }
+                    @Override
+                    public void onDownloading(int progress) {
+                        ToastUtils.showToast(mActivity, progress+"下载完成");
+                    }
+                    @Override
+                    public void onDownloadFailed() {
+
+                    }
+                },avnum.getText().toString()+".jpg");
             }
         });
         avnum = (EditText) view.findViewById(R.id.avnum);
@@ -86,6 +103,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
              * 要执行的操作
              */
             try {
+
                 movieInfo = GetJavbus.getInfo("ABP-038");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -124,6 +142,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
 
     @Override
     public void getDataSuccess(MovieInfo movieInfo) {
+        this.movieInfo= movieInfo;
         //textView.setText(movieInfo.toString());
         //Toast.makeText(mActivity,"得到网页数据开始加载",Toast.LENGTH_LONG).show();
         avvp.setAdapter(avViewPagerAdapter = new AVViewPagerAdapter(movieInfo.getPreviews(), mActivity));
