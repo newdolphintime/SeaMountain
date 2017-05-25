@@ -53,7 +53,8 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
         avcover.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Logger.d(avnum.getText().toString().trim().toUpperCase());
+               // Logger.d();
+                ToastUtils.showToast(mActivity,find(avnum.getText().toString().trim().toUpperCase()));
                 //ToastUtils.showToast(mActivity, find(avnum.getText().toString().trim().toUpperCase()));
             }
         });
@@ -146,17 +147,22 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
     }
 
     public String find(String id) {
+        String name =null;
         SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM movieinfo where num = ?", new String[]{id.toString()});
+        Cursor cursor = db.rawQuery("SELECT * FROM movieinfo where avnum = ?", new String[]{id});
         //存在数据才返回true
         if (cursor.moveToFirst()) {
+            if (name == null) {
+                name = cursor.getString(cursor.getColumnIndex("stars"));
+            }
+            else{
+                name = name + cursor.getString(cursor.getColumnIndex("stars"));
+             }
 
-            String name = cursor.getString(cursor.getColumnIndex("stars"));
-
-            return name;
         }
         cursor.close();
-        return "meizhaodao";
+        return name;
+
     }
 
     @Override
@@ -164,7 +170,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
 
         SQLiteDatabase javbusDB = javbusDBOpenHelper.getWritableDatabase();
         if (movieInfo != null) {
-            javbusDB.execSQL("replace INTO movieinfo(num,censored,cover,director,genres,lable,release,runtime,series,studio,title,stars,previews) " +
+            javbusDB.execSQL("replace INTO movieinfo(avnum,censored,cover,director,genres,lable,release,runtime,series,studio,title,stars,previews) " +
                             "values ( ?,?,?,?,?,?,?,?,?,?,?,?,?)",
 
                     new String[]{

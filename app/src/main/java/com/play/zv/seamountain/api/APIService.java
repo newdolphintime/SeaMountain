@@ -22,4 +22,6 @@ public interface APIService {
      */
     @GET("v2/movie/in_theaters")
     Observable<DoubanNewMovie> getLiveFilm();
+
+
 }

@@ -16,8 +16,9 @@ public class JavbusDBOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table movieinfo(" +
-                "num varchar(20) PRIMARY KEY," +
+        db.execSQL(
+                "create table movieinfo(" +
+                "avnum varchar(20) PRIMARY KEY," +
                 "censored varchar(10)," +
                 "cover varchar(1000)," +
                 "director varchar(100)," +
