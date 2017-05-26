@@ -61,7 +61,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
                 //ToastUtils.showToast(mActivity, find(avnum.getText().toString().trim().toUpperCase()));
                 //ToastUtils.showToast(mActivity,movieInfo.getCover());
                 //ToastUtils.showToast(mActivity,mActivity.getFilesDir().getPath());
-                SimpleNotification notification = new SimpleNotification(mActivity,find(avnum.getText().toString().trim().toUpperCase(), "cover"),avnum.getText().toString().trim().toUpperCase());
+                SimpleNotification notification = new SimpleNotification(mActivity,find(avnum.getText().toString().trim().toUpperCase(), "cover"),avnum.getText().toString().trim().toUpperCase()+".jpg");
                 notification.start();
             }
         });
