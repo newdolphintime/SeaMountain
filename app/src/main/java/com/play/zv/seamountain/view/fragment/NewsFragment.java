@@ -56,7 +56,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
                 Logger.d(mActivity.getFilesDir().getAbsolutePath());
                 Logger.d(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath());
                 Logger.d(Environment.getExternalStorageState());
-                ToastUtils.showToast(mActivity, find(avnum.getText().toString().trim().toUpperCase(),"previews"));
+                ToastUtils.showToast(mActivity, find(avnum.getText().toString().trim().toUpperCase(), "previews"));
                 //ToastUtils.showToast(mActivity, find(avnum.getText().toString().trim().toUpperCase()));
                 //ToastUtils.showToast(mActivity,movieInfo.getCover());
                 //ToastUtils.showToast(mActivity,mActivity.getFilesDir().getPath());
@@ -128,13 +128,12 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
 
     @Override
     public void loadData(String avnum) {
-        if(find(avnum,"cover").trim().isEmpty()){
+        if (find(avnum, "cover").trim().isEmpty()) {
             javPresenter.loadAVdata(avnum);
-        }
-        else{
-            ToastUtils.showToast(mActivity,"数据库里面有!");
-            Glide.with(mActivity).load(find(avnum,"cover").trim()).into(avcover);
-            List<String> previews=Arrays.asList(find(avnum,"previews").split(","));
+        } else {
+            ToastUtils.showToast(mActivity, "数据库里面有!");
+            Glide.with(mActivity).load(find(avnum, "cover").trim()).into(avcover);
+            List<String> previews = Arrays.asList(find(avnum, "previews").split(","));
             avvp.setAdapter(avViewPagerAdapter = new AVViewPagerAdapter(previews, mActivity));
         }
 
@@ -162,8 +161,9 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
     public void unSubcription() {
 
     }
+
     //"previews"
-    public String find(String id,String cloumn) {
+    public String find(String id, String cloumn) {
         String name = "";
         SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM movieinfo where avnum = ?", new String[]{id});
