@@ -6,6 +6,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -16,16 +18,17 @@ import com.bumptech.glide.Glide;
 import com.orhanobut.logger.Logger;
 import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.adapter.AVViewPagerAdapter;
+import com.play.zv.seamountain.adapter.AvStarRecyAdapter;
 import com.play.zv.seamountain.api.AvjsoupApi.MovieInfo;
 import com.play.zv.seamountain.api.AvjsoupApi.Star;
 import com.play.zv.seamountain.api.AvjsoupApi.GetJavbus;
 import com.play.zv.seamountain.db.JavbusDBOpenHelper;
 import com.play.zv.seamountain.download.SimpleNotification;
 import com.play.zv.seamountain.presenter.JavPresenter;
-import com.play.zv.seamountain.utils.DownloadUtil;
 import com.play.zv.seamountain.view.IviewBind.IJavFragment;
 import com.play.zv.seamountain.widget.ToastUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,6 +37,8 @@ import java.util.List;
  */
 
 public class NewsFragment extends BaseFragment implements IJavFragment {
+    private AvStarRecyAdapter avStarRecyAdapter;
+    private RecyclerView avcardList;
     private Button serch;
     private MovieInfo movieInfo;
     private ImageView avcover;
@@ -48,24 +53,27 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
     @Override
     public View initViews() {
         view = View.inflate(mActivity, R.layout.fragment_news, null);
-        //textView= (TextView) view.findViewById(R.id.av);
+        avcardList = (RecyclerView) view.findViewById(R.id.avcardList);
+        RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
+        // new GridLayoutManager(mActivity, 2, GridLayoutManager.VERTICAL, false);
+        avcardList.setLayoutManager(mLayoutManager);
         serch = (Button) view.findViewById(R.id.serch);
         avcover = (ImageView) view.findViewById(R.id.avcover);
+
         avcover.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Logger.d(mActivity.getFilesDir().getAbsolutePath());
                 Logger.d(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath());
                 Logger.d(Environment.getExternalStorageState());
-                ToastUtils.showToast(mActivity, find(avnum.getText().toString().trim().toUpperCase(), "previews"));
-                //ToastUtils.showToast(mActivity, find(avnum.getText().toString().trim().toUpperCase()));
-                //ToastUtils.showToast(mActivity,movieInfo.getCover());
-                //ToastUtils.showToast(mActivity,mActivity.getFilesDir().getPath());
+                ToastUtils.showToast(mActivity, findMovie(avnum.getText().toString().trim().toUpperCase(), "previews"));
+
                 SimpleNotification notification = new
                         SimpleNotification(mActivity,
-                        find(avnum.getText().toString().trim().toUpperCase(), "cover"),
+                        findMovie(avnum.getText().toString().trim().toUpperCase(), "cover"),
                         avnum.getText().toString().trim().toUpperCase() + ".jpg");
                 notification.start();
+
             }
         });
         avnum = (EditText) view.findViewById(R.id.avnum);
@@ -88,6 +96,12 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
 
     @Override
     public void initData() {
+        Logger.d(findStar());
+        if (avStarRecyAdapter == null) {
+            avcardList.setAdapter(avStarRecyAdapter = new AvStarRecyAdapter(mActivity, findStar()));
+        } else {
+            avStarRecyAdapter.notifyDataSetChanged();
+        }
         //new Thread(runnable).start();
         //loadData("abp-120");
     }
@@ -133,12 +147,12 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
 
     @Override
     public void loadData(String avnum) {
-        if (find(avnum, "cover").trim().isEmpty()) {
+        if (findMovie(avnum, "cover").trim().isEmpty()) {
             javPresenter.loadAVdata(avnum);
         } else {
             ToastUtils.showToast(mActivity, "数据库里面有!");
-            Glide.with(mActivity).load(find(avnum, "cover").trim()).into(avcover);
-            List<String> previews = Arrays.asList(find(avnum, "previews").split(","));
+            Glide.with(mActivity).load(findMovie(avnum, "cover").trim()).into(avcover);
+            List<String> previews = Arrays.asList(findMovie(avnum, "previews").split(","));
             avvp.setAdapter(avViewPagerAdapter = new AVViewPagerAdapter(previews, mActivity));
         }
 
@@ -166,13 +180,33 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
     public void unSubcription() {
 
     }
+    public  List<Star> findStar(){
+        List<Star> starList = new ArrayList<Star>() ;
+        Star star;
+        //String name = "";
+        SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM avstars ", new String[]{});
+        //存在数据才返回true
 
+        while (cursor.moveToNext()) {
+            star = new Star();
+
+            String avstarname = cursor.getString(cursor.getColumnIndex("avstarname"));
+            star.setName(avstarname);
+            String image = cursor.getString(cursor.getColumnIndex("image"));
+            star.setImage(image);
+            starList.add(star);
+        }
+        cursor.close();
+        return starList;
+    }
     //"previews"
-    public String find(String id, String cloumn) {
+    public String findMovie(String id, String cloumn) {
         String name = "";
         SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM movieinfo where avnum = ?", new String[]{id});
         //存在数据才返回true
+
         if (cursor.moveToFirst()) {
             if (name.trim().isEmpty()) {
                 name = cursor.getString(cursor.getColumnIndex(cloumn));
