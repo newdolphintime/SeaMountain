@@ -25,6 +25,7 @@ import com.play.zv.seamountain.utils.DownloadUtil;
 import com.play.zv.seamountain.view.IviewBind.IJavFragment;
 import com.play.zv.seamountain.widget.ToastUtils;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -52,24 +53,14 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
         avcover.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-               // Logger.d();
-                //ToastUtils.showToast(mActivity,find(avnum.getText().toString().trim().toUpperCase()));
+                Logger.d(mActivity.getFilesDir().getAbsolutePath());
+                Logger.d(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath());
+                Logger.d(Environment.getExternalStorageState());
+                ToastUtils.showToast(mActivity, find(avnum.getText().toString().trim().toUpperCase(),"previews"));
                 //ToastUtils.showToast(mActivity, find(avnum.getText().toString().trim().toUpperCase()));
-                ToastUtils.showToast(mActivity,movieInfo.getCover());
-                DownloadUtil.get().download(movieInfo.getCover(), Environment.getExternalStorageDirectory().getAbsolutePath(), new DownloadUtil.OnDownloadListener() {
-                    @Override
-                    public void onDownloadSuccess() {
-                        ToastUtils.showToast(mActivity, "下载完成");
-                    }
-                    @Override
-                    public void onDownloading(int progress) {
-                        ToastUtils.showToast(mActivity, progress+"下载完成");
-                    }
-                    @Override
-                    public void onDownloadFailed() {
+                //ToastUtils.showToast(mActivity,movieInfo.getCover());
+                //ToastUtils.showToast(mActivity,mActivity.getFilesDir().getPath());
 
-                    }
-                },avnum.getText().toString()+".jpg");
             }
         });
         avnum = (EditText) view.findViewById(R.id.avnum);
@@ -79,7 +70,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
                 if (!avnum.getText().toString().trim().isEmpty()) {
                     ToastUtils.showToast(mActivity, "开始给你翻网页");
                     Logger.d(avnum.getText().toString().trim());
-                    loadData(avnum.getText().toString().trim());
+                    loadData(avnum.getText().toString().toUpperCase().trim());
 
                 }
             }
@@ -137,12 +128,22 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
 
     @Override
     public void loadData(String avnum) {
-        javPresenter.loadAVdata(avnum);
+        if(find(avnum,"cover").trim().isEmpty()){
+            javPresenter.loadAVdata(avnum);
+        }
+        else{
+            ToastUtils.showToast(mActivity,"数据库里面有!");
+            Glide.with(mActivity).load(find(avnum,"cover").trim()).into(avcover);
+            List<String> previews=Arrays.asList(find(avnum,"previews").split(","));
+            avvp.setAdapter(avViewPagerAdapter = new AVViewPagerAdapter(previews, mActivity));
+        }
+
+
     }
 
     @Override
     public void getDataSuccess(MovieInfo movieInfo) {
-        this.movieInfo= movieInfo;
+        this.movieInfo = movieInfo;
         //textView.setText(movieInfo.toString());
         //Toast.makeText(mActivity,"得到网页数据开始加载",Toast.LENGTH_LONG).show();
         avvp.setAdapter(avViewPagerAdapter = new AVViewPagerAdapter(movieInfo.getPreviews(), mActivity));
@@ -154,26 +155,25 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
 
     @Override
     public void getDataFail(String errCode, String errMsg) {
-
+        ToastUtils.showToast(mActivity, errMsg);
     }
 
     @Override
     public void unSubcription() {
 
     }
-
-    public String find(String id) {
-        String name =null;
+    //"previews"
+    public String find(String id,String cloumn) {
+        String name = "";
         SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM movieinfo where avnum = ?", new String[]{id});
         //存在数据才返回true
         if (cursor.moveToFirst()) {
-            if (name == null) {
-                name = cursor.getString(cursor.getColumnIndex("stars"));
+            if (name.trim().isEmpty()) {
+                name = cursor.getString(cursor.getColumnIndex(cloumn));
+            } else {
+                name = name + cursor.getString(cursor.getColumnIndex(cloumn));
             }
-            else{
-                name = name + cursor.getString(cursor.getColumnIndex("stars"));
-             }
 
         }
         cursor.close();
@@ -202,7 +202,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
                             movieInfo.getStudio(),
                             movieInfo.getTitle(),
                             getStarsName(movieInfo.getStars()),
-                            movieInfo.getPreviews().toString()});
+                            getListname(movieInfo.getPreviews())});
             //ToastUtils.showToast(mActivity,"得到网页数据存入数据库中");
             for (Star star : movieInfo.getStars()) {
                 if (star != null) {
@@ -248,5 +248,18 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
 
         }
         return starName;
+    }
+
+    public String getListname(List<String> strs) {
+        String name = "";
+        for (String str : strs) {
+            if (name.trim().isEmpty()) {
+                name = str;
+            } else {
+                name = name + "," + str;
+            }
+
+        }
+        return name;
     }
 }

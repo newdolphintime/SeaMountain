@@ -27,14 +27,18 @@ public class JavPresenter extends BasePresenter {
 
             @Override
             public void call(Subscriber<? super MovieInfo> subscriber) {
+
+                MovieInfo movieinfo = null;
                 try {
-                    MovieInfo movieinfo = GetJavbus.getInfo(name);
-                    javFragment.writeDatabase(movieinfo);
-                    subscriber.onNext(movieinfo);
-                    subscriber.onCompleted();
+                    movieinfo = GetJavbus.getInfo(name);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    subscriber.onError(e);
                 }
+                javFragment.writeDatabase(movieinfo);
+                    subscriber.onNext(movieinfo);
+                    subscriber.onCompleted();
+
             }
         })
                 .subscribeOn(Schedulers.io())
@@ -47,7 +51,7 @@ public class JavPresenter extends BasePresenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        javFragment.getDataFail("0001","超时");
                     }
 
                     @Override
