@@ -20,6 +20,7 @@ import com.play.zv.seamountain.api.AvjsoupApi.MovieInfo;
 import com.play.zv.seamountain.api.AvjsoupApi.Star;
 import com.play.zv.seamountain.api.AvjsoupApi.GetJavbus;
 import com.play.zv.seamountain.db.JavbusDBOpenHelper;
+import com.play.zv.seamountain.download.SimpleNotification;
 import com.play.zv.seamountain.presenter.JavPresenter;
 import com.play.zv.seamountain.utils.DownloadUtil;
 import com.play.zv.seamountain.view.IviewBind.IJavFragment;
@@ -60,7 +61,8 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
                 //ToastUtils.showToast(mActivity, find(avnum.getText().toString().trim().toUpperCase()));
                 //ToastUtils.showToast(mActivity,movieInfo.getCover());
                 //ToastUtils.showToast(mActivity,mActivity.getFilesDir().getPath());
-
+                SimpleNotification notification = new SimpleNotification(mActivity,find(avnum.getText().toString().trim().toUpperCase(), "cover"),avnum.getText().toString().trim().toUpperCase());
+                notification.start();
             }
         });
         avnum = (EditText) view.findViewById(R.id.avnum);
