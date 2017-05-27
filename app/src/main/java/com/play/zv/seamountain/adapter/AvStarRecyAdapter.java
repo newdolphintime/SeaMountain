@@ -58,7 +58,7 @@ public class AvStarRecyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         Glide.with(mContext)
                 .load(starimage)
                 .placeholder(R.color.imageColorPlaceholder)
-                .centerCrop()
+                .fitCenter()
                 .into(((AvViewHolder)holder).avstar);
         ((AvViewHolder)holder).avstarname.setText(name);
 

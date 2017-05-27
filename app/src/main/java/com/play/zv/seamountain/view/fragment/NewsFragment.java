@@ -1,5 +1,6 @@
 package com.play.zv.seamountain.view.fragment;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.orhanobut.logger.Logger;
 import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.adapter.AVViewPagerAdapter;
@@ -25,6 +27,7 @@ import com.play.zv.seamountain.api.AvjsoupApi.GetJavbus;
 import com.play.zv.seamountain.db.JavbusDBOpenHelper;
 import com.play.zv.seamountain.download.SimpleNotification;
 import com.play.zv.seamountain.presenter.JavPresenter;
+import com.play.zv.seamountain.view.AvDetilsActivity;
 import com.play.zv.seamountain.view.IviewBind.IJavFragment;
 import com.play.zv.seamountain.widget.ToastUtils;
 
@@ -63,16 +66,19 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
         avcover.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                String mavnum = avnum.getText().toString().trim().toUpperCase();
                 Logger.d(mActivity.getFilesDir().getAbsolutePath());
                 Logger.d(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath());
                 Logger.d(Environment.getExternalStorageState());
-                ToastUtils.showToast(mActivity, findMovie(avnum.getText().toString().trim().toUpperCase(), "previews"));
+                ToastUtils.showToast(mActivity, findMovie(mavnum, "stars"));
 
-                SimpleNotification notification = new
-                        SimpleNotification(mActivity,
-                        findMovie(avnum.getText().toString().trim().toUpperCase(), "cover"),
-                        avnum.getText().toString().trim().toUpperCase() + ".jpg");
-                notification.start();
+                //下载代码
+//                SimpleNotification notification = new
+//                        SimpleNotification(mActivity,
+//                        findMovie(avnum.getText().toString().trim().toUpperCase(), "cover"),
+//                        avnum.getText().toString().trim().toUpperCase() + ".jpg");
+//                notification.start();
+                startAvDetileActivity(null,mavnum);
 
             }
         });
@@ -84,7 +90,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
                     ToastUtils.showToast(mActivity, "开始给你翻网页");
                     Logger.d(avnum.getText().toString().trim());
                     loadData(avnum.getText().toString().toUpperCase().trim());
-
+                    initData();
                 }
             }
         });
@@ -151,7 +157,8 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
             javPresenter.loadAVdata(avnum);
         } else {
             ToastUtils.showToast(mActivity, "数据库里面有!");
-            Glide.with(mActivity).load(findMovie(avnum, "cover").trim()).into(avcover);
+            Glide.with(mActivity).load(findMovie(avnum, "cover").trim()).
+                    diskCacheStrategy(DiskCacheStrategy.SOURCE).into(avcover);
             List<String> previews = Arrays.asList(findMovie(avnum, "previews").split(","));
             avvp.setAdapter(avViewPagerAdapter = new AVViewPagerAdapter(previews, mActivity));
         }
@@ -167,7 +174,8 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
         avvp.setAdapter(avViewPagerAdapter = new AVViewPagerAdapter(movieInfo.getPreviews(), mActivity));
         Logger.d(movieInfo);
         ToastUtils.showToast(mActivity, "得到网页数据开始加载");
-        Glide.with(mActivity).load(movieInfo.getCover()).into(avcover);
+        Glide.with(mActivity).load(movieInfo.getCover()).
+                diskCacheStrategy(DiskCacheStrategy.SOURCE).into(avcover);
 
     }
 
@@ -300,5 +308,15 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
 
         }
         return name;
+    }
+    private void startAvDetileActivity(View meizhiView, String avnum) {
+        Intent i = new Intent(mActivity, AvDetilsActivity.class);
+        i.putExtra(AvDetilsActivity.AVNUM, avnum);
+        startActivity(i);
+//        ActivityOptionsCompat optionsCompat =
+//                ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity, meizhiView,
+//                        PictureActivity.TRANSIT_PIC);
+//        ActivityCompat.startActivity(mActivity, i, optionsCompat.toBundle());
+        // ActivityCompat.startActivity(mActivity,i, ActivityOptions.makeSceneTransitionAnimation(mActivity, meizhiView, "sharedView").toBundle());
     }
 }
