@@ -6,6 +6,7 @@ import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -20,6 +21,7 @@ import com.play.zv.seamountain.db.AvDataHelper;
 
 public class AvDetilsActivity extends AppCompatActivity {
     private ImageView avcover;
+    private TextView avnum;
     private Context mContext;
     public String mAvnum;
     public static final String AVNUM = "av_num";
@@ -29,6 +31,7 @@ public class AvDetilsActivity extends AppCompatActivity {
         setContentView(R.layout.av_detail_activity);
         mContext = getApplicationContext();
         avcover = (ImageView) findViewById(R.id.avcover);
+        avnum = (TextView) findViewById(R.id.avnum);
         //设置透明状态栏
         ImmersionBar.
                 with(this)
@@ -41,6 +44,7 @@ public class AvDetilsActivity extends AppCompatActivity {
         Glide.with(mContext).load(avCover).centerCrop().
                 diskCacheStrategy(DiskCacheStrategy.SOURCE).into(avcover);
         Logger.d(avCover);
+        avnum.setText(mAvnum);
     }
     private void parseIntent() {
         mAvnum = getIntent().getStringExtra(AVNUM);

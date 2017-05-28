@@ -1,11 +1,14 @@
 package com.play.zv.seamountain.view.fragment;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -21,6 +24,7 @@ import com.orhanobut.logger.Logger;
 import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.adapter.AVViewPagerAdapter;
 import com.play.zv.seamountain.adapter.AvStarRecyAdapter;
+import com.play.zv.seamountain.api.AvjsoupApi.Magnet;
 import com.play.zv.seamountain.api.AvjsoupApi.MovieInfo;
 import com.play.zv.seamountain.api.AvjsoupApi.Star;
 import com.play.zv.seamountain.api.AvjsoupApi.GetJavbus;
@@ -57,7 +61,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
     public View initViews() {
         view = View.inflate(mActivity, R.layout.fragment_news, null);
         avcardList = (RecyclerView) view.findViewById(R.id.avcardList);
-        RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
+        RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         // new GridLayoutManager(mActivity, 2, GridLayoutManager.VERTICAL, false);
         avcardList.setLayoutManager(mLayoutManager);
         serch = (Button) view.findViewById(R.id.serch);
@@ -78,7 +82,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
 //                        findMovie(avnum.getText().toString().trim().toUpperCase(), "cover"),
 //                        avnum.getText().toString().trim().toUpperCase() + ".jpg");
 //                notification.start();
-                startAvDetileActivity(null,mavnum);
+                startAvDetileActivity(null, mavnum);
 
             }
         });
@@ -188,8 +192,9 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
     public void unSubcription() {
 
     }
-    public  List<Star> findStar(){
-        List<Star> starList = new ArrayList<Star>() ;
+
+    public List<Star> findStar() {
+        List<Star> starList = new ArrayList<Star>();
         Star star;
         //String name = "";
         SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
@@ -208,6 +213,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
         cursor.close();
         return starList;
     }
+
     //"previews"
     public String findMovie(String id, String cloumn) {
         String name = "";
@@ -280,6 +286,31 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
                             });
                 }
             }
+            for (Magnet magnet : movieInfo.getMagnet()) {
+                if (magnet != null) {
+                    javbusDB.execSQL(
+                            "replace into magnetinfo (" +
+                                    "isHD ," +
+                                    "magnetData ," +
+                                    "magnetNum ," +
+                                    "magnetSize ," +
+                                    "magnetTitle ," +
+                                    "magnetUrl " +
+                                    ")values (?,?,?,?,?,?)",
+                            new String[]{
+                                    String.valueOf(
+
+                                            magnet.getIsHD()),
+                                    magnet.getMagnetData(),
+                                    magnet.getMagnetNum(),
+                                    magnet.getMagnetSize(),
+                                    magnet.getMagnetTitle(),
+                                    magnet.getMagnetUrl()
+
+                            });
+                }
+
+            }
 
         }
     }
@@ -309,14 +340,16 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
         }
         return name;
     }
+
     private void startAvDetileActivity(View meizhiView, String avnum) {
+
+        //startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, view1, "sharedView").toBundle());
+
+
         Intent i = new Intent(mActivity, AvDetilsActivity.class);
         i.putExtra(AvDetilsActivity.AVNUM, avnum);
-        startActivity(i);
-//        ActivityOptionsCompat optionsCompat =
-//                ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity, meizhiView,
-//                        PictureActivity.TRANSIT_PIC);
-//        ActivityCompat.startActivity(mActivity, i, optionsCompat.toBundle());
-        // ActivityCompat.startActivity(mActivity,i, ActivityOptions.makeSceneTransitionAnimation(mActivity, meizhiView, "sharedView").toBundle());
+        //共享元素转场动画
+        startActivity(i, ActivityOptions.makeSceneTransitionAnimation(mActivity, avcover, "avcover").toBundle());
+//        }
     }
 }

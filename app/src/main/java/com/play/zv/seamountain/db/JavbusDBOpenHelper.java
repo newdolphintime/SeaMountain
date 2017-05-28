@@ -34,16 +34,24 @@ public class JavbusDBOpenHelper extends SQLiteOpenHelper {
 
         );
         db.execSQL("create table avstars(" +
-                   "avstarname varchar(100) PRIMARY KEY," +
-                   "age varchar(10)," +
-                   "birthday varchar(20)," +
-                   "bust varchar(10)," +
-                   "cup varchar(10)," +
-                   "height varchar(10)," +
-                   "hips varchar(10)," +
-                   "hometown varchar(100)," +
-                   "image varchar(500)," +
-                   "waist varchar(10)" +
+                "avstarname varchar(100) PRIMARY KEY," +
+                "age varchar(10)," +
+                "birthday varchar(20)," +
+                "bust varchar(10)," +
+                "cup varchar(10)," +
+                "height varchar(10)," +
+                "hips varchar(10)," +
+                "hometown varchar(100)," +
+                "image varchar(500)," +
+                "waist varchar(10)" +
+                ")");
+        db.execSQL("create table magnetinfo (" +
+                "isHD varchar(20)," +
+                "magnetData varchar(20)," +
+                "magnetNum varchar(20)," +
+                "magnetSize varchar(20)," +
+                "magnetTitle varchar(500)," +
+                "magnetUrl varchar(1000) primary key" +
                 ")");
     }
     //软件版本号发生改变时调用

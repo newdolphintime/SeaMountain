@@ -11,13 +11,13 @@
     app:cardCornerRadius="1dp">
     <!--<com.play.zv.seamountain.widget.RatioImageView-->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="120dp"
+        android:layout_height="50dp">
 
         <ImageView
             android:id="@+id/avstar"
             android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:src="@drawable/mide065"
