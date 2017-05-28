@@ -74,8 +74,9 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
                 Logger.d(mActivity.getFilesDir().getAbsolutePath());
                 Logger.d(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath());
                 Logger.d(Environment.getExternalStorageState());
-                ToastUtils.showToast(mActivity, findMovie(mavnum, "stars"));
-
+                if (findMovie(mavnum, "stars") != null) {
+                    ToastUtils.showToast(mActivity, findMovie(mavnum, "stars"));
+                }
                 //下载代码
 //                SimpleNotification notification = new
 //                        SimpleNotification(mActivity,
