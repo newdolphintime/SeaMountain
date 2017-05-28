@@ -58,28 +58,30 @@ public class AvDetilsActivity extends AppCompatActivity {
         Logger.d(avCover);
         avnum.setText(mAvnum);
         String starsname = AvDataHelper.findMovie(mAvnum, "stars", mContext);
-        List<String> starsnames = Arrays.asList(starsname.split(","));
+        if (starsname != null) {
+            List<String> starsnames = Arrays.asList(starsname.split(","));
 
-        List<Star> stars = new ArrayList<>();
-        if (starsnames != null) {
-            for (String avstarname : starsnames) {
-                Star star = AvDataHelper.findstar(avstarname.trim(), mContext);
-                Logger.d(avstarname.trim());
-                stars.add(star);
+            List<Star> stars = new ArrayList<>();
+            if (starsnames != null) {
+                for (String avstarname : starsnames) {
+                    Star star = AvDataHelper.findstar(avstarname.trim(), mContext);
+                    Logger.d(avstarname.trim());
+                    stars.add(star);
+                }
             }
-        }
-        if (stars.size() != 0) {
-            for (int i = 0; i < stars.size(); i++) {
-                int height = dip2px(mContext,60);
-                int width = dip2px(mContext,60);
-                ImageView imageView = new ImageView(this);
-                imageView.setLayoutParams(new LinearLayout.LayoutParams(height, width));
-                Glide.with(mContext).load(stars.get(i).getImage()).centerCrop().
-                        diskCacheStrategy(DiskCacheStrategy.SOURCE).
-                        bitmapTransform(new CropCircleTransformation(mContext)).
-                        into(imageView);
-                linearLayout.addView(imageView);
+            if (stars.size() != 0) {
+                for (int i = 0; i < stars.size(); i++) {
+                    int height = dip2px(mContext, 60);
+                    int width = dip2px(mContext, 60);
+                    ImageView imageView = new ImageView(this);
+                    imageView.setLayoutParams(new LinearLayout.LayoutParams(height, width));
+                    Glide.with(mContext).load(stars.get(i).getImage()).centerCrop().
+                            diskCacheStrategy(DiskCacheStrategy.SOURCE).
+                            bitmapTransform(new CropCircleTransformation(mContext)).
+                            into(imageView);
+                    linearLayout.addView(imageView);
 
+                }
             }
         }
     }
