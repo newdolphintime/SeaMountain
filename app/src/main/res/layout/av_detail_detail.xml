@@ -1,37 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
 
     >
-    <RelativeLayout
 
+    <RelativeLayout
+        android:id="@+id/avnumlayout"
         android:layout_width="match_parent"
         android:layout_height="60dp">
 
-        <TextView
+        <com.play.zv.seamountain.widget.CustomerTextView
             android:id="@+id/avnum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:text="ipz-952"
             android:textColor="#000000"
             android:textSize="23dp"
-            android:textStyle="bold"
-            android:layout_centerInParent="true"/>
+            android:textStyle="bold" />
     </RelativeLayout>
     <!--<android.support.v7.widget.CardView-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="60dp">-->
-        <LinearLayout
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:id="@+id/starlayout"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp">
-         </LinearLayout>
+    <!--android:layout_gravity="center_horizontal"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="60dp">-->
+    <LinearLayout
+        android:id="@+id/starlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"></LinearLayout>
     <!--</android.support.v7.widget.CardView>-->
+    <RelativeLayout
+        android:id="@+id/avnameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
 
+        <com.play.zv.seamountain.widget.CustomerTextView
+            android:id="@+id/avname"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
+            android:text="ipz-952"
+            android:textColor="#727272"
+            android:textSize="15dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/infolayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@+id/container_photo_details_center"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true" />
+
+        <RelativeLayout
+            android:id="@+id/starnamezone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+            android:layout_toLeftOf="@id/container_photo_details_center"
+            android:background="?attr/selectableItemBackground">
+
+
+
+            <TextView
+                android:id="@+id/censored"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_centerInParent="true"
+                android:text="天海"
+                android:textColor="#757575"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/runtimezone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+            android:layout_toRightOf="@id/container_photo_details_center"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                android:id="@+id/runtime"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_centerInParent="true"
+
+
+                android:text="天海"
+                android:textColor="#757575"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/megnetLayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
 </LinearLayout>

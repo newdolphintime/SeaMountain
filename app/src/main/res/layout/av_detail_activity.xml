@@ -41,7 +41,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <!-- 滚动的内容 -->
-        <include layout="@layout/av_detail_detail" />
+        <include android:id="@+id/detail_detail" layout="@layout/av_detail_detail" />
     </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

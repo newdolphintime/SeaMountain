@@ -41,13 +41,14 @@ public class AvDataHelper {
 
     }
 
-    public static List<Magnet> findmagnet(String id, String cloumn, Context context) {
+    public static List<Magnet> findmagnet(String id,  Context context) {
+        mContext = context;
         List<Magnet> magnetList = new ArrayList<Magnet>();
         Magnet magnet;
         javbusDBOpenHelper = new JavbusDBOpenHelper(mContext, "javbus.db", null, 2);
         //String name = "";
         SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM avstars ", new String[]{});
+        Cursor cursor = db.rawQuery("SELECT * FROM magnetinfo where magnetNum = ? ", new String[]{id});
         //存在数据才返回true
 
         while (cursor.moveToNext()) {
@@ -74,7 +75,7 @@ public class AvDataHelper {
             magnet.setMagnetSize(magnetSize);
             magnet.setMagnetTitle(magnetTitle);
             magnet.setMagnetUrl(magnetUrl);
-
+            magnetList.add(magnet);
 
         }
         cursor.close();
