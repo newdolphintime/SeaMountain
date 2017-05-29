@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,7 @@ public class AvDetilsActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
     private LinearLayout megnetlinearLayout;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +58,7 @@ public class AvDetilsActivity extends AppCompatActivity {
         avname = (TextView) findViewById(R.id.avname);
         linearLayout = (LinearLayout) findViewById(R.id.starlayout);
         megnetlinearLayout = (LinearLayout) findViewById(R.id.megnetLayout);
+
         //设置透明状态栏
         ImmersionBar.
                 with(this)
@@ -116,7 +119,8 @@ public class AvDetilsActivity extends AppCompatActivity {
         List<Magnet> magnetList = AvDataHelper.findmagnet(mAvnum, mContext);
         //多个磁力list
         if (magnetList != null) {
-            addLinearLayout(magnetList);
+            //addLinearLayout(magnetList);
+            addCard(magnetList);
         }
     }
 
@@ -169,6 +173,23 @@ public class AvDetilsActivity extends AppCompatActivity {
 
 
             megnetlinearLayout.addView(linearLayout);
+        }
+
+    }
+
+    /**
+     * 动态添加线性布局
+     */
+    private void addCard(List<Magnet> magnets) {
+        //initMissionList：存储几条测试数据
+        for (int i = 0; i < magnets.size(); i++) {
+            CardView cardView = new CardView(mContext);
+            CardView.LayoutParams layoutParams = new CardView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dip2px(mContext, 50));
+            layoutParams.setMargins(dip2px(mContext, 5), dip2px(mContext, 5), dip2px(mContext, 5), dip2px(mContext, 5));
+            cardView.setLayoutParams(layoutParams
+            );
+
+            megnetlinearLayout.addView(cardView);
         }
 
     }
