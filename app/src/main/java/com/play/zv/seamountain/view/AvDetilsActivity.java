@@ -1,6 +1,10 @@
 package com.play.zv.seamountain.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -11,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +26,8 @@ import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.api.AvjsoupApi.Magnet;
 import com.play.zv.seamountain.api.AvjsoupApi.Star;
 import com.play.zv.seamountain.db.AvDataHelper;
+import com.play.zv.seamountain.widget.CustomerTextView;
+import com.play.zv.seamountain.widget.FontCache;
 import com.play.zv.seamountain.widget.ToastUtils;
 
 import java.util.ArrayList;
@@ -181,16 +188,73 @@ public class AvDetilsActivity extends AppCompatActivity {
      * 动态添加线性布局
      */
     private void addCard(List<Magnet> magnets) {
-        //initMissionList：存储几条测试数据
-        for (int i = 0; i < magnets.size(); i++) {
-            CardView cardView = new CardView(mContext);
-            CardView.LayoutParams layoutParams = new CardView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dip2px(mContext, 50));
-            layoutParams.setMargins(dip2px(mContext, 5), dip2px(mContext, 5), dip2px(mContext, 5), dip2px(mContext, 5));
-            cardView.setLayoutParams(layoutParams
-            );
 
+        for (int i = 0; i < magnets.size(); i++) {
+
+            CardView cardView = new CardView(mContext);
+            RelativeLayout myrelativeLayout = new RelativeLayout(mContext);
+            myrelativeLayout.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+
+            TextView customerTextView = new TextView(mContext);
+            RelativeLayout.LayoutParams cuslayoutParams =
+                    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            cuslayoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+            cuslayoutParams.leftMargin = dip2px(mContext, 10);
+            customerTextView.setLayoutParams(cuslayoutParams);
+            customerTextView.setText(magnets.get(i).getMagnetNum());
+            customerTextView.setTextSize(dip2px(mContext, 10));
+            Typeface typeFace = FontCache.getTypeface("FZJHJW.ttf", mContext);
+            customerTextView.setTextColor(Color.BLACK);
+            customerTextView.setTypeface(typeFace);
+
+            TextView customerTextView2 = new TextView(mContext);
+
+            RelativeLayout.LayoutParams cuslayoutParams2 =
+                    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            cuslayoutParams2.addRule(RelativeLayout.CENTER_VERTICAL);
+            cuslayoutParams2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            cuslayoutParams2.rightMargin = dip2px(mContext, 10);
+
+            customerTextView2.setLayoutParams(cuslayoutParams2);
+            customerTextView2.setText(magnets.get(i).getMagnetSize());
+            customerTextView2.setTextSize(dip2px(mContext, 8));
+
+            customerTextView2.setTextColor(Color.BLACK);
+            customerTextView2.setTypeface(typeFace);
+            myrelativeLayout.addView(customerTextView);
+            myrelativeLayout.addView(customerTextView2);
+
+
+            CardView.LayoutParams layoutParams = new CardView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dip2px(mContext, 60));
+            layoutParams.setMargins(dip2px(mContext, 5), dip2px(mContext, 5), dip2px(mContext, 5), dip2px(mContext, 5));
+
+
+            cardView.setRadius(dip2px(mContext, 3));
+            cardView.setForeground(getSelectedItemDrawable());
+//            cardView.setClickable(true);
+            cardView.setLayoutParams(layoutParams);
+            cardView.addView(myrelativeLayout);
+            cardView.setCardElevation(dip2px(mContext, 1));
+            final String magnetUrl = magnets.get(i).getMagnetUrl();
             megnetlinearLayout.addView(cardView);
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ToastUtils.showToast(mContext, magnetUrl);
+                }
+            });
+
         }
 
+
     }
+
+    public Drawable getSelectedItemDrawable() {
+        int[] attrs = new int[]{R.attr.selectableItemBackground};
+        TypedArray ta = mContext.obtainStyledAttributes(attrs);
+        Drawable selectedItemDrawable = ta.getDrawable(0);
+        ta.recycle();
+        return selectedItemDrawable;
+    }
+
 }

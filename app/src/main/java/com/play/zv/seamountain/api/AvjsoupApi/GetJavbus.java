@@ -19,8 +19,10 @@ import java.util.Map;
 
 public class GetJavbus {
     static String BASEURL = "https://www.javbus.com/";
+
     /**
      * 根据番号获取信息
+     *
      * @param num
      * @return
      * @throws Exception
@@ -102,7 +104,7 @@ public class GetJavbus {
             movie.setTitle(title.trim());
 
             //磁链信息
-            List<Magnet> magnets = getMagnets(doc,num);
+            List<Magnet> magnets = getMagnets(doc, num);
             movie.setMagnet(magnets);
             return movie;
         } catch (HttpStatusException e) {
@@ -110,13 +112,15 @@ public class GetJavbus {
         }
         return null;
     }
+
     /**
      * 解析<script>标签获取var的参数
+     *
      * @param e
      * @return
      */
     public static Map<String, String> getJsParams(Elements e) {
-		/* 用來封裝要保存的参数 */
+        /* 用來封裝要保存的参数 */
         Map<String, String> map = new HashMap<String, String>();
         for (Element element : e) {
 
@@ -145,13 +149,15 @@ public class GetJavbus {
         map.put("lang", "zh");
         return map;
     }
+
     /**
      * 解析磁力链接
+     *
      * @param doc
      * @return
      * @throws IOException
      */
-    public static List<Magnet> getMagnets(Document doc,String num) throws IOException {
+    public static List<Magnet> getMagnets(Document doc, String num) throws IOException {
         List<Magnet> magnetList = new ArrayList<>();
 
         Elements e = doc.getElementsByTag("script").eq(8);
@@ -170,41 +176,45 @@ public class GetJavbus {
 
         for (int i = 0; i < magnets.size(); i++) {
             if (!"高清".equals(magnets.get(i).text())) {
-                switch (index) {
-                    case 0:
-                        magnet.setMagnetTitle(magnets.get(i).text());
-                        index++;
-                        break;
-                    case 1:
-                        magnet.setMagnetSize(magnets.get(i).text());
-                        index++;
-                        break;
-                    case 2:
-                        magnet.setMagnetData(magnets.get(i).text());
+                if (!"字幕".equals(magnets.get(i).text())) {
+                    switch (index) {
+                        case 0:
+                            magnet.setMagnetTitle(magnets.get(i).text());
+                            index++;
+                            break;
+                        case 1:
+                            magnet.setMagnetSize(magnets.get(i).text());
+                            index++;
+                            break;
+                        case 2:
+                            magnet.setMagnetData(magnets.get(i).text());
 
-                        index=0;
-                        //补全缺少的值
-                        magnet.setMagnetNum(num);
-                        String magnetsUrl = magnets.get(i).attr("href");
-                        magnet.setMagnetUrl(magnetsUrl.substring(0,(magnetsUrl.lastIndexOf("&")==-1)?magnetsUrl.length():magnetsUrl.lastIndexOf("&")));
-                        //存起来
-                        magnetList.add(magnet);
+                            index = 0;
+                            //补全缺少的值
+                            magnet.setMagnetNum(num);
+                            String magnetsUrl = magnets.get(i).attr("href");
+                            magnet.setMagnetUrl(magnetsUrl.substring(0, (magnetsUrl.lastIndexOf("&") == -1) ? magnetsUrl.length() : magnetsUrl.lastIndexOf("&")));
+                            //存起来
+                            magnetList.add(magnet);
 
-                        //重置magnet对象
-                        magnet=new Magnet();
-                        break;
-                    default:
-                        System.out.println(index);
-                        break;
+                            //重置magnet对象
+                            magnet = new Magnet();
+                            break;
+                        default:
+                            System.out.println(index);
+                            break;
+                    }
                 }
-            }else {
+            } else {
                 magnet.setIsHD(true);
             }
         }
         return magnetList;
     }
+
     /**
      * 获取演员信息...
+     *
      * @param StarUrl
      * @return
      * @throws IOException
@@ -253,8 +263,8 @@ public class GetJavbus {
                         star.setHometown(split[1]);
                         break;
                     default:
-                        System.err.println(StarUrl+":");
-                        System.err.println("意料之外的参数:"+element.text());
+                        System.err.println(StarUrl + ":");
+                        System.err.println("意料之外的参数:" + element.text());
                         break;
                 }
             }
