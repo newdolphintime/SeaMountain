@@ -13,6 +13,7 @@ import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -200,7 +201,14 @@ public class AvDetilsActivity extends AppCompatActivity {
      * 动态添加线性布局
      */
     private void addCard(List<Magnet> magnets) {
-
+        @android.support.annotation.IdRes
+        int TAG1401 = 1000;
+        int TAG1402 = 1001;
+        int TAG1403 = 1002;
+        int TAG1404 = 1003;
+        int TAG1405 = 1004;
+        int TAG1406 = 1005;
+        int TAG1407 = 1006;
         for (int i = 0; i < magnets.size(); i++) {
 
             CardView cardView = new CardView(mContext);
@@ -211,8 +219,10 @@ public class AvDetilsActivity extends AppCompatActivity {
             RelativeLayout.LayoutParams cuslayoutParams =
                     new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             cuslayoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+
             cuslayoutParams.leftMargin = dip2px(mContext, 10);
             customerTextView.setLayoutParams(cuslayoutParams);
+            customerTextView.setId(TAG1401);
             customerTextView.setText(magnets.get(i).getMagnetNum());
             customerTextView.setTextSize(dip2px(mContext, 10));
             Typeface typeFace = FontCache.getTypeface("FZJHJW.ttf", mContext);
@@ -235,6 +245,21 @@ public class AvDetilsActivity extends AppCompatActivity {
             customerTextView2.setTypeface(typeFace);
             myrelativeLayout.addView(customerTextView);
             myrelativeLayout.addView(customerTextView2);
+            Logger.d(magnets.get(i).getIsHD());
+            if(magnets.get(i).getIsHD()){
+                RelativeLayout.LayoutParams cuslayoutParams3 =
+                        new RelativeLayout.LayoutParams(dip2px(mContext, 24), dip2px(mContext, 24));
+                ImageView HDimageView = new ImageView(mContext);
+                cuslayoutParams3.addRule(RelativeLayout.CENTER_VERTICAL);
+                cuslayoutParams3.addRule(RelativeLayout.RIGHT_OF,TAG1401);
+                cuslayoutParams3.leftMargin = dip2px(mContext, 10);
+                HDimageView.setImageResource(R.drawable.hd_icon);
+                HDimageView.setLayoutParams(cuslayoutParams3);
+
+                myrelativeLayout.addView(HDimageView);
+            }
+
+
             ///myrelativeLayout.setBackground(getSelectedItemDrawable());
 
 
