@@ -29,7 +29,7 @@
             android:name=".view.PictureActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".view.AvDetilsActivity"/>
-
+        <activity android:name=".view.StarDetailActivity"/>
     </application>
 
 </manifest>

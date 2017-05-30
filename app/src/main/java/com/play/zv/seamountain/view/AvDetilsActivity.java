@@ -1,6 +1,9 @@
 package com.play.zv.seamountain.view;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -18,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gyf.barlibrary.ImmersionBar;
@@ -47,8 +51,10 @@ public class AvDetilsActivity extends AppCompatActivity {
     private ImageView avcover;
     private TextView avnum;
     private Context mContext;
+
     public String mAvnum;
     public static final String AVNUM = "av_num";
+    public static final String STARNAME = "star_num";
     private LinearLayout linearLayout;
     private LinearLayout megnetlinearLayout;
 
@@ -58,6 +64,7 @@ public class AvDetilsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.av_detail_activity);
         mContext = getApplicationContext();
+
         avcover = (ImageView) findViewById(R.id.avcover);
         avnum = (TextView) findViewById(R.id.avnum);
         mcensored = (TextView) findViewById(R.id.censored);
@@ -103,15 +110,20 @@ public class AvDetilsActivity extends AppCompatActivity {
                 for (int i = 0; i < stars.size(); i++) {
                     int height = dip2px(mContext, 50);
                     int width = dip2px(mContext, 50);
-                    ImageView imageView = new ImageView(this);
+                    final ImageView imageView = new ImageView(this);
+
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(height, width);
                     layoutParams.setMargins(10, 10, 10, 10);
                     imageView.setLayoutParams(layoutParams);
+                    imageView.setTransitionName("starphoto");
                     final String starnametest = stars.get(i).getName();
                     imageView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            ToastUtils.showToast(mContext, starnametest);
+                            Intent i = new Intent(mContext, StarDetailActivity.class);
+                            i.putExtra(AvDetilsActivity.STARNAME, starnametest);
+                            //共享元素转场动画
+                            startActivity(i, ActivityOptions.makeSceneTransitionAnimation(AvDetilsActivity.this, imageView, "starphoto").toBundle());
                         }
                     });
                     Glide.with(mContext).load(stars.get(i).getImage()).centerCrop().
@@ -223,6 +235,7 @@ public class AvDetilsActivity extends AppCompatActivity {
             customerTextView2.setTypeface(typeFace);
             myrelativeLayout.addView(customerTextView);
             myrelativeLayout.addView(customerTextView2);
+            ///myrelativeLayout.setBackground(getSelectedItemDrawable());
 
 
             CardView.LayoutParams layoutParams = new CardView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dip2px(mContext, 60));
@@ -231,16 +244,19 @@ public class AvDetilsActivity extends AppCompatActivity {
 
             cardView.setRadius(dip2px(mContext, 3));
             cardView.setForeground(getSelectedItemDrawable());
-//            cardView.setClickable(true);
+
             cardView.setLayoutParams(layoutParams);
             cardView.addView(myrelativeLayout);
             cardView.setCardElevation(dip2px(mContext, 1));
+            cardView.setClickable(true);
+
             final String magnetUrl = magnets.get(i).getMagnetUrl();
             megnetlinearLayout.addView(cardView);
+
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ToastUtils.showToast(mContext, magnetUrl);
+                    //ToastUtils.showToast(mContext, magnetUrl);
                 }
             });
 

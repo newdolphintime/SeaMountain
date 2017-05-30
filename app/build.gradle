@@ -60,5 +60,6 @@ dependencies {
 
     compile 'com.arialyy.aria:Aria:3.1.1'
 
+    compile 'com.balysv:material-ripple:1.0.2'
 
 }
