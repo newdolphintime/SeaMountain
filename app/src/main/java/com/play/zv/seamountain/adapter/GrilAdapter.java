@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
@@ -93,6 +94,7 @@ public class GrilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //        }
         Glide.with(mContext)
                 .load(grilInfo.getResults().get(position).getUrl())
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
                     //设置由黑白变彩色的动画

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gyf.barlibrary.ImmersionBar;
 import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.adapter.GrilAdapter;
@@ -48,6 +49,7 @@ public class PictureActivity extends AppCompatActivity {
         //Picasso.with(this).load(mImageUrl).into(picture);
         Glide.with(this)
                 .load(mImageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(picture);
 
         picture.enable();

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.api.DoubanMovieApi.DoubanNewMovie;
 
@@ -86,12 +87,14 @@ public class MovieNewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         Glide.with(mContext)
                 .load(doubanNewMovie.getSubjects().get(position).getImages().getLarge())
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .placeholder(R.color.imageColorPlaceholder)
                 .centerCrop()
                 .into(((MovieNewAdapter.MyViewHolder) holder).iv);
         ((MyViewHolder) holder).moviename.setText(doubanNewMovie.getSubjects().get(position).getTitle());
         Glide.with(mContext)
                 .load(doubanNewMovie.getSubjects().get(position).getImages().getLarge())
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .placeholder(R.color.imageColorPlaceholder)
                 .centerCrop()
                 .bitmapTransform(new BlurTransformation(mContext, 25, 1))
