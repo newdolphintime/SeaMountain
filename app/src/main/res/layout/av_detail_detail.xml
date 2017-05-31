@@ -101,6 +101,16 @@
 
         </RelativeLayout>
     </RelativeLayout>
+    <com.play.zv.seamountain.widget.MeasureGridView
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/gridpreview"
+        android:numColumns="4"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:horizontalSpacing="5dp"
+        android:verticalSpacing="5dp"
+        />
     <LinearLayout
         android:id="@+id/megnetLayout"
         android:orientation="vertical"
@@ -109,4 +119,8 @@
         android:layout_height="wrap_content">
 
     </LinearLayout>
+
+
+
+
 </LinearLayout>

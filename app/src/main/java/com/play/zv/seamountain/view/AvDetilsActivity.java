@@ -17,6 +17,7 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -28,6 +29,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gyf.barlibrary.ImmersionBar;
 import com.orhanobut.logger.Logger;
 import com.play.zv.seamountain.R;
+import com.play.zv.seamountain.adapter.PreviewAdapter;
 import com.play.zv.seamountain.api.AvjsoupApi.Magnet;
 import com.play.zv.seamountain.api.AvjsoupApi.Star;
 import com.play.zv.seamountain.db.AvDataHelper;
@@ -51,6 +53,7 @@ public class AvDetilsActivity extends AppCompatActivity {
     private TextView avname;
     private ImageView avcover;
     private TextView avnum;
+    private GridView gridView;
     private Context mContext;
 
     public String mAvnum;
@@ -58,6 +61,7 @@ public class AvDetilsActivity extends AppCompatActivity {
     public static final String STARNAME = "star_num";
     private LinearLayout linearLayout;
     private LinearLayout megnetlinearLayout;
+    private PreviewAdapter previewAdapter;
 
 
     @Override
@@ -73,6 +77,7 @@ public class AvDetilsActivity extends AppCompatActivity {
         avname = (TextView) findViewById(R.id.avname);
         linearLayout = (LinearLayout) findViewById(R.id.starlayout);
         megnetlinearLayout = (LinearLayout) findViewById(R.id.megnetLayout);
+        gridView = (GridView) findViewById(R.id.gridpreview);
 
         //设置透明状态栏
         ImmersionBar.
@@ -142,6 +147,10 @@ public class AvDetilsActivity extends AppCompatActivity {
             //addLinearLayout(magnetList);
             addCard(magnetList);
         }
+
+        List<String> previews = Arrays.asList(AvDataHelper.findMovie(mAvnum, "previews",mContext).split(","));
+        previewAdapter = new PreviewAdapter(mContext,previews);
+        gridView.setAdapter(previewAdapter);
     }
 
     private void parseIntent() {
