@@ -104,12 +104,13 @@
     <com.play.zv.seamountain.widget.MeasureGridView
         android:layout_gravity="center_horizontal"
         android:id="@+id/gridpreview"
-        android:numColumns="4"
+        android:numColumns="auto_fit"
         android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:horizontalSpacing="5dp"
         android:verticalSpacing="5dp"
+        android:columnWidth="80dp"
         />
     <LinearLayout
         android:id="@+id/megnetLayout"
