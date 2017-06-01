@@ -205,6 +205,9 @@ public class GetJavbus {
                             break;
                     }
                 }
+                else {
+                    magnet.setIsCC(true);
+                }
             } else {
                 magnet.setIsHD(true);
             }

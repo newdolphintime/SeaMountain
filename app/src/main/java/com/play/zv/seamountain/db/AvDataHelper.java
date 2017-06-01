@@ -64,17 +64,20 @@ public class AvDataHelper {
               )values (?,?,?,?,?,?)
             * */
             String isHD = cursor.getString(cursor.getColumnIndex("isHD"));
+            String isCC = cursor.getString(cursor.getColumnIndex("isCC"));
             String magnetData = cursor.getString(cursor.getColumnIndex("magnetData"));
             String magnetNum = cursor.getString(cursor.getColumnIndex("magnetNum"));
             String magnetSize = cursor.getString(cursor.getColumnIndex("magnetSize"));
             String magnetTitle = cursor.getString(cursor.getColumnIndex("magnetTitle"));
             String magnetUrl = cursor.getString(cursor.getColumnIndex("magnetUrl"));
             magnet.setIsHD(Boolean.parseBoolean(isHD));
+            magnet.setIsCC(Boolean.parseBoolean(isCC));
             magnet.setMagnetData(magnetData);
             magnet.setMagnetNum(magnetNum);
             magnet.setMagnetSize(magnetSize);
             magnet.setMagnetTitle(magnetTitle);
             magnet.setMagnetUrl(magnetUrl);
+
             magnetList.add(magnet);
 
         }

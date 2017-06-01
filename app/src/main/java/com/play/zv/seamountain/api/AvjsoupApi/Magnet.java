@@ -17,6 +17,10 @@ public class Magnet {
     String MagnetNum;
     //是否高清
     boolean isHD;
+    //是否字幕
+    boolean isCC;
+    public boolean getIsCC() {return isCC;}
+    public void setIsCC(Boolean isCC){this.isCC = isCC;}
     public boolean getIsHD() {
         return isHD;
     }

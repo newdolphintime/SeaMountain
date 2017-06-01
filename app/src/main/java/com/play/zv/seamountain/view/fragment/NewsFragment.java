@@ -291,14 +291,18 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
                 if (magnet != null) {
                     javbusDB.execSQL(
                             "replace into magnetinfo (" +
+                                    "isCC ," +
                                     "isHD ," +
                                     "magnetData ," +
                                     "magnetNum ," +
                                     "magnetSize ," +
                                     "magnetTitle ," +
                                     "magnetUrl " +
-                                    ")values (?,?,?,?,?,?)",
+                                    ")values (?,?,?,?,?,?,?)",
                             new String[]{
+                                    String.valueOf(
+
+                                            magnet.getIsCC()),
                                     String.valueOf(
 
                                             magnet.getIsHD()),

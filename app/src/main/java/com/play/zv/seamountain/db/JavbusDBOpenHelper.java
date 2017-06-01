@@ -46,6 +46,7 @@ public class JavbusDBOpenHelper extends SQLiteOpenHelper {
                 "waist varchar(10)" +
                 ")");
         db.execSQL("create table magnetinfo (" +
+                "isCC varchar(20),"+
                 "isHD varchar(20)," +
                 "magnetData varchar(20)," +
                 "magnetNum varchar(20)," +
