@@ -60,10 +60,10 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
     @Override
     public View initViews() {
         view = View.inflate(mActivity, R.layout.fragment_news, null);
-        avcardList = (RecyclerView) view.findViewById(R.id.avcardList);
+        //avcardList = (RecyclerView) view.findViewById(R.id.avcardList);
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         // new GridLayoutManager(mActivity, 2, GridLayoutManager.VERTICAL, false);
-        avcardList.setLayoutManager(mLayoutManager);
+        //avcardList.setLayoutManager(mLayoutManager);
         serch = (Button) view.findViewById(R.id.serch);
         avcover = (ImageView) view.findViewById(R.id.avcover);
 
@@ -109,9 +109,9 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
     public void initData() {
         Logger.d(findStar());
         if (avStarRecyAdapter == null) {
-            avcardList.setAdapter(avStarRecyAdapter = new AvStarRecyAdapter(mActivity, findStar()));
+            //avcardList.setAdapter(avStarRecyAdapter = new AvStarRecyAdapter(mActivity, findStar()));
         } else {
-            avStarRecyAdapter.notifyDataSetChanged();
+            //avStarRecyAdapter.notifyDataSetChanged();
         }
         //new Thread(runnable).start();
         //loadData("abp-120");
@@ -165,7 +165,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
             Glide.with(mActivity).load(findMovie(avnum, "cover").trim()).
                     diskCacheStrategy(DiskCacheStrategy.SOURCE).into(avcover);
             List<String> previews = Arrays.asList(findMovie(avnum, "previews").split(","));
-            avvp.setAdapter(avViewPagerAdapter = new AVViewPagerAdapter(previews, mActivity));
+            //avvp.setAdapter(avViewPagerAdapter = new AVViewPagerAdapter(previews, mActivity));
         }
 
 
@@ -176,7 +176,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
         this.movieInfo = movieInfo;
         //textView.setText(movieInfo.toString());
         //Toast.makeText(mActivity,"得到网页数据开始加载",Toast.LENGTH_LONG).show();
-        avvp.setAdapter(avViewPagerAdapter = new AVViewPagerAdapter(movieInfo.getPreviews(), mActivity));
+        //avvp.setAdapter(avViewPagerAdapter = new AVViewPagerAdapter(movieInfo.getPreviews(), mActivity));
         Logger.d(movieInfo);
         ToastUtils.showToast(mActivity, "得到网页数据开始加载");
         Glide.with(mActivity).load(movieInfo.getCover()).

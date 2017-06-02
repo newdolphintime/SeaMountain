@@ -1,25 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="vertical">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/avcardList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-        </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
-    <android.support.v4.view.ViewPager
-        android:id="@+id/avvp"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp">
 
-    </android.support.v4.view.ViewPager>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,7 +14,9 @@
             android:id="@+id/avnum"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="30dp"
+
+            android:background="@drawable/edittextstyle"/>
         <Button
             android:id="@+id/serch"
             android:background="#000000"

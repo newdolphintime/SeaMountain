@@ -1,12 +1,14 @@
 package com.play.zv.seamountain.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.play.zv.seamountain.R;
@@ -49,6 +51,13 @@ public class PreviewAdapter extends BaseAdapter {
         Glide.with(context).load(preview.get(i)).centerCrop().
                 diskCacheStrategy(DiskCacheStrategy.SOURCE).
                 into(previewimg);
+        previewimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         return v;
 
     }
