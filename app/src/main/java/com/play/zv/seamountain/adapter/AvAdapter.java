@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -57,7 +58,7 @@ public class AvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     class MyViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public ImageView av_cover;
-
+        public LinearLayout av_item;
 
         public TextView av_title;
         public TextView av_runtime;
@@ -72,6 +73,7 @@ public class AvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             av_stars = (TextView) mView.findViewById(R.id.av_stars);
             av_cover = (ImageView) mView.findViewById(R.id.av_cover);
             av_back = (ImageView) mView.findViewById(R.id.av_back);
+            av_item = (LinearLayout) mView.findViewById(R.id.av_item);
         }
     }
 
@@ -113,7 +115,7 @@ public class AvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         final ImageView imagetemp = ((MyViewHolder) holder).av_cover;
        final int fposition = position;
-        ((MyViewHolder) holder).av_cover.setOnClickListener(new View.OnClickListener() {
+        ((MyViewHolder) holder).av_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

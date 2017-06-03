@@ -20,13 +20,13 @@
             app:contentScrim="@color/colorPrimary"
             app:expandedTitleMarginStart="100dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
-
-        <com.play.zv.seamountain.widget.RatioImageView
-            app:is_height_fix_drawable_size_ratio="true"
+            <!--app:is_height_fix_drawable_size_ratio="true"-->
+        <ImageView
+            android:scaleType="centerCrop"
             android:fitsSystemWindows="true"
             android:id="@+id/avcover"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="250dp"
             android:transitionName="avcover"
             app:layout_collapseMode="parallax"
             app:layout_collapseParallaxMultiplier="0.7"
