@@ -15,6 +15,7 @@ import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.adapter.ViewPagerAdapter;
 
 
+import com.play.zv.seamountain.view.fragment.AvFragment;
 import com.play.zv.seamountain.view.fragment.GrilFragment;
 import com.play.zv.seamountain.view.fragment.MovieFragment;
 import com.play.zv.seamountain.view.fragment.NewsFragment;
@@ -69,8 +70,9 @@ public class MainActivity extends AppCompatActivity  {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new GrilFragment());
         adapter.addFragment(new MovieFragment());
-        adapter.addFragment(new NewsFragment());
-        //adapter.addFragment(new AvFragment());
+
+        //adapter.addFragment(new NewsFragment());
+        adapter.addFragment(new AvFragment());
         viewPager.setAdapter(adapter);
     }
 }

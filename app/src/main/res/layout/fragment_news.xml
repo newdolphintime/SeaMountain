@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/grid_coordinatorLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    >
 
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/serchlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <EditText
             android:id="@+id/avnum"
             android:layout_weight="1"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="30dp"
 
             android:background="@drawable/edittextstyle"/>
         <Button
+            android:layout_toRightOf="@id/avnum"
             android:id="@+id/serch"
             android:background="#000000"
             android:text="搜索"
             android:textColor="#ffffff"
             android:layout_weight="4"
-            android:layout_width="match_parent"
-            android:layout_height="35dp" />
+            android:layout_width="50dp"
+            android:layout_height="30dp" />
 
-    </LinearLayout>
+    </RelativeLayout>
     <ImageView
 
         android:id="@+id/avcover"
@@ -34,4 +39,4 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

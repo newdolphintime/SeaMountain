@@ -6,9 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.orhanobut.logger.Logger;
 import com.play.zv.seamountain.api.AvjsoupApi.Magnet;
+import com.play.zv.seamountain.api.AvjsoupApi.MovieInfo;
 import com.play.zv.seamountain.api.AvjsoupApi.Star;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,7 +43,7 @@ public class AvDataHelper {
 
     }
 
-    public static List<Magnet> findmagnet(String id,  Context context) {
+    public static List<Magnet> findmagnet(String id, Context context) {
         mContext = context;
         List<Magnet> magnetList = new ArrayList<Magnet>();
         Magnet magnet;
@@ -99,16 +101,16 @@ public class AvDataHelper {
         if (cursor.moveToFirst()) {
 
             star = new Star();
-           String  avstarname = cursor.getString(cursor.getColumnIndex("avstarname"));
-            String  age = cursor.getString(cursor.getColumnIndex("age"));
-            String  birthday = cursor.getString(cursor.getColumnIndex("birthday"));
-            String  bust = cursor.getString(cursor.getColumnIndex("bust"));
-            String  cup = cursor.getString(cursor.getColumnIndex("cup"));
-            String  height = cursor.getString(cursor.getColumnIndex("height"));
-            String  hips = cursor.getString(cursor.getColumnIndex("hips"));
-            String  hometown = cursor.getString(cursor.getColumnIndex("hometown"));
-            String  waist = cursor.getString(cursor.getColumnIndex("waist"));
-            String  image = cursor.getString(cursor.getColumnIndex("image"));
+            String avstarname = cursor.getString(cursor.getColumnIndex("avstarname"));
+            String age = cursor.getString(cursor.getColumnIndex("age"));
+            String birthday = cursor.getString(cursor.getColumnIndex("birthday"));
+            String bust = cursor.getString(cursor.getColumnIndex("bust"));
+            String cup = cursor.getString(cursor.getColumnIndex("cup"));
+            String height = cursor.getString(cursor.getColumnIndex("height"));
+            String hips = cursor.getString(cursor.getColumnIndex("hips"));
+            String hometown = cursor.getString(cursor.getColumnIndex("hometown"));
+            String waist = cursor.getString(cursor.getColumnIndex("waist"));
+            String image = cursor.getString(cursor.getColumnIndex("image"));
             Logger.d(image);
 
 
@@ -128,4 +130,47 @@ public class AvDataHelper {
 
     }
 
+    public static List<MovieInfo> findmovieinfos(Context context) {
+        MovieInfo movieInfo = null;
+        Star star;
+        List<MovieInfo> movieInfos = new ArrayList<MovieInfo>();
+
+        mContext = context;
+        javbusDBOpenHelper = new JavbusDBOpenHelper(mContext, "javbus.db", null, 2);
+
+        SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM movieinfo ", new String[]{});
+        //存在数据才返回true
+//        CREATE TABLE avstars(avstarname varchar(100) PRIMARY KEY,age varchar(10),birthday varchar(20),bust varchar(10),
+//                cup varchar(10),height varchar(10),hips varchar(10),hometown varchar(100),
+//                image varchar(500),waist varchar(10));
+        while (cursor.moveToNext()) {
+            List<Star> starList = new ArrayList<Star>();
+            movieInfo = new MovieInfo();
+            star = new Star();
+            String avnum = cursor.getString(cursor.getColumnIndex("avnum"));
+            String cover = cursor.getString(cursor.getColumnIndex("cover"));
+            String runtime = cursor.getString(cursor.getColumnIndex("runtime"));
+            String title = cursor.getString(cursor.getColumnIndex("title"));
+            String stars = cursor.getString(cursor.getColumnIndex("stars"));
+
+
+            movieInfo.setNum(avnum);
+            movieInfo.setCover(cover);
+            movieInfo.setRunTime(runtime);
+            movieInfo.setTitle(title);
+            for (String starname : Arrays.asList(stars.split(","))) {
+
+                star.setName(starname);
+                starList.add(star);
+            }
+            movieInfo.setStars(starList);
+
+            movieInfos.add(movieInfo);
+
+        }
+        cursor.close();
+        return movieInfos;
+
+    }
 }

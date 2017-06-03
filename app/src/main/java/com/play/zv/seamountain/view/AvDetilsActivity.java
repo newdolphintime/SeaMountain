@@ -89,7 +89,7 @@ public class AvDetilsActivity extends AppCompatActivity {
 
         String avCover = AvDataHelper.findMovie(mAvnum, "cover", mContext);
 
-        Glide.with(mContext).load(avCover).centerCrop().
+        Glide.with(mContext).load(avCover).fitCenter().
                 diskCacheStrategy(DiskCacheStrategy.SOURCE).into(avcover);
         Logger.d(avCover);
         avnum.setText(mAvnum);

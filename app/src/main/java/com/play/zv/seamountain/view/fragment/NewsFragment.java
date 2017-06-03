@@ -14,9 +14,16 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -57,6 +64,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
     private View view;
 
 
+
     @Override
     public View initViews() {
         view = View.inflate(mActivity, R.layout.fragment_news, null);
@@ -66,6 +74,9 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
         //avcardList.setLayoutManager(mLayoutManager);
         serch = (Button) view.findViewById(R.id.serch);
         avcover = (ImageView) view.findViewById(R.id.avcover);
+
+
+
 
         avcover.setOnClickListener(new OnClickListener() {
             @Override
@@ -97,9 +108,11 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
                     loadData(avnum.getText().toString().toUpperCase().trim());
                     initData();
                 }
+
+
             }
         });
-        avvp = (ViewPager) view.findViewById(R.id.avvp);
+        //avvp = (ViewPager) view.findViewById(R.id.avvp);
         javbusDBOpenHelper = new JavbusDBOpenHelper(mActivity, "javbus.db", null, 2);
         return view;
 

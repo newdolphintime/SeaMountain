@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="1dp"
+    app:cardElevation="1dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:scaleType="centerCrop"
+            android:id="@+id/av_back"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+
+
+
+            <ImageView
+                android:adjustViewBounds="true"
+                android:layout_marginLeft="5dp"
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop"
+                android:id="@+id/av_cover"
+                android:layout_width="155dp"
+                android:layout_height="100dp" />
+
+
+        <RelativeLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/av_cover">
+
+            <com.play.zv.seamountain.widget.CustomerTextView
+                android:textSize="20dp"
+                android:id="@+id/av_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+
+
+                android:lines="1"
+                android:text="标题" />
+
+            <com.play.zv.seamountain.widget.CustomerTextView
+                android:id="@+id/av_runtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/av_title"
+
+
+                android:layout_marginTop="15dp"
+                android:text="时间" />
+
+            <com.play.zv.seamountain.widget.CustomerTextView
+                android:id="@+id/av_stars"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/av_runtime"
+                android:layout_marginTop="15dp"
+
+
+                android:lines="1"
+                android:text="时间" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>
