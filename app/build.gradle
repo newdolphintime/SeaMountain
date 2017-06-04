@@ -22,6 +22,7 @@ android {
 allprojects {
     repositories {
         maven { url "https://jitpack.io" }
+        maven { url 'https://github.com/500px/500px-android-blur/raw/master/releases/' }
     }
 }
 dependencies {
@@ -60,8 +61,8 @@ dependencies {
 
     compile 'com.arialyy.aria:Aria:3.1.1'
 
-    compile 'com.balysv:material-ripple:1.0.2'
+    compile 'com.github.igalata:Bubble-Picker:v0.2.4'
 
-
+    compile 'com.fivehundredpx:blurringview:1.0.0'
 
 }

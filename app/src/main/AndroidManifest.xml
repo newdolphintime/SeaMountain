@@ -30,6 +30,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".view.AvDetilsActivity"/>
         <activity android:name=".view.StarDetailActivity"/>
+        <activity android:name=".view.FindAvActivity"/>
     </application>
 
 </manifest>

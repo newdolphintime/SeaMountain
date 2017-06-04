@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    >
+
+
+
+    <LinearLayout
+        android:id="@+id/serchlayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/avnum"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:background="@drawable/edittextstyle" />
+
+        <Button
+            android:id="@+id/serch"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/avnum"
+            android:layout_weight="4"
+            android:background="#000000"
+            android:text="搜索"
+            android:textColor="#ffffff" />
+
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/avcover"
+        android:transitionName="avcover"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>

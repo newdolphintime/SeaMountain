@@ -2,6 +2,7 @@ package com.play.zv.seamountain.view.fragment;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.play.zv.seamountain.adapter.AvAdapter;
 import com.play.zv.seamountain.api.AvjsoupApi.MovieInfo;
 import com.play.zv.seamountain.db.AvDataHelper;
 import com.play.zv.seamountain.view.AvDetilsActivity;
+import com.play.zv.seamountain.view.FindAvActivity;
 
 import java.util.List;
 
@@ -21,6 +23,7 @@ import java.util.List;
  */
 
 public class AvFragment extends BaseFragment {
+    private FloatingActionButton floatingActionButton;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView recyclerView;
     private AvAdapter avAdapter;
@@ -31,7 +34,15 @@ public class AvFragment extends BaseFragment {
         mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         // new GridLayoutManager(mActivity, 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
+        floatingActionButton = (FloatingActionButton) view.findViewById(R.id.fab);
 
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mActivity, FindAvActivity.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 

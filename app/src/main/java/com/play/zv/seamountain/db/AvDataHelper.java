@@ -173,4 +173,69 @@ public class AvDataHelper {
         return movieInfos;
 
     }
+
+    public static List<Star> findstars( Context context) {
+        Star star = null;
+        List<Star> starList = new ArrayList<>();
+        mContext = context;
+        javbusDBOpenHelper = new JavbusDBOpenHelper(mContext, "javbus.db", null, 2);
+
+        SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from avstars ", new String[]{});
+        //存在数据才返回true
+//        CREATE TABLE avstars(avstarname varchar(100) PRIMARY KEY,age varchar(10),birthday varchar(20),bust varchar(10),
+//                cup varchar(10),height varchar(10),hips varchar(10),hometown varchar(100),
+//                image varchar(500),waist varchar(10));
+        while (cursor.moveToNext()) {
+
+            star = new Star();
+            String avstarname = cursor.getString(cursor.getColumnIndex("avstarname"));
+            String age = cursor.getString(cursor.getColumnIndex("age"));
+            String birthday = cursor.getString(cursor.getColumnIndex("birthday"));
+            String bust = cursor.getString(cursor.getColumnIndex("bust"));
+            String cup = cursor.getString(cursor.getColumnIndex("cup"));
+            String height = cursor.getString(cursor.getColumnIndex("height"));
+            String hips = cursor.getString(cursor.getColumnIndex("hips"));
+            String hometown = cursor.getString(cursor.getColumnIndex("hometown"));
+            String waist = cursor.getString(cursor.getColumnIndex("waist"));
+            String image = cursor.getString(cursor.getColumnIndex("image"));
+            Logger.d(image);
+
+
+            star.setName(avstarname);
+            star.setAge(age);
+            star.setBirthday(birthday);
+            star.setBust(bust);
+            star.setCup(cup);
+            star.setHeight(height);
+            star.setHips(hips);
+            star.setHometown(hometown);
+            star.setWaist(waist);
+            star.setImage(image);
+            starList.add(star);
+        }
+        cursor.close();
+        return starList;
+
+    }
+
+    //"previews"
+    public String findMovie(String id, String cloumn) {
+        String name = "";
+        SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM movieinfo where avnum = ?", new String[]{id});
+        //存在数据才返回true
+
+        if (cursor.moveToFirst()) {
+            if (name.trim().isEmpty()) {
+                name = cursor.getString(cursor.getColumnIndex(cloumn));
+            } else {
+                name = name + cursor.getString(cursor.getColumnIndex(cloumn));
+            }
+
+        }
+        cursor.close();
+        return name;
+
+    }
 }
