@@ -148,9 +148,14 @@ public class AvDetilsActivity extends AppCompatActivity {
             addCard(magnetList);
         }
 
-        List<String> previews = Arrays.asList(AvDataHelper.findMovie(mAvnum, "previews",mContext).split(","));
-        previewAdapter = new PreviewAdapter(mContext,previews);
-        gridView.setAdapter(previewAdapter);
+        List<String> previews = Arrays.asList(AvDataHelper.findMovie(mAvnum, "previews", mContext).split(","));
+        Logger.d(previews.get(0));
+        previewAdapter = new PreviewAdapter(mContext, previews);
+        if (!previews.get(0).isEmpty()) {
+            gridView.setVisibility(View.VISIBLE);
+            gridView.setAdapter(previewAdapter);
+        }
+
     }
 
     private void parseIntent() {
@@ -255,12 +260,12 @@ public class AvDetilsActivity extends AppCompatActivity {
             myrelativeLayout.addView(customerTextView);
             myrelativeLayout.addView(customerTextView2);
             Logger.d(magnets.get(i).getIsHD());
-            if(magnets.get(i).getIsHD()){
+            if (magnets.get(i).getIsHD()) {
                 RelativeLayout.LayoutParams cuslayoutParams3 =
                         new RelativeLayout.LayoutParams(dip2px(mContext, 24), dip2px(mContext, 24));
                 ImageView HDimageView = new ImageView(mContext);
                 cuslayoutParams3.addRule(RelativeLayout.CENTER_VERTICAL);
-                cuslayoutParams3.addRule(RelativeLayout.RIGHT_OF,TAG1401);
+                cuslayoutParams3.addRule(RelativeLayout.RIGHT_OF, TAG1401);
                 cuslayoutParams3.leftMargin = dip2px(mContext, 10);
                 HDimageView.setImageResource(R.drawable.hd_icon);
                 HDimageView.setLayoutParams(cuslayoutParams3);
