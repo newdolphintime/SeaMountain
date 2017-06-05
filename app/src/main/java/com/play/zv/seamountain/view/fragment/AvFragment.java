@@ -112,5 +112,9 @@ public class AvFragment extends BaseFragment {
         });
     }
 
-
+    @Override
+    public void onResume() {
+        loadData();
+        super.onResume();
+    }
 }
