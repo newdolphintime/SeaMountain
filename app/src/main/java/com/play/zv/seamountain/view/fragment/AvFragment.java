@@ -114,6 +114,7 @@ public class AvFragment extends BaseFragment {
 
     @Override
     public void onResume() {
+        Logger.d("onresume");
         loadData();
         super.onResume();
     }
