@@ -61,8 +61,6 @@ dependencies {
 
     compile 'com.arialyy.aria:Aria:3.1.1'
 
-    compile 'com.github.igalata:Bubble-Picker:v0.2.4'
 
-    compile 'com.fivehundredpx:blurringview:1.0.0'
 
 }

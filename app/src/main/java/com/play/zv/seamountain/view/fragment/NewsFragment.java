@@ -27,7 +27,7 @@ import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.fivehundredpx.android.blur.BlurringView;
+
 import com.orhanobut.logger.Logger;
 import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.adapter.AVViewPagerAdapter;
@@ -181,8 +181,6 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
             List<String> previews = Arrays.asList(findMovie(avnum, "previews").split(","));
             //avvp.setAdapter(avViewPagerAdapter = new AVViewPagerAdapter(previews, mActivity));
         }
-
-
     }
 
     @Override

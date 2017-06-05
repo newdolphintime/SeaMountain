@@ -19,11 +19,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.fivehundredpx.android.blur.BlurringView;
-import com.igalata.bubblepicker.adapter.BubblePickerAdapter;
-import com.igalata.bubblepicker.model.BubbleGradient;
-import com.igalata.bubblepicker.model.PickerItem;
-import com.igalata.bubblepicker.rendering.BubblePicker;
+
 import com.orhanobut.logger.Logger;
 import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.adapter.AVViewPagerAdapter;
@@ -37,7 +33,6 @@ import com.play.zv.seamountain.presenter.JavPresenter;
 import com.play.zv.seamountain.view.IviewBind.IJavFragment;
 import com.play.zv.seamountain.widget.ToastUtils;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;

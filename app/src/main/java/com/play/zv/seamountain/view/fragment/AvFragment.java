@@ -43,18 +43,16 @@ public class AvFragment extends BaseFragment {
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.fab);
 
 
-//        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.av_swipe_refresh);
-//        swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                if (movieinfos != null) {
-//                    movieinfos.clear();
-//                }
-//                loadData();
-//                swipeRefreshLayout.setRefreshing(false);
-//            }
-//        });
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.av_swipe_refresh);
+        swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                loadData();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         return view;
     }
 
@@ -70,17 +68,16 @@ public class AvFragment extends BaseFragment {
         });
     }
 
-   public void  loadData(){
-       mActivity.runOnUiThread(new Runnable() {
-           @Override
-           public void run() {
-               movieinfos = AvDataHelper.findmovieinfos(mActivity);
-               recyclerView.setAdapter(avAdapter);
-           }
-       });
+    public void loadData() {
 
-   }
+        mLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        // new GridLayoutManager(mActivity, 2, GridLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(mLayoutManager);
+        movieinfos = AvDataHelper.findmovieinfos(mActivity);
+        recyclerView.setAdapter(avAdapter = new AvAdapter(mActivity, movieinfos));
 
+
+    }
 
 
     @Override
