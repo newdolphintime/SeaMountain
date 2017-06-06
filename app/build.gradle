@@ -61,6 +61,8 @@ dependencies {
 
     compile 'com.arialyy.aria:Aria:3.1.1'
 
+    compile 'com.blankj:utilcode:1.6.4'
+
 
 
 }

@@ -74,7 +74,6 @@ public class AvFragment extends BaseFragment {
         // new GridLayoutManager(mActivity, 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
         movieinfos = AvDataHelper.findmovieinfos(mActivity);
-        Logger.d(movieinfos);
         recyclerView.setAdapter(avAdapter = new AvAdapter(mActivity, movieinfos));
         avAdapter.setOnItemClickListener(new AvAdapter.OnRecyclerViewItemClickListener() {
 
@@ -108,7 +107,7 @@ public class AvFragment extends BaseFragment {
             recyclerView.setAdapter(avAdapter = new AvAdapter(mActivity, movieinfos));
         } else {
             avAdapter.notifyDataSetChanged();
-            Logger.d("heheheheheheh");
+            //Logger.d("heheheheheheh");
         }
         avAdapter.setOnItemClickListener(new AvAdapter.OnRecyclerViewItemClickListener() {
 
