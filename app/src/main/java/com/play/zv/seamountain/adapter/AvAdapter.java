@@ -141,7 +141,7 @@ public class AvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
     @Override
     public int getItemCount() {
-        Logger.d(movieInfo.size());
+        //Logger.d(movieInfo.size());
         return movieInfo.size();
     }
 }

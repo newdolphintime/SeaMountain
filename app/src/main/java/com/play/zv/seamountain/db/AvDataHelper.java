@@ -147,7 +147,7 @@ public class AvDataHelper {
         while (cursor.moveToNext()) {
             List<Star> starList = new ArrayList<Star>();
             movieInfo = new MovieInfo();
-            star = new Star();
+
             String avnum = cursor.getString(cursor.getColumnIndex("avnum"));
             String cover = cursor.getString(cursor.getColumnIndex("cover"));
             String runtime = cursor.getString(cursor.getColumnIndex("runtime"));
@@ -159,11 +159,15 @@ public class AvDataHelper {
             movieInfo.setCover(cover);
             movieInfo.setRunTime(runtime);
             movieInfo.setTitle(title);
-            for (String starname : Arrays.asList(stars.split(","))) {
 
+            List<String> starnameList=Arrays.asList(stars.split(","));
+
+            for (String starname : starnameList) {
+                star = new Star();
                 star.setName(starname);
                 starList.add(star);
             }
+            Logger.d(starList);
             movieInfo.setStars(starList);
 
             movieInfos.add(movieInfo);

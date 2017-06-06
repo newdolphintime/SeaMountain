@@ -74,6 +74,7 @@ public class AvFragment extends BaseFragment {
         // new GridLayoutManager(mActivity, 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
         movieinfos = AvDataHelper.findmovieinfos(mActivity);
+        Logger.d(movieinfos);
         recyclerView.setAdapter(avAdapter = new AvAdapter(mActivity, movieinfos));
 
 
