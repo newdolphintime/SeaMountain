@@ -167,7 +167,7 @@ public class AvDataHelper {
                 star.setName(starname);
                 starList.add(star);
             }
-            Logger.d(starList);
+            //Logger.d(starList);
             movieInfo.setStars(starList);
 
             movieInfos.add(movieInfo);

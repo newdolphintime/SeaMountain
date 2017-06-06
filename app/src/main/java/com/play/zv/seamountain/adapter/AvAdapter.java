@@ -95,6 +95,8 @@ public class AvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .placeholder(R.color.imageColorPlaceholder)
 
+                .fitCenter()
+
                 .into(((MyViewHolder) holder).av_cover);
         Glide.with(context)
                 .load(movieInfo.get(position).getCover())

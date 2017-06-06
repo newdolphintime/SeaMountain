@@ -19,15 +19,22 @@
             android:layout_height="150dp" />
 
 
-
-            <ImageView
-                android:adjustViewBounds="true"
+            <RelativeLayout
+                android:id="@+id/av_relatiavelayout"
                 android:layout_marginLeft="5dp"
                 android:layout_centerVertical="true"
-                android:scaleType="centerCrop"
-                android:id="@+id/av_cover"
                 android:layout_width="155dp"
-                android:layout_height="100dp" />
+                android:layout_height="100dp">
+                <ImageView
+
+
+
+                    android:scaleType="centerCrop"
+                    android:id="@+id/av_cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp" />
+            </RelativeLayout>
+
 
 
         <RelativeLayout
@@ -36,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@id/av_cover">
+            android:layout_toRightOf="@id/av_relatiavelayout">
 
             <com.play.zv.seamountain.widget.CustomerTextView
                 android:textSize="20dp"

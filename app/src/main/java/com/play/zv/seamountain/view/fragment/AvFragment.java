@@ -76,7 +76,24 @@ public class AvFragment extends BaseFragment {
         movieinfos = AvDataHelper.findmovieinfos(mActivity);
         Logger.d(movieinfos);
         recyclerView.setAdapter(avAdapter = new AvAdapter(mActivity, movieinfos));
+        avAdapter.setOnItemClickListener(new AvAdapter.OnRecyclerViewItemClickListener() {
 
+
+            @Override
+            public void onItemClick(String avnum, View view) {
+                Intent i = new Intent(mActivity, AvDetilsActivity.class);
+                i.putExtra(AvDetilsActivity.AVNUM, avnum);
+                //共享元素转场动画
+                startActivity(i, ActivityOptions.makeSceneTransitionAnimation(mActivity, view, "avcover").toBundle());
+            }
+
+            @Override
+            public void onItemLongClick(View view) {
+
+            }
+
+
+        });
 
     }
 

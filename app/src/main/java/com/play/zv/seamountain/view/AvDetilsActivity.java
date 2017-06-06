@@ -17,6 +17,7 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -68,6 +69,7 @@ public class AvDetilsActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.av_detail_activity);
+        postponeEnterTransition();
         mContext = getApplicationContext();
 
         avcover = (ImageView) findViewById(R.id.avcover);
@@ -88,10 +90,16 @@ public class AvDetilsActivity extends AppCompatActivity {
         parseIntent();
 
         String avCover = AvDataHelper.findMovie(mAvnum, "cover", mContext);
-
-        Glide.with(mContext).load(avCover).fitCenter().
-                diskCacheStrategy(DiskCacheStrategy.SOURCE).into(avcover);
+        /*
+        * 20170606
+        * 共享元素动画一直出现一条缝隙  我加了一个asBitmap()   奇迹的好了  。。待看
+        *
+        * */
+        Glide.with(mContext).load(avCover).asBitmap().fitCenter().
+                diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(avcover);
         Logger.d(avCover);
+        scheduleStartPostponedTransition(avcover);
         avnum.setText(mAvnum);
 
         String avName = AvDataHelper.findMovie(mAvnum, "title", mContext);
@@ -311,5 +319,17 @@ public class AvDetilsActivity extends AppCompatActivity {
         ta.recycle();
         return selectedItemDrawable;
     }
+    private void scheduleStartPostponedTransition(final View sharedElement) {
+        sharedElement.getViewTreeObserver().addOnPreDrawListener(
+                new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        sharedElement.getViewTreeObserver().removeOnPreDrawListener(this);
+                        startPostponedEnterTransition();
+                        return true;
+                    }
+                });
+    }
+
 
 }
