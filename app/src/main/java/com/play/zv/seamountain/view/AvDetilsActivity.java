@@ -40,6 +40,7 @@ import com.play.zv.seamountain.api.AvjsoupApi.Star;
 import com.play.zv.seamountain.db.AvDataHelper;
 import com.play.zv.seamountain.widget.CustomerTextView;
 import com.play.zv.seamountain.widget.FontCache;
+import com.play.zv.seamountain.widget.SnackbarUtil;
 import com.play.zv.seamountain.widget.ToastUtils;
 
 import java.util.ArrayList;
@@ -79,7 +80,7 @@ public class AvDetilsActivity extends AppCompatActivity {
         setContentView(R.layout.av_detail_activity);
         postponeEnterTransition();
         mContext = getApplicationContext();
-        myClipboard = (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+        myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         avcover = (ImageView) findViewById(R.id.avcover);
         avnum = (TextView) findViewById(R.id.avnum);
         mcensored = (TextView) findViewById(R.id.censored);
@@ -311,14 +312,15 @@ public class AvDetilsActivity extends AppCompatActivity {
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ToastUtils.showToast(mContext, magnetUrl);
+                    //ToastUtils.showToast(mContext, magnetUrl);
 
                     myClip = ClipData.newPlainText("text", magnetUrl);
                     myClipboard.setPrimaryClip(myClip);
 
-                  Snackbar.make(view, "磁力链接已经复制到剪贴板", duration)
-
-                           .show();
+//                  Snackbar.make(view, "磁力链接已经复制到剪贴板", duration)
+//
+//                           .show();
+                    SnackbarUtil.ShortSnackbar(view, "磁力链接已经复制到剪贴板", Color.BLACK, Color.WHITE).show();
                 }
             });
 
@@ -334,6 +336,7 @@ public class AvDetilsActivity extends AppCompatActivity {
         ta.recycle();
         return selectedItemDrawable;
     }
+
     private void scheduleStartPostponedTransition(final View sharedElement) {
         sharedElement.getViewTreeObserver().addOnPreDrawListener(
                 new ViewTreeObserver.OnPreDrawListener() {
