@@ -2,6 +2,8 @@ package com.play.zv.seamountain.view;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -11,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.Display;
@@ -25,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.blankj.utilcode.util.ClipboardUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gyf.barlibrary.ImmersionBar;
@@ -43,6 +47,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+
+import static android.R.attr.duration;
 
 /**
  * Created by Zv on 2017/05/27.
@@ -63,6 +69,8 @@ public class AvDetilsActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
     private LinearLayout megnetlinearLayout;
     private PreviewAdapter previewAdapter;
+    private ClipboardManager myClipboard;
+    private ClipData myClip;
 
 
     @Override
@@ -71,7 +79,7 @@ public class AvDetilsActivity extends AppCompatActivity {
         setContentView(R.layout.av_detail_activity);
         postponeEnterTransition();
         mContext = getApplicationContext();
-
+        myClipboard = (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
         avcover = (ImageView) findViewById(R.id.avcover);
         avnum = (TextView) findViewById(R.id.avnum);
         mcensored = (TextView) findViewById(R.id.censored);
@@ -303,7 +311,14 @@ public class AvDetilsActivity extends AppCompatActivity {
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //ToastUtils.showToast(mContext, magnetUrl);
+                    ToastUtils.showToast(mContext, magnetUrl);
+
+                    myClip = ClipData.newPlainText("text", magnetUrl);
+                    myClipboard.setPrimaryClip(myClip);
+
+                  Snackbar.make(view, "磁力链接已经复制到剪贴板", duration)
+
+                           .show();
                 }
             });
 
