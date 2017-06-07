@@ -61,58 +61,7 @@
             android:textSize="15dp" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/infolayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <FrameLayout
-            android:id="@+id/container_photo_details_center"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:layout_centerHorizontal="true" />
-
-        <RelativeLayout
-            android:id="@+id/starnamezone"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-
-            android:layout_toLeftOf="@id/container_photo_details_center"
-            android:background="?attr/selectableItemBackground">
-
-
-
-            <TextView
-                android:id="@+id/censored"
-                android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                android:layout_centerInParent="true"
-                android:text="天海"
-                android:textColor="#757575"
-                android:textSize="16sp" />
-
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/runtimezone"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-
-            android:layout_toRightOf="@id/container_photo_details_center"
-            android:background="?attr/selectableItemBackground">
-
-            <TextView
-                android:id="@+id/runtime"
-                android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                android:layout_centerInParent="true"
-
-
-                android:text="天海"
-                android:textColor="#757575"
-                android:textSize="16sp" />
-
-        </RelativeLayout>
-    </RelativeLayout>
     <com.play.zv.seamountain.widget.MeasureGridView
         android:visibility="gone"
         android:layout_gravity="center_horizontal"

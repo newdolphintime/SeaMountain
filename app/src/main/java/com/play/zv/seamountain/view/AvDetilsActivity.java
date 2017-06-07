@@ -86,8 +86,8 @@ public class AvDetilsActivity extends AppCompatActivity {
         myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         avcover = (ImageView) findViewById(R.id.avcover);
         avnum = (TextView) findViewById(R.id.avnum);
-        mcensored = (TextView) findViewById(R.id.censored);
-        mruntime = (TextView) findViewById(R.id.runtime);
+//        mcensored = (TextView) findViewById(R.id.censored);
+//        mruntime = (TextView) findViewById(R.id.runtime);
         avname = (TextView) findViewById(R.id.avname);
         linearLayout = (LinearLayout) findViewById(R.id.starlayout);
         nestedScrollView = (HorizontalScrollView) findViewById(R.id.av_star_scroll);
@@ -117,8 +117,8 @@ public class AvDetilsActivity extends AppCompatActivity {
 
         String avName = AvDataHelper.findMovie(mAvnum, "title", mContext);
         avname.setText(avName);
-        mcensored.setText(AvDataHelper.findMovie(mAvnum, "censored", mContext));
-        mruntime.setText(AvDataHelper.findMovie(mAvnum, "runtime", mContext));
+        //mcensored.setText(AvDataHelper.findMovie(mAvnum, "censored", mContext));
+        //mruntime.setText(AvDataHelper.findMovie(mAvnum, "runtime", mContext));
 
         //多个starlist
         String starsname = AvDataHelper.findMovie(mAvnum, "stars", mContext);
