@@ -108,7 +108,7 @@ public class AvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ((MyViewHolder) holder).av_title.setText(movieInfo.get(position).getNum());
 
         ((MyViewHolder) holder).av_runtime.setText(movieInfo.get(position).getRunTime());
-        if (movieInfo.get(position).getStars().toString() != null) {
+        if (movieInfo.get(position).getStars() != null) {
             ((MyViewHolder) holder).av_stars.setText(getStarsName(movieInfo.get(position).getStars()));
         }else{
             ((MyViewHolder) holder).av_stars.setText("暂无");

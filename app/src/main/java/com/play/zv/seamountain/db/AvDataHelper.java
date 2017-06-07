@@ -159,17 +159,17 @@ public class AvDataHelper {
             movieInfo.setCover(cover);
             movieInfo.setRunTime(runtime);
             movieInfo.setTitle(title);
+            if (stars != null) {
+                List<String> starnameList = Arrays.asList(stars.split(","));
 
-            List<String> starnameList=Arrays.asList(stars.split(","));
-
-            for (String starname : starnameList) {
-                star = new Star();
-                star.setName(starname);
-                starList.add(star);
+                for (String starname : starnameList) {
+                    star = new Star();
+                    star.setName(starname);
+                    starList.add(star);
+                }
+                //Logger.d(starList);
+                movieInfo.setStars(starList);
             }
-            //Logger.d(starList);
-            movieInfo.setStars(starList);
-
             movieInfos.add(movieInfo);
 
         }
@@ -178,7 +178,7 @@ public class AvDataHelper {
 
     }
 
-    public static List<Star> findstars( Context context) {
+    public static List<Star> findstars(Context context) {
         Star star = null;
         List<Star> starList = new ArrayList<>();
         mContext = context;

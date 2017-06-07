@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.Display;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.GridView;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -72,6 +74,7 @@ public class AvDetilsActivity extends AppCompatActivity {
     private PreviewAdapter previewAdapter;
     private ClipboardManager myClipboard;
     private ClipData myClip;
+    private HorizontalScrollView nestedScrollView;
 
 
     @Override
@@ -87,6 +90,7 @@ public class AvDetilsActivity extends AppCompatActivity {
         mruntime = (TextView) findViewById(R.id.runtime);
         avname = (TextView) findViewById(R.id.avname);
         linearLayout = (LinearLayout) findViewById(R.id.starlayout);
+        nestedScrollView = (HorizontalScrollView) findViewById(R.id.av_star_scroll);
         megnetlinearLayout = (LinearLayout) findViewById(R.id.megnetLayout);
         gridView = (GridView) findViewById(R.id.gridpreview);
 
