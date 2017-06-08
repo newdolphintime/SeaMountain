@@ -3,12 +3,18 @@ package com.play.zv.seamountain.db;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 
 import com.orhanobut.logger.Logger;
 import com.play.zv.seamountain.api.AvjsoupApi.Magnet;
 import com.play.zv.seamountain.api.AvjsoupApi.MovieInfo;
 import com.play.zv.seamountain.api.AvjsoupApi.Star;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -242,4 +248,45 @@ public class AvDataHelper {
         return name;
 
     }
+
+    /**
+     * 拷贝数据库到sd卡
+     *
+     * @deprecated <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+     */
+    public static void copyDataBaseToSD(Context context) {
+        mContext = context;
+        if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            return;
+        }
+        File dbFile = new File(mContext.getDatabasePath("javbus") + ".db");
+        File file = new File(Environment.getExternalStorageDirectory(), "javbus.db");
+
+        FileChannel inChannel = null, outChannel = null;
+
+        try {
+            file.createNewFile();
+            inChannel = new FileInputStream(dbFile).getChannel();
+            outChannel = new FileOutputStream(file).getChannel();
+            inChannel.transferTo(0, inChannel.size(), outChannel);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        } finally {
+            try {
+                if (inChannel != null) {
+                    inChannel.close();
+                    inChannel = null;
+                }
+                if (outChannel != null) {
+                    outChannel.close();
+                    outChannel = null;
+                }
+            } catch (IOException e) {
+
+                e.printStackTrace();
+            }
+        }
+    }
+
 }
