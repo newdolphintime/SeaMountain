@@ -252,7 +252,7 @@ public class AvDataHelper {
     /**
      * 拷贝数据库到sd卡
      *
-     * @deprecated <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+     *
      */
     public static void copyDataBaseToSD(Context context) {
         mContext = context;
@@ -268,6 +268,46 @@ public class AvDataHelper {
             file.createNewFile();
             inChannel = new FileInputStream(dbFile).getChannel();
             outChannel = new FileOutputStream(file).getChannel();
+            inChannel.transferTo(0, inChannel.size(), outChannel);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        } finally {
+            try {
+                if (inChannel != null) {
+                    inChannel.close();
+                    inChannel = null;
+                }
+                if (outChannel != null) {
+                    outChannel.close();
+                    outChannel = null;
+                }
+            } catch (IOException e) {
+
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 拷贝数据库到sd卡
+     *
+     *
+     */
+    public static void copySDToDataBase(Context context) {
+        mContext = context;
+        if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            return;
+        }
+        File dbFile = new File(mContext.getDatabasePath("javbus") + ".db");
+        File file = new File(Environment.getExternalStorageDirectory(), "javbus.db");
+
+        FileChannel inChannel = null, outChannel = null;
+
+        try {
+            file.createNewFile();
+            inChannel = new FileInputStream(file).getChannel();
+            outChannel = new FileOutputStream(dbFile).getChannel();
             inChannel.transferTo(0, inChannel.size(), outChannel);
         } catch (Exception e) {
 

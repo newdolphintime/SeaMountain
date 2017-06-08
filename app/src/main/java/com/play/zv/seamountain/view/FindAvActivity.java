@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -48,6 +49,9 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
     private EditText avnum;
     private JavbusDBOpenHelper javbusDBOpenHelper;
     private JavPresenter javPresenter = new JavPresenter(this);
+    private Button but_db2sd;
+    private Button but_sd2db;
+    private TextView tvpro;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +59,25 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
         serch = (Button) findViewById(R.id.serch);
         avcover = (ImageView) findViewById(R.id.avcover);
 
-
+        but_db2sd = (Button) findViewById(R.id.but_db2sd);
+        but_sd2db= (Button) findViewById(R.id.but_sd2db);
+        tvpro = (TextView) findViewById(R.id.tvpro);
+        but_db2sd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvpro.setText("正在导出");
+                AvDataHelper.copyDataBaseToSD(FindAvActivity.this);
+                tvpro.setText("导出成功");
+            }
+        });
+        but_sd2db.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvpro.setText("正在导出");
+                AvDataHelper.copySDToDataBase(FindAvActivity.this);
+                tvpro.setText("导出成功");
+            }
+        });
 
 
         avcover.setOnClickListener(new View.OnClickListener() {
