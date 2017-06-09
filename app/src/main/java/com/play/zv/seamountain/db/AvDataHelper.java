@@ -290,7 +290,7 @@ public class AvDataHelper {
     }
 
     /**
-     * 拷贝数据库到sd卡
+     * 拷贝sd卡中的数据库文件到数据库
      *
      *
      */
