@@ -305,6 +305,7 @@ public class AvDataHelper {
         FileChannel inChannel = null, outChannel = null;
 
         try {
+            //如果存在就不创建
             file.createNewFile();
             inChannel = new FileInputStream(file).getChannel();
             outChannel = new FileOutputStream(dbFile).getChannel();
