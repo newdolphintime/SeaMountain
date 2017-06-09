@@ -12,7 +12,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -56,7 +58,7 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_findav);
-        serch = (Button) findViewById(R.id.serch);
+//        serch = (Button) findViewById(R.id.serch);
         avcover = (ImageView) findViewById(R.id.avcover);
 
         but_db2sd = (Button) findViewById(R.id.but_db2sd);
@@ -101,18 +103,38 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
             }
         });
         avnum = (EditText) findViewById(R.id.avnum);
-        serch.setOnClickListener(new View.OnClickListener() {
+//        serch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (!avnum.getText().toString().trim().isEmpty()) {
+//                    ToastUtils.showToast(FindAvActivity.this, "开始给你翻网页");
+//                    Logger.d(avnum.getText().toString().trim());
+//                    loadData(avnum.getText().toString().toUpperCase().trim());
+//
+//                }
+//
+//
+//            }
+//        });
+        avnum.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public void onClick(View v) {
-                if (!avnum.getText().toString().trim().isEmpty()) {
-                    ToastUtils.showToast(FindAvActivity.this, "开始给你翻网页");
-                    Logger.d(avnum.getText().toString().trim());
-                    loadData(avnum.getText().toString().toUpperCase().trim());
+            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    // 先隐藏键盘
+                    ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                            .hideSoftInputFromWindow(FindAvActivity.this.getCurrentFocus()
+                                    .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    //进行搜索操作的方法，在该方法中可以加入mEditSearchUser的非空判断
+                    if (!avnum.getText().toString().trim().isEmpty()) {
+                        ToastUtils.showToast(FindAvActivity.this, "开始给你翻网页");
+                        Logger.d(avnum.getText().toString().trim());
+                        loadData(avnum.getText().toString().toUpperCase().trim());
 
+                    }
                 }
-
-
+                return false;
             }
+
         });
         javbusDBOpenHelper = new JavbusDBOpenHelper(FindAvActivity.this, "javbus.db", null, 2);
 

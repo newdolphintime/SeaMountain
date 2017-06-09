@@ -2,12 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    >
-
+    android:orientation="vertical">
 
 
     <LinearLayout
@@ -15,40 +13,44 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
+        <!--修改Editview属性：android:imeOptions="actionSearch"
 
+          在该Editview获得焦点的时候将“回车”键改为“搜索”
+
+          android:singleLine="true"
+
+          不然回车【搜索】会换行-->
         <EditText
+
             android:id="@+id/avnum"
             android:layout_width="250dp"
             android:layout_height="match_parent"
             android:layout_weight="6"
-            android:background="@drawable/edittextstyle" />
+            android:imeOptions="actionSearch"
+            android:singleLine="true"/>
 
-        <Button
-            android:id="@+id/serch"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@id/avnum"
-            android:layout_weight="4"
-            android:background="#000000"
-            android:text="搜索"
-            android:textColor="#ffffff" />
+
 
     </LinearLayout>
+
     <ImageView
         android:id="@+id/avcover"
-        android:transitionName="avcover"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:transitionName="avcover" />
+
     <Button
         android:id="@+id/but_db2sd"
-        android:text="拷贝数据库到SD卡"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="拷贝数据库到SD卡" />
+
     <Button
         android:id="@+id/but_sd2db"
-        android:text="拷贝SD卡到数据库"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="拷贝SD卡到数据库" />
+
     <TextView
         android:id="@+id/tvpro"
         android:layout_width="wrap_content"
