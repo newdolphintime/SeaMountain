@@ -36,6 +36,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gyf.barlibrary.ImmersionBar;
 import com.orhanobut.logger.Logger;
 import com.play.zv.seamountain.R;
+import com.play.zv.seamountain.adapter.AVViewPagerAdapter;
 import com.play.zv.seamountain.adapter.PreviewAdapter;
 import com.play.zv.seamountain.api.AvjsoupApi.Magnet;
 import com.play.zv.seamountain.api.AvjsoupApi.Star;
@@ -69,6 +70,7 @@ public class AvDetilsActivity extends AppCompatActivity {
     public String mAvnum;
     public static final String AVNUM = "av_num";
     public static final String STARNAME = "star_num";
+    public static final String AVPAGER_POSITION= "pager_position";
     private LinearLayout linearLayout;
     private LinearLayout megnetlinearLayout;
     private PreviewAdapter previewAdapter;
@@ -174,7 +176,17 @@ public class AvDetilsActivity extends AppCompatActivity {
         previewAdapter = new PreviewAdapter(mContext, previews);
         if (!previews.get(0).isEmpty()) {
             gridView.setVisibility(View.VISIBLE);
+            previewAdapter.setOnItemClickListener(new PreviewAdapter.OnPreviewClickListener() {
+                @Override
+                public void OnItemClick(int position) {
+                    Intent intent = new Intent(AvDetilsActivity.this, AvViewpagerActivity.class);
+                    intent.putExtra(AVNUM,mAvnum);
+                    intent.putExtra(AVPAGER_POSITION,position);
+                    startActivity(intent);
+                }
+            });
             gridView.setAdapter(previewAdapter);
+
         }
 
     }

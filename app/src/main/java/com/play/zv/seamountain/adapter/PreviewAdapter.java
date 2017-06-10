@@ -1,6 +1,7 @@
 package com.play.zv.seamountain.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +24,22 @@ public class PreviewAdapter extends BaseAdapter {
     LayoutInflater layoutInflater;
     Context context;
     List<String> preview;
-    public PreviewAdapter(Context context , List<String> preview){
+    private OnPreviewClickListener onPreviewClickListener = null;
+
+    public static interface OnPreviewClickListener {
+        void OnItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnPreviewClickListener onPreviewClickListener) {
+        this.onPreviewClickListener = onPreviewClickListener;
+    }
+
+    public PreviewAdapter(Context context, List<String> preview) {
         this.context = context;
         this.preview = preview;
         layoutInflater = LayoutInflater.from(context);
     }
+
     @Override
     public int getCount() {
         return preview.size();
@@ -45,7 +57,8 @@ public class PreviewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        View v = layoutInflater.inflate(R.layout.preview_imageview,null);
+        final int position = i;
+        View v = layoutInflater.inflate(R.layout.preview_imageview, null);
         ImageView previewimg = (ImageView) v.findViewById(R.id.previewimage);
 
         Glide.with(context).load(preview.get(i)).centerCrop().
@@ -54,6 +67,9 @@ public class PreviewAdapter extends BaseAdapter {
         previewimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (onPreviewClickListener != null) {
+                    onPreviewClickListener.OnItemClick(position);
+                }
 
             }
         });

@@ -160,7 +160,7 @@ public class GrilFragment extends BaseFragment implements IGrilFragment {
                     int position = recyclerview.getChildAdapterPosition(view);
                     //SnackbarUtil.ShortSnackbar(coordinatorLayout,"点击第"+position+"个",SnackbarUtil.Info).show();
                     startPictureActivity(grilview, url);
-                    Toast.makeText(mActivity, page + "", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mActivity, page + "", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override

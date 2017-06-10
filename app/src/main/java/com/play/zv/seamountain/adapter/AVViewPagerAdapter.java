@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
  */
 
 public class AVViewPagerAdapter extends PagerAdapter {
+
     List<String> avpreviewurls = null;
     Context mContext = null;
 
@@ -38,6 +40,7 @@ public class AVViewPagerAdapter extends PagerAdapter {
         ImageView iv = new ImageView(mContext);
         Glide.with(mContext)
                 .load(avpreviewurls.get(position).toString())
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(iv);
         container.addView(iv);
         return iv;

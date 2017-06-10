@@ -103,9 +103,9 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
                 Logger.d(FindAvActivity.this.getFilesDir().getAbsolutePath());
                 Logger.d(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath());
                 Logger.d(Environment.getExternalStorageState());
-                if (findMovie(mavnum, "stars") != null) {
-                    ToastUtils.showToast(FindAvActivity.this, findMovie(mavnum, "stars"));
-                }
+//                if (findMovie(mavnum, "stars") != null) {
+//                    ToastUtils.showToast(FindAvActivity.this, findMovie(mavnum, "stars"));
+//                }
                 //下载代码
 //                SimpleNotification notification = new
 //                        SimpleNotification(mActivity,
@@ -198,7 +198,7 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
         //Toast.makeText(mActivity,"得到网页数据开始加载",Toast.LENGTH_LONG).show();
         //avvp.setAdapter(avViewPagerAdapter = new AVViewPagerAdapter(movieInfo.getPreviews(), mActivity));
         Logger.d(movieInfo);
-        ToastUtils.showToast(FindAvActivity.this, "得到网页数据开始加载");
+
         SnackbarUtil.ShortSnackbar(view, "得到网页数据开始加载！", Color.BLACK, Color.WHITE).show();
         Glide.with(FindAvActivity.this).load(movieInfo.getCover()).
                 diskCacheStrategy(DiskCacheStrategy.SOURCE).into(avcover);
@@ -206,7 +206,7 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
 
     @Override
     public void getDataFail(String errCode, String errMsg) {
-        ToastUtils.showToast(FindAvActivity.this, errMsg);
+        //ToastUtils.showToast(FindAvActivity.this, errMsg);
         SnackbarUtil.ShortSnackbar(view, errMsg, Color.BLACK, Color.WHITE).show();
     }
 
