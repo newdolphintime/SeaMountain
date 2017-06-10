@@ -1,60 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    android:orientation="vertical">
-
+    >
 
     <LinearLayout
-        android:id="@+id/serchlayout"
+        android:id="@+id/findavlayout"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
-        <!--修改Editview属性：android:imeOptions="actionSearch"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/serchlayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+            <!--修改Editview属性：android:imeOptions="actionSearch"
 
-          在该Editview获得焦点的时候将“回车”键改为“搜索”
+              在该Editview获得焦点的时候将“回车”键改为“搜索”
 
-          android:singleLine="true"
+              android:singleLine="true"
 
-          不然回车【搜索】会换行-->
-        <EditText
+              不然回车【搜索】会换行-->
+            <EditText
 
-            android:id="@+id/avnum"
-            android:layout_width="250dp"
-            android:layout_height="match_parent"
-            android:layout_weight="6"
-            android:imeOptions="actionSearch"
-            android:singleLine="true"/>
+                android:id="@+id/avnum"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"/>
+
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/avcover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:transitionName="avcover" />
 
 
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/avcover"
-        android:layout_width="match_parent"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabsetting"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:transitionName="avcover" />
+        android:layout_margin="16dp"
+        android:clickable="true"
 
-    <Button
-        android:id="@+id/but_db2sd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="拷贝数据库到SD卡" />
+        android:src="@drawable/ic_setting"
+        app:backgroundTint="#000000"
+        app:layout_anchor="@id/findavlayout"
+        app:layout_anchorGravity="bottom|center"
+         />
 
-    <Button
-        android:id="@+id/but_sd2db"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="拷贝SD卡到数据库" />
-
-    <TextView
-        android:id="@+id/tvpro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

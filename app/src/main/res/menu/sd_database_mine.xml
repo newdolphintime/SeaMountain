@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/database" android:title="备份数据库到SD卡" android:icon="@drawable/ic_database"/>
+    <item android:id="@+id/sdcard" android:title="从SD卡恢复数据库" android:icon="@drawable/ic_sd"/>
+    <item android:id="@+id/aboutme" android:title="关于我" android:icon="@drawable/ic_me"/>
+</menu>

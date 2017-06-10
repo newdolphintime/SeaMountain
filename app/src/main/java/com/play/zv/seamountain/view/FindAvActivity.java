@@ -1,13 +1,16 @@
 package com.play.zv.seamountain.view;
 
 import android.app.ActivityOptions;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.CalendarContract;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +26,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import com.cocosw.bottomsheet.BottomSheet;
 import com.orhanobut.logger.Logger;
 import com.play.zv.seamountain.R;
 import com.play.zv.seamountain.adapter.AVViewPagerAdapter;
@@ -34,6 +38,7 @@ import com.play.zv.seamountain.db.AvDataHelper;
 import com.play.zv.seamountain.db.JavbusDBOpenHelper;
 import com.play.zv.seamountain.presenter.JavPresenter;
 import com.play.zv.seamountain.view.IviewBind.IJavFragment;
+import com.play.zv.seamountain.widget.SnackbarUtil;
 import com.play.zv.seamountain.widget.ToastUtils;
 
 
@@ -51,35 +56,44 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
     private EditText avnum;
     private JavbusDBOpenHelper javbusDBOpenHelper;
     private JavPresenter javPresenter = new JavPresenter(this);
-    private Button but_db2sd;
-    private Button but_sd2db;
-    private TextView tvpro;
+    private View view;
+
+    private FloatingActionButton fab_setting;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_findav);
 //        serch = (Button) findViewById(R.id.serch);
+        view = findViewById(R.id.fabsetting);
         avcover = (ImageView) findViewById(R.id.avcover);
+        fab_setting = (FloatingActionButton) findViewById(R.id.fabsetting);
+        fab_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final View mView = view;
+                new BottomSheet.Builder(FindAvActivity.this).title("设置").sheet(R.menu.sd_database_mine).
+                        listener(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case R.id.database:
+                                AvDataHelper.copyDataBaseToSD(FindAvActivity.this);
+                                SnackbarUtil.ShortSnackbar(mView, "备份数据库成功！", Color.BLACK, Color.WHITE).show();
+                                break;
+                            case  R.id.sdcard:
+                                AvDataHelper.copySDToDataBase(FindAvActivity.this);
+                                SnackbarUtil.ShortSnackbar(mView, "恢复数据库成功！", Color.BLACK, Color.WHITE).show();
+                                break;
+                            case R.id.aboutme:
+                                break;
+                        }
+                    }
+                }).show();
+            }
+        });
 
-        but_db2sd = (Button) findViewById(R.id.but_db2sd);
-        but_sd2db= (Button) findViewById(R.id.but_sd2db);
-        tvpro = (TextView) findViewById(R.id.tvpro);
-        but_db2sd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tvpro.setText("正在导出");
-                AvDataHelper.copyDataBaseToSD(FindAvActivity.this);
-                tvpro.setText("导出成功");
-            }
-        });
-        but_sd2db.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tvpro.setText("正在导出");
-                AvDataHelper.copySDToDataBase(FindAvActivity.this);
-                tvpro.setText("导出成功");
-            }
-        });
+
+
 
 
         avcover.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +140,7 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
                                     .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     //进行搜索操作的方法，在该方法中可以加入mEditSearchUser的非空判断
                     if (!avnum.getText().toString().trim().isEmpty()) {
-                        ToastUtils.showToast(FindAvActivity.this, "开始给你翻网页");
+                        SnackbarUtil.ShortSnackbar(view, "搜索数据中！", Color.BLACK, Color.WHITE).show();
                         Logger.d(avnum.getText().toString().trim());
                         loadData(avnum.getText().toString().toUpperCase().trim());
 
@@ -139,10 +153,8 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
         javbusDBOpenHelper = new JavbusDBOpenHelper(FindAvActivity.this, "javbus.db", null, 2);
 
 
-
-
-
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -169,7 +181,7 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
         if (findMovie(avnum, "cover").trim().isEmpty()) {
             javPresenter.loadAVdata(avnum);
         } else {
-            ToastUtils.showToast(FindAvActivity.this, "数据库里面有!");
+            SnackbarUtil.ShortSnackbar(view, "数据库中有数据！", Color.BLACK, Color.WHITE).show();
             Glide.with(FindAvActivity.this).load(findMovie(avnum, "cover").trim()).
                     diskCacheStrategy(DiskCacheStrategy.SOURCE).into(avcover);
             List<String> previews = Arrays.asList(findMovie(avnum, "previews").split(","));
@@ -187,6 +199,7 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
         //avvp.setAdapter(avViewPagerAdapter = new AVViewPagerAdapter(movieInfo.getPreviews(), mActivity));
         Logger.d(movieInfo);
         ToastUtils.showToast(FindAvActivity.this, "得到网页数据开始加载");
+        SnackbarUtil.ShortSnackbar(view, "得到网页数据开始加载！", Color.BLACK, Color.WHITE).show();
         Glide.with(FindAvActivity.this).load(movieInfo.getCover()).
                 diskCacheStrategy(DiskCacheStrategy.SOURCE).into(avcover);
     }
@@ -194,6 +207,7 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
     @Override
     public void getDataFail(String errCode, String errMsg) {
         ToastUtils.showToast(FindAvActivity.this, errMsg);
+        SnackbarUtil.ShortSnackbar(view, errMsg, Color.BLACK, Color.WHITE).show();
     }
 
     @Override
@@ -284,6 +298,7 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
 
         }
     }
+
     public String getStarsName(List<Star> stars) {
         String starName = null;
         for (Star star : stars) {
@@ -309,6 +324,7 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
         }
         return name;
     }
+
     //"previews"
     public String findMovie(String id, String cloumn) {
         String name = "";
@@ -328,6 +344,7 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
         return name;
 
     }
+
     private void startAvDetileActivity(View meizhiView, String avnum) {
 
         //startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, view1, "sharedView").toBundle());
