@@ -38,6 +38,7 @@ public class AVViewPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         ImageView iv = new ImageView(mContext);
+
         Glide.with(mContext)
                 .load(avpreviewurls.get(position).toString())
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)

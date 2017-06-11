@@ -11,6 +11,8 @@ import com.play.zv.seamountain.db.AvDataHelper;
 import java.util.Arrays;
 import java.util.List;
 
+import me.relex.circleindicator.CircleIndicator;
+
 /**
  * Created by Zv on 2017/06/10.
  */
@@ -18,6 +20,7 @@ import java.util.List;
 public class AvViewpagerActivity extends AppCompatActivity {
     private ViewPager av_pager;
     private AVViewPagerAdapter avViewPagerAdapter;
+    private CircleIndicator circleIndicator;
     public static final String AVNUM = "av_num";
     public static final String AVPAGER_POSITION = "pager_position";
     private String mAvnum;
@@ -29,9 +32,12 @@ public class AvViewpagerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_avpager);
         parseIntent();
         av_pager = (ViewPager) findViewById(R.id.av_pager);
+        circleIndicator = (CircleIndicator) findViewById(R.id.indicator);
         List<String> previews = Arrays.asList(AvDataHelper.findMovie(mAvnum, "previews", AvViewpagerActivity.this).split(","));
         avViewPagerAdapter = new AVViewPagerAdapter(previews, AvViewpagerActivity.this);
         av_pager.setAdapter(avViewPagerAdapter);
+        circleIndicator.setViewPager(av_pager);
+
         av_pager.setCurrentItem(mposition);
 
     }

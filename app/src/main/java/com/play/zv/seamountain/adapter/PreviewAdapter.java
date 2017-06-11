@@ -27,7 +27,7 @@ public class PreviewAdapter extends BaseAdapter {
     private OnPreviewClickListener onPreviewClickListener = null;
 
     public static interface OnPreviewClickListener {
-        void OnItemClick(int position);
+        void OnItemClick(int position,View view);
     }
 
     public void setOnItemClickListener(OnPreviewClickListener onPreviewClickListener) {
@@ -68,7 +68,7 @@ public class PreviewAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 if (onPreviewClickListener != null) {
-                    onPreviewClickListener.OnItemClick(position);
+                    onPreviewClickListener.OnItemClick(position,view);
                 }
 
             }

@@ -67,4 +67,8 @@ dependencies {
 
     compile 'com.cocosw:bottomsheet:1.+@aar'
 
+    compile 'me.relex:circleindicator:1.2.2@aar'
+
+
+
 }

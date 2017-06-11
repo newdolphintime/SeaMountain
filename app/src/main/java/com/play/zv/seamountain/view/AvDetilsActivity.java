@@ -178,11 +178,12 @@ public class AvDetilsActivity extends AppCompatActivity {
             gridView.setVisibility(View.VISIBLE);
             previewAdapter.setOnItemClickListener(new PreviewAdapter.OnPreviewClickListener() {
                 @Override
-                public void OnItemClick(int position) {
+                public void OnItemClick(int position,View view) {
                     Intent intent = new Intent(AvDetilsActivity.this, AvViewpagerActivity.class);
                     intent.putExtra(AVNUM,mAvnum);
                     intent.putExtra(AVPAGER_POSITION,position);
                     startActivity(intent);
+
                 }
             });
             gridView.setAdapter(previewAdapter);
