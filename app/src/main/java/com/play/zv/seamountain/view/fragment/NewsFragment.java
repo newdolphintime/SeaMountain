@@ -83,8 +83,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
             @Override
             public void onClick(View v) {
                 String mavnum = avnum.getText().toString().trim().toUpperCase();
-                Logger.d(mActivity.getFilesDir().getAbsolutePath());
-                Logger.d(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath());
+                 Logger.d(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath());
                 Logger.d(Environment.getExternalStorageState());
                 if (findMovie(mavnum, "stars") != null) {
                     ToastUtils.showToast(mActivity, findMovie(mavnum, "stars"));

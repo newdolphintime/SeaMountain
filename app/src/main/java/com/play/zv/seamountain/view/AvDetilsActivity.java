@@ -2,6 +2,8 @@ package com.play.zv.seamountain.view;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -11,13 +13,14 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.NestedScrollView;
+import android.os.Environment;
+
+import android.support.design.widget.FloatingActionButton;
+
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.CardView;
-import android.view.Display;
+
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +29,9 @@ import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 
 
@@ -34,14 +39,17 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gyf.barlibrary.ImmersionBar;
+import com.liulishuo.filedownloader.BaseDownloadTask;
+import com.liulishuo.filedownloader.FileDownloadListener;
+import com.liulishuo.filedownloader.FileDownloadMonitor;
+import com.liulishuo.filedownloader.FileDownloader;
 import com.orhanobut.logger.Logger;
 import com.play.zv.seamountain.R;
-import com.play.zv.seamountain.adapter.AVViewPagerAdapter;
 import com.play.zv.seamountain.adapter.PreviewAdapter;
 import com.play.zv.seamountain.api.AvjsoupApi.Magnet;
 import com.play.zv.seamountain.api.AvjsoupApi.Star;
+import com.play.zv.seamountain.api.GlobalMonitor;
 import com.play.zv.seamountain.db.AvDataHelper;
-import com.play.zv.seamountain.widget.CustomerTextView;
 import com.play.zv.seamountain.widget.FontCache;
 import com.play.zv.seamountain.widget.SnackbarUtil;
 import com.play.zv.seamountain.widget.ToastUtils;
@@ -49,10 +57,11 @@ import com.play.zv.seamountain.widget.ToastUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
-import static android.R.attr.duration;
+
 
 /**
  * Created by Zv on 2017/05/27.
@@ -65,27 +74,42 @@ public class AvDetilsActivity extends AppCompatActivity {
     private ImageView avcover;
     private TextView avnum;
     private GridView gridView;
-    private Context mContext;
+    private static Context mContext;
+    private NotificationCompat.Builder builder;
+    private NotificationManager manager;
 
     public String mAvnum;
     public static final String AVNUM = "av_num";
     public static final String STARNAME = "star_num";
-    public static final String AVPAGER_POSITION= "pager_position";
+    public static final String AVPAGER_POSITION = "pager_position";
     private LinearLayout linearLayout;
     private LinearLayout megnetlinearLayout;
     private PreviewAdapter previewAdapter;
     private ClipboardManager myClipboard;
     private ClipData myClip;
     private HorizontalScrollView nestedScrollView;
+    private List<String> downloadUrls;
+    private FloatingActionButton fab_download;
+    private static int hasDownloadurlnum = 0;
+    private static View mView;
+    private ProgressBar progess;
+
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FileDownloadMonitor.setGlobalMonitor(GlobalMonitor.getImpl());
         setContentView(R.layout.av_detail_activity);
         postponeEnterTransition();
+        downloadUrls = new ArrayList<>();
         mContext = getApplicationContext();
         myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        progess = (ProgressBar) findViewById(R.id.progess);
+        /*
+        * 封面
+        * */
         avcover = (ImageView) findViewById(R.id.avcover);
         avnum = (TextView) findViewById(R.id.avnum);
 //        mcensored = (TextView) findViewById(R.id.censored);
@@ -94,6 +118,38 @@ public class AvDetilsActivity extends AppCompatActivity {
         linearLayout = (LinearLayout) findViewById(R.id.starlayout);
         nestedScrollView = (HorizontalScrollView) findViewById(R.id.av_star_scroll);
         megnetlinearLayout = (LinearLayout) findViewById(R.id.megnetLayout);
+        //mView=findViewById(R.id.fab_download);
+        fab_download = (FloatingActionButton) findViewById(R.id.fab_download);
+        fab_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (downloadUrls.size() != 0) {
+                    int position = 0;
+                    progess.setMax(downloadUrls.size());
+                    progess.setProgress(0);
+                    for (String downloadurl : downloadUrls) {
+
+
+                        FileDownloader.getImpl().create(downloadurl)
+                                .setPath(Environment.getExternalStorageDirectory().getPath()
+                                        + "/AvLibrary/"+mAvnum+"/"+mAvnum+"_"+position+".jpg")
+                                .setCallbackProgressTimes(0) // 由于是队列任务, 这里是我们假设了现在不需要每个任务都回调`FileDownloadListener#progress`, 我们只关系每个任务是否完成, 所以这里这样设置可以很有效的减少ipc.
+                                .setListener(queueTarget)
+                                .addHeader("user-agent","Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.2604.400 QQBrowser/9.6.10897.400")
+                                .asInQueueTask()
+                                .enqueue();
+                        position++;
+                        SnackbarUtil.ShortSnackbar(view, "开始下载"+Environment.getExternalStorageDirectory().getPath()
+                                + "/AvLibrary/"+mAvnum+"/", Color.BLACK, Color.WHITE).show();
+                    }
+                    FileDownloader.getImpl().start(queueTarget, false);
+                }
+            }
+        });
+        /*
+        * 预览方格
+        *
+        * */
         gridView = (GridView) findViewById(R.id.gridpreview);
 
         //设置透明状态栏
@@ -105,6 +161,10 @@ public class AvDetilsActivity extends AppCompatActivity {
         parseIntent();
 
         String avCover = AvDataHelper.findMovie(mAvnum, "cover", mContext);
+        /*
+        * 下载链接添加封面链接
+        * */
+        downloadUrls.add(avCover);
         /*
         * 20170606
         * 共享元素动画一直出现一条缝隙  我加了一个asBitmap()   奇迹的好了  。。待看
@@ -175,13 +235,20 @@ public class AvDetilsActivity extends AppCompatActivity {
         Logger.d(previews.get(0));
         previewAdapter = new PreviewAdapter(mContext, previews);
         if (!previews.get(0).isEmpty()) {
+            /*
+            * 添加预览链接
+            * */
+            for (String preview : previews) {
+                downloadUrls.add(preview);
+            }
+
             gridView.setVisibility(View.VISIBLE);
             previewAdapter.setOnItemClickListener(new PreviewAdapter.OnPreviewClickListener() {
                 @Override
-                public void OnItemClick(int position,View view) {
+                public void OnItemClick(int position, View view) {
                     Intent intent = new Intent(AvDetilsActivity.this, AvViewpagerActivity.class);
-                    intent.putExtra(AVNUM,mAvnum);
-                    intent.putExtra(AVPAGER_POSITION,position);
+                    intent.putExtra(AVNUM, mAvnum);
+                    intent.putExtra(AVPAGER_POSITION, position);
                     startActivity(intent);
 
                 }
@@ -367,4 +434,71 @@ public class AvDetilsActivity extends AppCompatActivity {
     }
 
 
+
+
+
+    final FileDownloadListener queueTarget = new FileDownloadListener() {
+        @Override
+        protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+        }
+
+        @Override
+        protected void connected(BaseDownloadTask task, String etag, boolean isContinue, int soFarBytes, int totalBytes) {
+        }
+
+        @Override
+        protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+        }
+
+        @Override
+        protected void blockComplete(BaseDownloadTask task) {
+        }
+
+        @Override
+        protected void retry(final BaseDownloadTask task, final Throwable ex, final int retryingTimes, final int soFarBytes) {
+        }
+
+        @Override
+        protected void completed(BaseDownloadTask task) {
+            if(task.getListener() != queueTarget){
+                return;
+            }
+
+            progess.setProgress(progess.getProgress() + 1);
+        }
+
+        @Override
+        protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+        }
+
+        @Override
+        protected void error(BaseDownloadTask task, Throwable e) {
+        }
+
+        @Override
+        protected void warn(BaseDownloadTask task) {
+        }
+    };
+    private Notification customNotification(int progress, String text) {//自定义View通知
+        if (builder == null)
+            builder = new NotificationCompat.Builder(this);
+
+        RemoteViews view = new RemoteViews(getPackageName(), R.layout.notification_upgrade);
+        view.setProgressBar(R.id.bar, 100, progress, false);
+        view.setTextViewText(R.id.tv_des, text);
+        view.setTextViewText(R.id.tv_progress, String.format(Locale.getDefault(), "%d%%", progress));
+
+        builder.setCustomContentView(view)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setAutoCancel(true);
+        return builder.build();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // unbind and stop service manually if idle
+        FileDownloader.getImpl().unBindServiceIfIdle();
+
+        FileDownloadMonitor.releaseGlobalMonitor();
+    }
 }

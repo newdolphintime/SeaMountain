@@ -61,7 +61,13 @@
             android:textSize="15dp" />
     </RelativeLayout>
 
-
+    <ProgressBar
+        android:layout_margin="0dp"
+        android:id="@+id/progess"
+        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom" />
     <com.play.zv.seamountain.widget.MeasureGridView
         android:id="@+id/gridpreview"
         android:layout_width="match_parent"
