@@ -45,7 +45,7 @@ public class ScrollFabBehavior extends FloatingActionButton.Behavior {
     @Override
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, FloatingActionButton child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
         //检测第一步
-        Log.e("onNestedScroll()", "dyConsumed:"+dyConsumed);
+        //Log.e("onNestedScroll()", "dyConsumed:"+dyConsumed);
         if ((dyConsumed > 0 || dyUnconsumed > 0) && !isAnimatingOut && child.getVisibility() == View.VISIBLE) {//往下滑
             scaleHide(child);
         } else if ((dyConsumed < 0 || dyUnconsumed < 0) && child.getVisibility() != View.VISIBLE) {
@@ -95,7 +95,7 @@ public class ScrollFabBehavior extends FloatingActionButton.Behavior {
             isAnimatingOut = false;
             view.setVisibility(View.INVISIBLE);
             //检测第二步
-            Log.e("onAnimationEnd()", "隐藏按钮");
+            //Log.e("onAnimationEnd()", "隐藏按钮");
         }
         @Override
         public void onAnimationCancel(View arg0) {
