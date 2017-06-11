@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,27 +74,24 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
                 final View mView = view;
                 new BottomSheet.Builder(FindAvActivity.this).title("设置").sheet(R.menu.sd_database_mine).
                         listener(new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case R.id.database:
-                                AvDataHelper.copyDataBaseToSD(FindAvActivity.this);
-                                SnackbarUtil.ShortSnackbar(mView, "备份数据库成功！", Color.BLACK, Color.WHITE).show();
-                                break;
-                            case  R.id.sdcard:
-                                AvDataHelper.copySDToDataBase(FindAvActivity.this);
-                                SnackbarUtil.ShortSnackbar(mView, "恢复数据库成功！", Color.BLACK, Color.WHITE).show();
-                                break;
-                            case R.id.aboutme:
-                                break;
-                        }
-                    }
-                }).show();
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case R.id.database:
+                                        AvDataHelper.copyDataBaseToSD(FindAvActivity.this);
+                                        SnackbarUtil.ShortSnackbar(mView, "备份数据库成功！", Color.BLACK, Color.WHITE).show();
+                                        break;
+                                    case R.id.sdcard:
+                                        AvDataHelper.copySDToDataBase(FindAvActivity.this);
+                                        SnackbarUtil.ShortSnackbar(mView, "恢复数据库成功！", Color.BLACK, Color.WHITE).show();
+                                        break;
+                                    case R.id.aboutme:
+                                        break;
+                                }
+                            }
+                        }).show();
             }
         });
-
-
-
 
 
         avcover.setOnClickListener(new View.OnClickListener() {
@@ -130,10 +128,11 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
 //
 //            }
 //        });
-        avnum.setOnKeyListener(new View.OnKeyListener() {
+        //onkeylistener点击搜索会点击搜索出现两次点击时间 解决 用setOnEditorActionListener 事件用EditorInfo.IME_ACTION_SEARCH
+        avnum.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
                     // 先隐藏键盘
                     ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(FindAvActivity.this.getCurrentFocus()
@@ -145,10 +144,10 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
                         loadData(avnum.getText().toString().toUpperCase().trim());
 
                     }
+                    return true;
                 }
                 return false;
             }
-
         });
         javbusDBOpenHelper = new JavbusDBOpenHelper(FindAvActivity.this, "javbus.db", null, 2);
 
