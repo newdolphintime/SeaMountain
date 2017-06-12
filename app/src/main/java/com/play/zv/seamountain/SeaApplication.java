@@ -1,19 +1,30 @@
 package com.play.zv.seamountain;
 
 import android.app.Application;
+import android.os.Environment;
 
 import com.facebook.stetho.Stetho;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
 import com.liulishuo.filedownloader.services.DownloadMgrInitialParams;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.Proxy;
+import java.nio.channels.FileChannel;
+
+import static android.provider.ContactsContract.Directory.PACKAGE_NAME;
 
 /**
  * Created by Zv on 2017/06/07.
  */
 
 public class SeaApplication extends Application {
+
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -32,5 +43,8 @@ public class SeaApplication extends Application {
                         .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
                         .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
                         .build());
+
+
     }
 }
+

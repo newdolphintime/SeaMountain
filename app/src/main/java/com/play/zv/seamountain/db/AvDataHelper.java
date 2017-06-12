@@ -30,9 +30,9 @@ public class AvDataHelper {
 
     public static String findMovie(String id, String cloumn, Context context) {
         mContext = context;
-        javbusDBOpenHelper = new JavbusDBOpenHelper(mContext, "javbus.db", null, 2);
+
         String name = "";
-        SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
+        SQLiteDatabase db = javbusDBOpenHelper.openDatabase(mContext);
         Cursor cursor = db.rawQuery("SELECT * FROM movieinfo where avnum = ?", new String[]{id});
         //存在数据才返回true
 
@@ -53,9 +53,9 @@ public class AvDataHelper {
         mContext = context;
         List<Magnet> magnetList = new ArrayList<Magnet>();
         Magnet magnet;
-        javbusDBOpenHelper = new JavbusDBOpenHelper(mContext, "javbus.db", null, 2);
+
         //String name = "";
-        SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
+        SQLiteDatabase db = javbusDBOpenHelper.openDatabase(mContext);
         Cursor cursor = db.rawQuery("SELECT * FROM magnetinfo where magnetNum = ? ", new String[]{id});
         //存在数据才返回true
 
@@ -96,9 +96,9 @@ public class AvDataHelper {
     public static Star findstar(String starname, Context context) {
         Star star = null;
         mContext = context;
-        javbusDBOpenHelper = new JavbusDBOpenHelper(mContext, "javbus.db", null, 2);
 
-        SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
+
+        SQLiteDatabase db = javbusDBOpenHelper.openDatabase(mContext);
         Cursor cursor = db.rawQuery("select * from avstars where avstarname = ?", new String[]{starname});
         //存在数据才返回true
 //        CREATE TABLE avstars(avstarname varchar(100) PRIMARY KEY,age varchar(10),birthday varchar(20),bust varchar(10),
@@ -142,9 +142,9 @@ public class AvDataHelper {
         List<MovieInfo> movieInfos = new ArrayList<MovieInfo>();
 
         mContext = context;
-        javbusDBOpenHelper = new JavbusDBOpenHelper(mContext, "javbus.db", null, 2);
 
-        SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
+
+        SQLiteDatabase db = javbusDBOpenHelper.openDatabase(mContext);
         Cursor cursor = db.rawQuery("SELECT * FROM movieinfo ", new String[]{});
         //存在数据才返回true
 //        CREATE TABLE avstars(avstarname varchar(100) PRIMARY KEY,age varchar(10),birthday varchar(20),bust varchar(10),
@@ -188,9 +188,9 @@ public class AvDataHelper {
         Star star = null;
         List<Star> starList = new ArrayList<>();
         mContext = context;
-        javbusDBOpenHelper = new JavbusDBOpenHelper(mContext, "javbus.db", null, 2);
 
-        SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
+
+        SQLiteDatabase db = javbusDBOpenHelper.openDatabase(mContext);
         Cursor cursor = db.rawQuery("select * from avstars ", new String[]{});
         //存在数据才返回true
 //        CREATE TABLE avstars(avstarname varchar(100) PRIMARY KEY,age varchar(10),birthday varchar(20),bust varchar(10),
@@ -232,7 +232,7 @@ public class AvDataHelper {
     //"previews"
     public String findMovie(String id, String cloumn) {
         String name = "";
-        SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
+        SQLiteDatabase db = javbusDBOpenHelper.openDatabase(mContext);
         Cursor cursor = db.rawQuery("SELECT * FROM movieinfo where avnum = ?", new String[]{id});
         //存在数据才返回true
 

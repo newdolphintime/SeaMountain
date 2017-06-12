@@ -1,63 +1,79 @@
 package com.play.zv.seamountain.db;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by hspc on 2017/5/24.
  */
 
-public class JavbusDBOpenHelper extends SQLiteOpenHelper {
-    public JavbusDBOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context,"javbus.db",null,1);
-    }
+public class JavbusDBOpenHelper {
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(
-                "create table movieinfo(" +
-                "avnum varchar(20) PRIMARY KEY," +
-                "censored varchar(10)," +
-                "cover varchar(1000)," +
-                "director varchar(100)," +
-                "genres varchar(1000)," +
-                "lable varchar(500)," +
-                "release varchar(20)," +
-                "runtime varchar(100)," +
-                "series varchar(1000)," +
-                "studio varchar(500)," +
-                "title varchar(1000)," +
-                "stars varchar(500),"+
-                "previews varchar(2000))"
 
-        );
-        db.execSQL("create table avstars(" +
-                "avstarname varchar(100) PRIMARY KEY," +
-                "age varchar(10)," +
-                "birthday varchar(20)," +
-                "bust varchar(10)," +
-                "cup varchar(10)," +
-                "height varchar(10)," +
-                "hips varchar(10)," +
-                "hometown varchar(100)," +
-                "image varchar(500)," +
-                "waist varchar(10)" +
-                ")");
-        db.execSQL("create table magnetinfo (" +
-                "isCC varchar(20),"+
-                "isHD varchar(20)," +
-                "magnetData varchar(20)," +
-                "magnetNum varchar(20)," +
-                "magnetSize varchar(20)," +
-                "magnetTitle varchar(500)," +
-                "magnetUrl varchar(1000) primary key" +
-                ")");
-    }
-    //软件版本号发生改变时调用
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    //数据库存储路径
+    static String filePath = "data/data/com.play.zv.seamountain/database/javbus.db";
+    //数据库存放的文件夹
+    static String pathStr = "data/data/com.play.zv.seamountain/database";
 
+    SQLiteDatabase database;
+
+    public static SQLiteDatabase openDatabase(Context context) {
+        System.out.println("filePath:" + filePath);
+        File jhPath = new File(filePath);
+        //查看数据库文件是否存在
+        if (jhPath.exists()) {
+            Log.i("test", "存在数据库");
+            //存在则直接返回打开的数据库
+            return SQLiteDatabase.openOrCreateDatabase(jhPath, null);
+        } else {
+            //不存在先创建文件夹
+            File path = new File(pathStr);
+            Log.i("test", "pathStr=" + path);
+            if (path.mkdir()) {
+                Log.i("test", "创建成功");
+            } else {
+                Log.i("test", "创建失败");
+            }
+            ;
+            try {
+                //得到资源
+                AssetManager am = context.getAssets();
+                //得到数据库的输入流
+                InputStream is = am.open("javbus.db");
+                Log.i("test", is + "");
+                //用输出流写到SDcard上面
+                FileOutputStream fos = new FileOutputStream(jhPath);
+                Log.i("test", "fos=" + fos);
+                Log.i("test", "jhPath=" + jhPath);
+                //创建byte数组  用于1KB写一次
+                byte[] buffer = new byte[1024];
+                int count = 0;
+                while ((count = is.read(buffer)) > 0) {
+                    Log.i("test", "得到");
+                    fos.write(buffer, 0, count);
+                }
+                //最后关闭就可以了
+                fos.flush();
+                fos.close();
+                is.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                return null;
+            }
+            //如果没有这个数据库  我们已经把他写到SD卡上了，然后在执行一次这个方法 就可以返回数据库了
+            return openDatabase(context);
+        }
     }
 }
+
+

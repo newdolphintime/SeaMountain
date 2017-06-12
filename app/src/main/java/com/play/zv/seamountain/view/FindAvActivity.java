@@ -149,7 +149,7 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
                 return false;
             }
         });
-        javbusDBOpenHelper = new JavbusDBOpenHelper(FindAvActivity.this, "javbus.db", null, 2);
+        //javbusDBOpenHelper = new JavbusDBOpenHelper(FindAvActivity.this, "javbus.db", null, 2);
 
 
     }
@@ -216,7 +216,7 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
 
     @Override
     public void writeDatabase(MovieInfo movieInfo) {
-        SQLiteDatabase javbusDB = javbusDBOpenHelper.getWritableDatabase();
+        SQLiteDatabase javbusDB = javbusDBOpenHelper.openDatabase(getApplicationContext());
         if (movieInfo != null) {
             javbusDB.execSQL("replace INTO movieinfo(avnum,censored,cover,director,genres,lable,release,runtime,series,studio,title,stars,previews) " +
                             "values ( ?,?,?,?,?,?,?,?,?,?,?,?,?)",
@@ -327,7 +327,7 @@ public class FindAvActivity extends AppCompatActivity implements IJavFragment {
     //"previews"
     public String findMovie(String id, String cloumn) {
         String name = "";
-        SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
+        SQLiteDatabase db = javbusDBOpenHelper.openDatabase(getApplicationContext());
         Cursor cursor = db.rawQuery("SELECT * FROM movieinfo where avnum = ?", new String[]{id});
         //存在数据才返回true
 

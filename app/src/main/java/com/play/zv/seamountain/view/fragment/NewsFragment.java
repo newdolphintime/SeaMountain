@@ -113,7 +113,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
             }
         });
         //avvp = (ViewPager) view.findViewById(R.id.avvp);
-        javbusDBOpenHelper = new JavbusDBOpenHelper(mActivity, "javbus.db", null, 2);
+        //javbusDBOpenHelper = new JavbusDBOpenHelper(mActivity, "javbus.db", null, 2);
         return view;
 
     }
@@ -209,7 +209,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
         List<Star> starList = new ArrayList<Star>();
         Star star;
         //String name = "";
-        SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
+        SQLiteDatabase db = javbusDBOpenHelper.openDatabase(mActivity);
         Cursor cursor = db.rawQuery("SELECT * FROM avstars ", new String[]{});
         //存在数据才返回true
 
@@ -229,7 +229,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
     //"previews"
     public String findMovie(String id, String cloumn) {
         String name = "";
-        SQLiteDatabase db = javbusDBOpenHelper.getReadableDatabase();
+        SQLiteDatabase db = javbusDBOpenHelper.openDatabase(mActivity);
         Cursor cursor = db.rawQuery("SELECT * FROM movieinfo where avnum = ?", new String[]{id});
         //存在数据才返回true
 
@@ -249,7 +249,7 @@ public class NewsFragment extends BaseFragment implements IJavFragment {
     @Override
     public void writeDatabase(MovieInfo movieInfo) {
 
-        SQLiteDatabase javbusDB = javbusDBOpenHelper.getWritableDatabase();
+        SQLiteDatabase javbusDB = javbusDBOpenHelper.openDatabase(mActivity);
         if (movieInfo != null) {
             javbusDB.execSQL("replace INTO movieinfo(avnum,censored,cover,director,genres,lable,release,runtime,series,studio,title,stars,previews) " +
                             "values ( ?,?,?,?,?,?,?,?,?,?,?,?,?)",
