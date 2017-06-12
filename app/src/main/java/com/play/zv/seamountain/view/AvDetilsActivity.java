@@ -35,7 +35,6 @@ import android.widget.RemoteViews;
 import android.widget.TextView;
 
 
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gyf.barlibrary.ImmersionBar;
@@ -62,7 +61,6 @@ import java.util.Locale;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 
-
 /**
  * Created by Zv on 2017/05/27.
  */
@@ -74,7 +72,7 @@ public class AvDetilsActivity extends AppCompatActivity {
     private ImageView avcover;
     private TextView avnum;
     private GridView gridView;
-    private static Context mContext;
+    private Context mContext;
     private NotificationCompat.Builder builder;
     private NotificationManager manager;
 
@@ -91,9 +89,8 @@ public class AvDetilsActivity extends AppCompatActivity {
     private List<String> downloadUrls;
     private FloatingActionButton fab_download;
     private static int hasDownloadurlnum = 0;
-    private static View mView;
-    private ProgressBar progess;
 
+    private ProgressBar progess;
 
 
     @Override
@@ -132,15 +129,18 @@ public class AvDetilsActivity extends AppCompatActivity {
 
                         FileDownloader.getImpl().create(downloadurl)
                                 .setPath(Environment.getExternalStorageDirectory().getPath()
-                                        + "/AvLibrary/"+mAvnum+"/"+mAvnum+"_"+position+".jpg")
+                                        + "/AvLibrary/" + mAvnum + "/" + mAvnum + "_" + position + ".jpg")
                                 .setCallbackProgressTimes(0) // 由于是队列任务, 这里是我们假设了现在不需要每个任务都回调`FileDownloadListener#progress`, 我们只关系每个任务是否完成, 所以这里这样设置可以很有效的减少ipc.
+
                                 .setListener(queueTarget)
-                                .addHeader("user-agent","Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.2604.400 QQBrowser/9.6.10897.400")
+
+                                .addHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.2604.400 QQBrowser/9.6.10897.400")
                                 .asInQueueTask()
                                 .enqueue();
+                        FileDownloader.getImpl().setMaxNetworkThreadCount(7);
                         position++;
-                        SnackbarUtil.ShortSnackbar(view, "开始下载"+Environment.getExternalStorageDirectory().getPath()
-                                + "/AvLibrary/"+mAvnum+"/", Color.BLACK, Color.WHITE).show();
+                        SnackbarUtil.ShortSnackbar(view, "开始下载" + Environment.getExternalStorageDirectory().getPath()
+                                + "/AvLibrary/" + mAvnum + "/", Color.BLACK, Color.WHITE).show();
                     }
                     FileDownloader.getImpl().start(queueTarget, false);
                 }
@@ -188,7 +188,7 @@ public class AvDetilsActivity extends AppCompatActivity {
             List<String> starsnames = Arrays.asList(starsname.split(","));
 
             List<Star> stars = new ArrayList<>();
-            if (starsnames != null) {
+            if (starsnames.get(0) != null) {
                 for (String avstarname : starsnames) {
                     Star star = AvDataHelper.findstar(avstarname.trim(), mContext);
                     Logger.d(avstarname.trim());
@@ -201,7 +201,7 @@ public class AvDetilsActivity extends AppCompatActivity {
                     int width = dip2px(mContext, 50);
                     final ImageView imageView = new ImageView(this);
 
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(height, width);
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
                     layoutParams.setMargins(10, 10, 10, 10);
                     imageView.setLayoutParams(layoutParams);
                     imageView.setTransitionName("starphoto");
@@ -434,9 +434,6 @@ public class AvDetilsActivity extends AppCompatActivity {
     }
 
 
-
-
-
     final FileDownloadListener queueTarget = new FileDownloadListener() {
         @Override
         protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
@@ -460,7 +457,7 @@ public class AvDetilsActivity extends AppCompatActivity {
 
         @Override
         protected void completed(BaseDownloadTask task) {
-            if(task.getListener() != queueTarget){
+            if (task.getListener() != queueTarget) {
                 return;
             }
 
@@ -479,6 +476,7 @@ public class AvDetilsActivity extends AppCompatActivity {
         protected void warn(BaseDownloadTask task) {
         }
     };
+
     private Notification customNotification(int progress, String text) {//自定义View通知
         if (builder == null)
             builder = new NotificationCompat.Builder(this);
@@ -493,6 +491,7 @@ public class AvDetilsActivity extends AppCompatActivity {
                 .setAutoCancel(true);
         return builder.build();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

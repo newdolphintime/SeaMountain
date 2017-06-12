@@ -23,7 +23,6 @@ public class SeaApplication extends Application {
         FileDownloader.init(getApplicationContext(), new DownloadMgrInitialParams.InitCustomMaker()
                 .connectionCreator(new FileDownloadUrlConnection
                         .Creator(new FileDownloadUrlConnection.Configuration()
-
                         .connectTimeout(15000) // set connection timeout.
                         .readTimeout(15000) // set read timeout.
                         .proxy(Proxy.NO_PROXY) // set proxy
