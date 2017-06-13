@@ -28,9 +28,13 @@ public class JavbusDBOpenHelper {
     SQLiteDatabase database;
 
     public static SQLiteDatabase openDatabase(Context context) {
+        ///data/user/0/com.play.zv.seamountain/databases/javbus.db
         System.out.println("filePath:" + context.getDatabasePath("javbus") + ".db");
-        String pathStr = context.getPackageName()+"/database";
+        String pathStr = context.getDatabasePath("nimabi")+".db";
+        pathStr=pathStr.replace("/nimabi.db","");
+        ///data/user/0/com.play.zv.seamountain/databases
         File jhPath = new File(context.getDatabasePath("javbus") + ".db");
+        Log.i("test", "pathStr=" + pathStr);
         //查看数据库文件是否存在
         if (jhPath.exists()) {
             Log.i("test", "存在数据库");
