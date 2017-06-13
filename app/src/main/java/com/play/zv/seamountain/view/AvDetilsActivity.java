@@ -340,9 +340,10 @@ public class AvDetilsActivity extends AppCompatActivity {
             customerTextView.setId(TAG1401);
             customerTextView.setText(magnets.get(i).getMagnetNum());
             customerTextView.setTextSize(dip2px(mContext, 10));
-            Typeface typeFace = FontCache.getTypeface("FZJHJW.ttf", mContext);
+            Typeface typeFace = FontCache.getTypeface("Thin.otf", mContext);
             customerTextView.setTextColor(Color.BLACK);
             customerTextView.setTypeface(typeFace);
+            customerTextView.setIncludeFontPadding(false);
 
             TextView customerTextView2 = new TextView(mContext);
 

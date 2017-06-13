@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-
+                android:includeFontPadding="false"
 
                 android:lines="1"
                 android:text="标题" />
@@ -61,13 +61,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/av_title"
-
+                android:includeFontPadding="false"
 
                 android:layout_marginTop="15dp"
                 android:text="时间" />
 
             <com.play.zv.seamountain.widget.CustomerTextView
                 android:id="@+id/av_stars"
+                android:includeFontPadding="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/av_runtime"

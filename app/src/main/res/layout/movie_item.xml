@@ -52,6 +52,7 @@
 
 
             android:id="@+id/moviename"
+            android:includeFontPadding="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
@@ -62,7 +63,7 @@
             android:layout_toEndOf="@+id/cd" />
 
         <com.play.zv.seamountain.widget.CustomerTextView
-
+            android:includeFontPadding="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="神奇动物在哪里"
@@ -74,7 +75,7 @@
             android:id="@+id/director" />
 
         <com.play.zv.seamountain.widget.CustomerTextView
-
+            android:includeFontPadding="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="神奇动物在哪里"
@@ -89,7 +90,7 @@
 
 
         <com.play.zv.seamountain.widget.CustomerTextView
-
+            android:includeFontPadding="false"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:background="#3effffff"

@@ -38,10 +38,10 @@ public class CustomerTextView extends TextView {
         */
         switch (textStyle) {
             case Typeface.BOLD: // bold
-                return FontCache.getTypeface("FZJHJW.ttf", context);
+                return FontCache.getTypeface("Thin.otf", context);
 
             default:
-                return FontCache.getTypeface("FZJHJW.ttf", context);
+                return FontCache.getTypeface("Thin.otf", context);
         }
     }
 }
