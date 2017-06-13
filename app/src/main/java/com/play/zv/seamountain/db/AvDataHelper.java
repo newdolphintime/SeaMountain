@@ -45,6 +45,7 @@ public class AvDataHelper {
 
         }
         cursor.close();
+        db.close();
         return name;
 
     }
@@ -90,6 +91,7 @@ public class AvDataHelper {
 
         }
         cursor.close();
+        db.close();
         return magnetList;
     }
 
@@ -132,6 +134,7 @@ public class AvDataHelper {
             star.setImage(image);
         }
         cursor.close();
+        db.close();
         return star;
 
     }
@@ -180,6 +183,7 @@ public class AvDataHelper {
 
         }
         cursor.close();
+        db.close();
         return movieInfos;
 
     }
@@ -225,6 +229,7 @@ public class AvDataHelper {
             starList.add(star);
         }
         cursor.close();
+        db.close();
         return starList;
 
     }

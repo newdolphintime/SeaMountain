@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
@@ -22,13 +23,14 @@ public class JavbusDBOpenHelper {
     //数据库存储路径
     static String filePath = "data/data/com.play.zv.seamountain/database/javbus.db";
     //数据库存放的文件夹
-    static String pathStr = "data/data/com.play.zv.seamountain/database";
+
 
     SQLiteDatabase database;
 
     public static SQLiteDatabase openDatabase(Context context) {
-        System.out.println("filePath:" + filePath);
-        File jhPath = new File(filePath);
+        System.out.println("filePath:" + context.getDatabasePath("javbus") + ".db");
+        String pathStr = context.getPackageName()+"/database";
+        File jhPath = new File(context.getDatabasePath("javbus") + ".db");
         //查看数据库文件是否存在
         if (jhPath.exists()) {
             Log.i("test", "存在数据库");
@@ -43,7 +45,7 @@ public class JavbusDBOpenHelper {
             } else {
                 Log.i("test", "创建失败");
             }
-            ;
+
             try {
                 //得到资源
                 AssetManager am = context.getAssets();
