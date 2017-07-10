@@ -384,7 +384,7 @@ public class AvDetilsActivity extends AppCompatActivity {
 
 
             cardView.setRadius(dip2px(mContext, 3));
-            cardView.setForeground(getSelectedItemDrawable());
+            //cardView.setForeground(getSelectedItemDrawable());
 
             cardView.setLayoutParams(layoutParams);
             cardView.addView(myrelativeLayout);
